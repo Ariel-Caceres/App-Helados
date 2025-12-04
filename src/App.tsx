@@ -3,6 +3,7 @@ import './App.css'
 import { Home } from './pages/Home'
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { Modal } from './pages/Modal';
+import { Record } from './pages/Record';
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />}></Route>
           <Route path="/sell" element={<Modal />}></Route>
+          <Route path="/record" element={<Record />}></Route>
         </Routes>
       </Router>
     </div>

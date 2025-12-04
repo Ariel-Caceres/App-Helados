@@ -53,8 +53,16 @@ export const Home = () => {
 
             <div className="w-full bg-[#DAF5FF] rounded-2xl flex flex-col justify-evenly relative py-6">
 
-                <div className="absolute top-0 left-0 right-0 flex items-center h-14 bg-amber-200 rounded-2xl px-6">
-                    <span className="text-2xl md:text-3xl font-medium">📊 Panel</span>
+                <div className="absolute top-0 left-0 right-0 flex items-center h-14 bg-amber-200 rounded-2xl px-6 ">
+                    <div className="w-1/2">
+                        <span className="text-2xl md:text-3xl font-medium">📊 Panel</span>
+
+                    </div>
+                    <div className="w-1/2 justify-end flex items-end ">
+                        <button className="" onClick={() => navigate("/record")}>
+                            <span className="text-xl  md:text-xl font-medium self-end justify-self-end border-2 rounded-2xl p-1 cursor-pointer">🗓 Ver historial</span>
+                        </button>
+                    </div>
                 </div>
 
                 <div className="w-full flex flex-col md:flex-row justify-evenly gap-4 mt-16 px-2">
