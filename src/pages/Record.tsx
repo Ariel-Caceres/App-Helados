@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import { Header } from "../components/Header"
 import { useSell } from "../context/useSell"
-import { useEffect, useState } from "react"
 
 
 export const Record = () => {
