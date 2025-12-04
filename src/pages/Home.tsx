@@ -10,57 +10,23 @@ export const Home = () => {
     const ventasHoy = ventas.filter(v => v.fecha == hoy)
     const DineroHoy = ventas.reduce((acc, v) => acc + v.precio, 0)
     console.log(ventasHoy)
-    // return (
-    //     <div className='min-w-1/2 h-full flex flex-col mt-32 gap-10'>
-    //         <Header />
-    //         <div className='w-full h-96 bg-[#DAF5FF] rounded-2xl flex flex-col justify-evenly relative'>
-    //             <div className='absolute top-0 w-full flex  h-1/5 items-center  bg-amber-200 rounded-2xl '>
-    //                 <span className='text-3xl font-medium ml-10'>📊Panel:    </span>
-    //             </div>
-    //             <div className='w-full  flex justify-evenly'>
-    //                 <div className='w-1/3  bg-[#FFBFA0] h-40 rounded-2xl flex-col flex border-2'>
-    //                     <div className="w-full justify-center flex h-1/3 items-center">
-    //                         <span className="text-2xl font-medium">🧊Ventas hoy :</span>
-    //                     </div>
-    //                     <div className="w-full justify-center flex h-1/3 items-center">
-    //                         <span className="text-4xl font-bold">{ventasHoy.length}</span>
-    //                     </div>
-    //                 </div>
-    //                 <div className='w-1/3 bg-[#87F6FF] h-40 rounded-2xl flex-col flex border-2 '>
-    //                     <div className="w-full justify-center flex h-1/3 items-center">
-    //                         <span className="text-2xl font-medium  ">💸Dinero hoy :</span>
-    //                     </div>
-    //                     <div className="w-full justify-center flex h-1/3 items-center ">
-    //                         <span className="text-4xl font-bold">{DineroHoy}$</span>
-    //                     </div>
 
-    //                 </div>
-    //             </div>
-    //         </div>
-    //         <div className='w-full h-15 flex justify-center '>
-    //             <div className="bg-white w-1/5 items-center flex justify-center text-black  rounded-2xl border-2 hover:bg-black hover:text-white hover:border-[#DAF5FF] transition-all ease-in-out delay-100">
-    //                 <button className="w-full h-full hover:cursor-pointer" onClick={() => navigate("/sell")}>
-    //                     <span className="text-2xl font-bold">Vender</span>
-    //                 </button>
-    //             </div>
-    //         </div>
-    //     </div>
-    // )
+
     return (
         <div className="w-full max-w-3xl mx-auto h-full flex flex-col mt-20 gap-10 px-4">
 
             <Header />
 
-            <div className="w-full bg-[#DAF5FF] rounded-2xl flex flex-col justify-evenly relative py-6">
+            <div className="w-full bg-[#DAF5FF] rounded-2xl flex  flex-col justify-evenly relative py-6">
 
-                <div className="absolute top-0 left-0 right-0 flex items-center h-14 bg-amber-200 rounded-2xl px-6 ">
-                    <div className="w-1/2">
-                        <span className="text-2xl md:text-3xl font-medium">📊 Panel</span>
+                <div className="absolute top-0 left-0 gap-x-10 gap-y-3 right-0 flex flex-wrap w-full  items-center justify-between   bg-amber-200 rounded-2xl px-6 py-4 ">
+                    <div className="">
+                        <span className="text-2xl whitespace-nowrap md:text-3xl font-medium">📊 Panel</span>
 
                     </div>
-                    <div className="w-1/2 justify-end flex items-end ">
+                    <div className=" justify-end flex items-end ">
                         <button className="" onClick={() => navigate("/record")}>
-                            <span className="text-xl  md:text-xl font-medium self-end justify-self-end border-2 rounded-2xl p-1 cursor-pointer">🗓 Ver historial</span>
+                            <span className="text-md text-end whitespace-nowrap sm:text-2xl font-medium self-end justify-self-end border-2 rounded-2xl p-1 cursor-pointer">🗓 Ver historial</span>
                         </button>
                     </div>
                 </div>
