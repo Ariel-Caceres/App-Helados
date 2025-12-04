@@ -22,12 +22,12 @@ export const Modal = () => {
     }
 
     const auth = (precio: string, cantidad: string) => {
-        if (!precio || !cantidad) {
-            if (!precio) {
+        if (!precio || !cantidad || Number(precio) == 0 || Number(cantidad) == 0) {
+            if (!precio || Number(precio) == 0) {
                 console.log("agregar precio")
                 setCartelPrecio(true)
             }
-            if (!cantidad) {
+            if (!cantidad || Number(cantidad) == 0) {
                 setCartelCantidad(true)
                 console.log("agregar cantidad")
             }
@@ -61,6 +61,20 @@ export const Modal = () => {
 
                 <div className='w-full sm:w-2/3 lg:w-1/2  flex flex-col items-center gap-5 py-10 justify-between'>
 
+
+                    <div className="w-full flex bg-[#B1F6FF] h-20 justify-between px-4 items-center rounded-2xl border-2">
+                        <label htmlFor="cantidad" className="text-lg sm:text-2xl font-medium w-1/3">Cantidad:</label>
+                        <input
+                            type="number"
+                            id="cantidad"
+                            placeholder="Ej. 1"
+                            className={`border-2 pl-2 rounded-xl h-10 bg-white w-2/3 ${cartelCantidad ? "border-4 border-red-700" : ""}`}
+                            value={cantidad}
+                            onChange={(e) => changeHandlerCantidad(e.target.value)}
+                            required
+                        />
+                    </div>
+
                     <div className="w-full flex bg-[#B1F6FF] h-20 justify-between px-4 items-center rounded-2xl border-2">
                         <label htmlFor="precio" className={`text-lg sm:text-2xl font-medium w-1/3 `}>Precio:</label>
                         <input
@@ -86,18 +100,6 @@ export const Modal = () => {
                         </select>
                     </div>
 
-                    <div className="w-full flex bg-[#B1F6FF] h-20 justify-between px-4 items-center rounded-2xl border-2">
-                        <label htmlFor="cantidad" className="text-lg sm:text-2xl font-medium w-1/3">Cantidad:</label>
-                        <input
-                            type="number"
-                            id="cantidad"
-                            placeholder="Ej. 1"
-                            className={`border-2 pl-2 rounded-xl h-10 bg-white w-2/3 ${cartelCantidad ? "border-4 border-red-700" : ""}`}
-                            value={cantidad}
-                            onChange={(e) => changeHandlerCantidad(e.target.value)}
-                            required
-                        />
-                    </div>
 
                 </div>
             </div>
