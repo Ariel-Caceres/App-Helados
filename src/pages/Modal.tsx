@@ -58,7 +58,7 @@ export const Modal = () => {
     // )
     return (
 
-        <div className='w-full max-w-[900px] mx-auto flex flex-col mt-32 gap-10 px-4'>
+        <div className='w-full max-w-[900px] mx-auto flex flex-col mt-32 md:mt-15 gap-10 px-4'>
             <Header />
 
             {/* CARD PRINCIPAL */}
