@@ -9,7 +9,6 @@ export const Record = () => {
     const navigate = useNavigate()
     const [hayVentas, setHayVentas] = useState<boolean>(false)
 
-    // const ventasDiv = 
 
     useEffect(() => {
         if (ventas.length != 0) {
@@ -43,7 +42,7 @@ export const Record = () => {
                                 <span className="pl-2 text-xl font-bold">Sabor</span>
                             </div>
                             <div className="w-1/4 border-2 border-r-0">
-                                <span className="pl-2 text-xl font-bold">Cantidad</span>
+                                <span className="pl-1 text-xl font-bold">Cantidad</span>
                             </div>
                             <div className="w-1/4 border-2 ">
                                 <span className="pl-2 text-xl font-bold">Precio</span>
