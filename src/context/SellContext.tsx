@@ -37,7 +37,6 @@ export const SellProvider = ({ children }: { children: ReactNode }) => {
 
 
 
-
     const registrarVenta = () => {
         const nuevaVenta: Venta = {
             precio: Number(precio),

@@ -6,10 +6,19 @@ import { useSell } from "../context/useSell"
 export const Home = () => {
     const navigate = useNavigate()
     const { ventas } = useSell()
-    const hoy = new Date().toISOString().slice(0, 10);
+
+
+    const d = new Date();
+    const año = d.getFullYear();
+    const mes = String(d.getMonth() + 1).padStart(2, "0");
+    const dia = String(d.getDate()).padStart(2, "0");
+
+    const hoy = `${año}-${mes}-${dia}`;
+
     const ventasHoy = ventas.filter(v => v.fecha == hoy)
     const DineroHoy = ventas.reduce((acc, v) => acc + v.precio, 0)
 
+    console.log(mes)
 
 
 
