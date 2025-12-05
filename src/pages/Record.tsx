@@ -11,6 +11,10 @@ export const Record = () => {
     const ventasTotalDinero = ventas.reduce((acc, v) => acc + v.precio, 0)
     const ventasTotalCantidad = ventas.reduce((acc, v) => acc + v.cantidad, 0)
 
+    // const mesAEleccion = ventas.filter(v => (v.fecha.split("-")[1] === "01"))
+    // console.log(mesAEleccion)
+
+
     return (
         <div className="w-full max-w-3xl mx-auto h-full flex flex-col mt-20 gap-10 px-4">
 
@@ -18,9 +22,14 @@ export const Record = () => {
 
             <div className="w-full bg-[#DAF5FF] rounded-2xl flex flex-col justify-evenly relative py-6">
 
-                <div className="absolute top-0 left-0 right-0 flex items-center h-14 bg-amber-200 rounded-2xl px-6">
+                <div className="absolute top-0 left-0 right-0 flex items-center h-14 bg-amber-200 rounded-2xl justify-between px-6">
                     <span className="text-2xl md:text-3xl font-medium">🗓 Historial</span>
+                    <div className="">
+                        <span className="text-xl sm:text-md font-medium">Filtrar</span>
+                        <select name="" id=""></select>
+                    </div>
                 </div>
+
 
                 <div className="w-full flex flex-col md:flex-row justify-evenly gap-4 mt-16 px-2 max-h-[30vh] overflow-y-scroll  ">
                     <div className="flex flex-col w-full " >

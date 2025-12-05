@@ -5,20 +5,18 @@ import { useSell } from "../context/useSell"
 
 export const Home = () => {
     const navigate = useNavigate()
-    const { ventas } = useSell()
+    const { ventas, hoy } = useSell()
 
 
-    const d = new Date();
-    const año = d.getFullYear();
-    const mes = String(d.getMonth() + 1).padStart(2, "0");
-    const dia = String(d.getDate()).padStart(2, "0");
-
-    const hoy = `${año}-${mes}-${dia}`;
-
-    const ventasHoy = ventas.filter(v => v.fecha === hoy)
     const DineroHoy = ventas.reduce((acc, v) => acc + v.precio, 0)
+    const ventasHoy = ventas.filter(v => v.fecha === hoy)
+    const ventasHoyCant = ventasHoy.reduce((acc, va) => acc + va.cantidad, 0);
 
 
+
+    // console.log(hoy)
+
+    console.log(ventasHoyCant)
 
     return (
         <div className="w-full max-w-3xl mx-auto h-full flex flex-col mt-20 gap-10 px-4">
@@ -55,7 +53,7 @@ export const Home = () => {
                             </span>
                         </div>
                         <div className="w-full flex justify-center items-center flex-1">
-                            <span className="text-4xl font-bold">{ventasHoy.length}</span>
+                            <span className="text-4xl font-bold">{ventasHoyCant}</span>
                         </div>
                     </div>
 

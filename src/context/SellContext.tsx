@@ -17,6 +17,7 @@ interface SellContextType {
     setCantidad: (value: string) => void;
     setSabor: (value: string) => void;
     registrarVenta: () => void;
+    hoy: string
 }
 
 export const SellContext = createContext<SellContextType | undefined>(undefined);
@@ -34,8 +35,12 @@ export const SellProvider = ({ children }: { children: ReactNode }) => {
 
     });
 
-    const hoy = new Date().toLocaleDateString("sv-SE");
+    const d = new Date();
+    const año = d.getFullYear();
+    const mes = String(d.getMonth() + 1).padStart(2, "0");
+    const dia = String(d.getDate()).padStart(2, "0");
 
+    const hoy = `${año}-${mes}-${dia}`;
 
 
     const registrarVenta = () => {
@@ -70,6 +75,7 @@ export const SellProvider = ({ children }: { children: ReactNode }) => {
                 setCantidad,
                 setSabor,
                 registrarVenta,
+                hoy
             }}
         >
             {children}
