@@ -6,6 +6,7 @@ import { useState } from "react"
 export const Modal = () => {
     const navigate = useNavigate()
     const [cartelPrecio, setCartelPrecio] = useState<boolean>(false)
+    const [cantUno, setCantUno] = useState<boolean>(false)
     const [cartelCantidad, setCartelCantidad] = useState<boolean>(false)
     const { sabor, precio, cantidad, setSabor, setPrecio, setCantidad, registrarVenta } = useSell()
 
@@ -19,6 +20,11 @@ export const Modal = () => {
 
     const changeHandlerCantidad = (cantidad: string) => {
         setCantidad(cantidad)
+        if (cantidad == "1") {
+            setCantUno(true)
+        } else {
+            setCantUno(false)
+        }
     }
 
     const auth = (precio: string, cantidad: string) => {
@@ -94,18 +100,18 @@ export const Modal = () => {
 
                         />
                     </div>
+                    {cantUno &&
+                        <div className="w-full flex bg-[#B1F6FF] h-20 justify-between px-4 items-center rounded-2xl border-2">
+                            <label htmlFor="sabor" className="text-lg sm:text-2xl font-medium w-1/3">Sabor:</label>
 
-                    <div className="w-full flex bg-[#B1F6FF] h-20 justify-between px-4 items-center rounded-2xl border-2">
-                        <label htmlFor="sabor" className="text-lg sm:text-2xl font-medium w-1/3">Sabor:</label>
-
-                        <select name="" id="sabor" value={sabor} className="border-2 pl-2 rounded-xl h-10 bg-white w-2/3" onChange={(e) => changeHandlerSabor(e.target.value)}>
-                            <option value=""></option>
-                            {sabores.map((s, i) => (
-                                <option key={i} value={s}>{s}</option>
-                            ))}
-                        </select>
-                    </div>
-
+                            <select name="" id="sabor" value={sabor} className="border-2 pl-2 rounded-xl h-10 bg-white w-2/3" onChange={(e) => changeHandlerSabor(e.target.value)}>
+                                <option value=""></option>
+                                {sabores.map((s, i) => (
+                                    <option key={i} value={s}>{s}</option>
+                                ))}
+                            </select>
+                        </div>
+                    }
 
                 </div>
             </div>

@@ -9,7 +9,8 @@ export const Home = () => {
     const hoy = new Date().toISOString().slice(0, 10);
     const ventasHoy = ventas.filter(v => v.fecha == hoy)
     const DineroHoy = ventas.reduce((acc, v) => acc + v.precio, 0)
-    console.log(ventasHoy)
+
+
 
 
     return (
