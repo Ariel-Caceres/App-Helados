@@ -25,15 +25,16 @@ export const SellProvider = ({ children }: { children: ReactNode }) => {
     const [precio, setPrecio] = useState<string>("");
     const [sabor, setSabor] = useState<string>("");
     const [cantidad, setCantidad] = useState<string>("");
-    const [ventas, setVentas] = useState<Venta[]>([]);
+    const [ventas, setVentas] = useState<Venta[]>(() => {
+        const data = (localStorage.getItem("ventas"))
+        if (data) {
+            return JSON.parse(data)
+        }
+        return []
+
+    });
 
     const hoy = new Date().toLocaleDateString("sv-SE");
-
-    useEffect(() => {
-        const data = JSON.parse(localStorage.getItem("ventas") || "[]");
-
-        setVentas(data);
-    }, []);
 
 
 
@@ -45,16 +46,17 @@ export const SellProvider = ({ children }: { children: ReactNode }) => {
             fecha: hoy,
         };
 
-        const actualizado = [...ventas, nuevaVenta];
 
-        setVentas(actualizado);
-        localStorage.setItem("ventas", JSON.stringify(actualizado));
+        setVentas([...ventas, nuevaVenta]);
 
         setPrecio("");
         setCantidad("");
         setSabor("");
     };
 
+    useEffect(() => {
+        localStorage.setItem("ventas", JSON.stringify(ventas))
+    }, [ventas])
 
 
     return (

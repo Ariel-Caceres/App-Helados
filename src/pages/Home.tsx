@@ -15,10 +15,8 @@ export const Home = () => {
 
     const hoy = `${año}-${mes}-${dia}`;
 
-    const ventasHoy = ventas.filter(v => v.fecha == hoy)
+    const ventasHoy = ventas.filter(v => v.fecha === hoy)
     const DineroHoy = ventas.reduce((acc, v) => acc + v.precio, 0)
-
-    console.log(mes)
 
 
 
