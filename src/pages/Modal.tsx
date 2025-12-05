@@ -37,6 +37,12 @@ export const Modal = () => {
         }
     }
 
+    const cancelar = () => {
+        setPrecio("");
+        setCantidad("");
+        setSabor("");
+    }
+
     const sabores = [
         "Coco🥥",
         "Coco quemado 🥥🔥",
@@ -107,7 +113,7 @@ export const Modal = () => {
             <div className='w-full flex flex-col sm:flex-row justify-evenly gap-4 sm:gap-0'>
 
                 <div className="bg-white w-full sm:w-1/4 h-14 flex items-center justify-center text-black rounded-2xl border-2 hover:bg-black hover:text-white hover:border-[#DAF5FF] transition-all">
-                    <button className="w-full h-full hover:cursor-pointer" onClick={() => navigate("/")}>
+                    <button className="w-full h-full hover:cursor-pointer" onClick={() => { navigate("/"); cancelar() }}>
                         <span className="text-xl sm:text-2xl font-bold">Cancelar</span>
                     </button>
                 </div>

@@ -26,7 +26,7 @@ export const Record = () => {
                     <span className="text-2xl md:text-3xl font-medium">🗓 Historial</span>
                 </div>
 
-                <div className="w-full flex flex-col md:flex-row justify-evenly gap-4 mt-16 px-2 ">
+                <div className="w-full flex flex-col md:flex-row justify-evenly gap-4 mt-16 px-2 max-h-[30vh] overflow-y-scroll  ">
                     <div className="flex flex-col w-full " >
                         <div className="w-full  flex justify-between" >
                             <div className="w-1/4 border-2  border-r-0 ">

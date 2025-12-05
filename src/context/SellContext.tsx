@@ -31,7 +31,7 @@ export const SellProvider = ({ children }: { children: ReactNode }) => {
 
     useEffect(() => {
         const data = JSON.parse(localStorage.getItem("ventas") || "[]");
-        localStorage.removeItem("ventas")
+
         setVentas(data);
     }, []);
 
