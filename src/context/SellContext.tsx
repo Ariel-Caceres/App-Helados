@@ -27,13 +27,16 @@ export const SellProvider = ({ children }: { children: ReactNode }) => {
     const [cantidad, setCantidad] = useState<string>("");
     const [ventas, setVentas] = useState<Venta[]>([]);
 
-    const hoy = new Date().toISOString().slice(0, 10);
+    const hoy = new Date().toLocaleDateString("sv-SE");
 
     useEffect(() => {
         const data = JSON.parse(localStorage.getItem("ventas") || "[]");
 
         setVentas(data);
     }, []);
+
+
+
 
     const registrarVenta = () => {
         const nuevaVenta: Venta = {
