@@ -15,7 +15,7 @@ export const Home = () => {
 
 
     return (
-        <div className="w-full max-w-3xl mx-auto  flex mt-[10vh]  flex-col gap-10 px-2">
+        <div className="w-full max-w-3xl mx-auto  flex mt-[5vh]  flex-col gap-10 px-2">
 
             <Header />
 
@@ -25,11 +25,11 @@ export const Home = () => {
 
                     <div className="">
                         <span className="text-2xl whitespace-nowrap md:text-3xl font-medium">📊 Panel</span>
-
                     </div>
+
                     <div className=" justify-end flex items-end ">
                         <button className="" onClick={() => navigate("/record")}>
-                            <span className="text-xl text-end whitespace-nowrap sm:text-2xl font-medium self-end justify-self-end border-2 rounded-2xl p-1 cursor-pointer">🗓 Ver historial</span>
+                            <span className="text-xl text-end whitespace-nowrap sm:text-2xl font-medium self-end justify-self-end border-2 rounded-2xl cursor-pointer p-1">🗓 Ver historial</span>
                         </button>
                     </div>
                 </div>

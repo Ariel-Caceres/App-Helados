@@ -47,8 +47,8 @@ export const Edit = ({ ventaAEditar, vaciarVentaAEditar }: { ventaAEditar: Venta
         <>
             <div className='w-full min-h-10 bg-[#DAF5FF]  rounded-2xl flex flex-col items-center'>
 
-                <div className='w-full h-16 flex items-center bg-amber-200 rounded-t-2xl'>
-                    <span className='text-2xl sm:text-3xl font-medium ml-6 sm:ml-10'>✏ Editar:</span>
+                <div className='w-full h-16 flex items-center bg-amber-200 rounded-2xl'>
+                    <span className="text-2xl whitespace-nowrap md:text-3xl font-medium px-6">✏ Editar:</span>
                 </div>
 
                 <div className='w-full sm:w-2/3 lg:w-1/2  flex flex-col items-center gap-5 py-10 justify-between'>
