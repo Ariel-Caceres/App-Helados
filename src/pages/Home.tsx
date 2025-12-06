@@ -14,10 +14,6 @@ export const Home = () => {
 
 
 
-    // console.log(hoy)
-
-    console.log(ventasHoyCant)
-
     return (
         <div className="w-full max-w-3xl mx-auto h-full flex flex-col mt-20 gap-10 px-4">
 

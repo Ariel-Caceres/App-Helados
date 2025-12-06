@@ -11,8 +11,8 @@ export const Record = () => {
     const ventasTotalDinero = ventas.reduce((acc, v) => acc + v.precio, 0)
     const ventasTotalCantidad = ventas.reduce((acc, v) => acc + v.cantidad, 0)
 
-    // const mesAEleccion = ventas.filter(v => (v.fecha.split("-")[1] === "01"))
-    // console.log(mesAEleccion)
+    const mesAEleccion = ventas.filter(v => (v.fecha.split("-")[1] === "05"))
+    console.log(mesAEleccion)
 
 
     return (
@@ -25,15 +25,14 @@ export const Record = () => {
                 <div className="absolute top-0 left-0 right-0 flex items-center h-14 bg-amber-200 rounded-2xl justify-between px-6">
                     <span className="text-2xl md:text-3xl font-medium">🗓 Historial</span>
                     <div className="">
-                        <span className="text-xl sm:text-md font-medium">Filtrar</span>
-                        <select name="" id=""></select>
+                        <span className="text-xl sm:text-md font-medium">Mes</span>
                     </div>
                 </div>
 
 
-                <div className="w-full flex flex-col md:flex-row justify-evenly gap-4 mt-16 px-2 max-h-[30vh] overflow-y-scroll  ">
-                    <div className="flex flex-col w-full " >
-                        <div className="w-full  flex justify-between" >
+                <div className=" flex flex-col md:flex-row justify-evenly gap-4 mt-16 px-2 max-h-[30vh] overflow-hidden  overflow-x-scroll  ">
+                    <div className="flex flex-col w-full min-w-2xl " >
+                        <div className="  flex justify-between " >
                             <div className="w-1/4 border-2  border-r-0 ">
                                 <span className="pl-2 text-xl font-bold">Fecha</span>
                             </div>
@@ -43,37 +42,48 @@ export const Record = () => {
                             <div className="w-1/4 border-2 border-r-0">
                                 <span className="pl-1 text-xl font-bold">Cantidad</span>
                             </div>
-                            <div className="w-1/4 border-2 ">
+                            <div className="w-1/4 border-2 border-r-0">
                                 <span className="pl-2 text-xl font-bold">Precio</span>
                             </div>
+                            <div className="w-1/4 border-2 ">
+                                <span className="pl-2 text-xl font-bold">Acciones</span>
+                            </div>
+
                         </div>
                         {ventas.map((v, i) => (
-                            <div className="w-full  flex justify-between" key={i}>
-                                <div className="flex justify-center w-1/4 border-gray-300 border-2 items-center ">
+                            <div className="flex justify-between" key={i}>
+                                <div className="flex justify-center w-1/5 border-gray-300 border-2 items-center ">
                                     <span>{v.fecha}</span>
                                 </div>
-                                <div className="flex justify-center w-1/4 border-gray-300 border-2 items-center ">
+                                <div className="flex justify-center w-1/5 border-gray-300 border-2 items-center ">
                                     <span>{v.sabor}</span>
                                 </div>
-                                <div className="flex justify-center w-1/4 border-gray-300 border-2 items-center ">
+                                <div className="flex justify-center w-1/5 border-gray-300 border-2 items-center ">
                                     <span>{v.cantidad}</span>
                                 </div>
-                                <div className="flex justify-center w-1/4 border-gray-300 border-2 items-center ">
-                                    <span>{v.precio}</span>
+                                <div className="flex justify-center w-1/5 border-gray-300 border-2 items-center ">
+                                    <span>${v.precio}</span>
+                                </div>
+                                <div className="flex justify-center w-1/5 border-gray-300 border-2 items-center ">
+                                    <button className="bg-blue-400 w-1/2 h-full">Editar</button>
+                                    <button className="bg-red-400 w-1/2 h-full">Borrar</button>
                                 </div>
                             </div>
 
                         ))}
                         {hayVentas ?
                             <div className="w-full flex  justify-end">
-                                <div className="w-1/4 border-2 border-gray-600 justify-center flex border-r-0">
+                                <div className="w-1/5 border-2 border-gray-600 justify-center flex border-r-0">
                                     <span>Total =</span>
                                 </div>
-                                <div className="w-1/4 border-2 border-gray-600 justify-center flex border-r-0">
+                                <div className="w-1/5 border-2 border-gray-600 justify-center flex border-r-0">
                                     <span>{ventasTotalCantidad}</span>
                                 </div>
-                                <div className="w-1/4 border-2 border-gray-600 justify-center flex">
-                                    <span>{ventasTotalDinero}$</span>
+                                <div className="w-1/5 border-2 border-gray-600 justify-center flex">
+                                    <span>${ventasTotalDinero}</span>
+                                </div>
+                                <div className="w-1/5">
+
                                 </div>
                             </div>
                             :

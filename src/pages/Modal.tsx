@@ -51,7 +51,7 @@ export const Modal = () => {
 
     const sabores = [
         "Coco🥥",
-        "Coco quemado 🥥🔥",
+        "Coco quemado 🔥",
         "Menta ☘",
         "Frutilla 🍓",
         "Banana 🍌",
