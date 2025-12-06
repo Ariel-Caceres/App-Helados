@@ -1,7 +1,8 @@
 
 import { createContext, useEffect, useState, type ReactNode } from "react";
 
-interface Venta {
+
+export interface Venta {
     precio: number;
     sabor: string;
     cantidad: number;
@@ -17,7 +18,8 @@ interface SellContextType {
     setCantidad: (value: string) => void;
     setSabor: (value: string) => void;
     registrarVenta: () => void;
-    hoy: string
+    hoy: string,
+    setVentas: (venta: Venta[]) => void;
 }
 
 export const SellContext = createContext<SellContextType | undefined>(undefined);
@@ -37,10 +39,10 @@ export const SellProvider = ({ children }: { children: ReactNode }) => {
 
     const d = new Date();
     const año = d.getFullYear();
-    // const mes = String(d.getMonth() + 1).padStart(2, "0");
+    const mes = String(d.getMonth() + 1).padStart(2, "0");
     const dia = String(d.getDate()).padStart(2, "0");
 
-    const hoy = `${año}-05-${dia}`;
+    const hoy = `${año}-${mes}-${dia}`;
 
 
     const registrarVenta = () => {
@@ -75,7 +77,8 @@ export const SellProvider = ({ children }: { children: ReactNode }) => {
                 setCantidad,
                 setSabor,
                 registrarVenta,
-                hoy
+                hoy,
+                setVentas
             }}
         >
             {children}

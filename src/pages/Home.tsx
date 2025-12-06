@@ -68,7 +68,7 @@ export const Home = () => {
                             </span>
                         </div>
                         <div className="w-full flex justify-center items-center flex-1">
-                            <span className="text-4xl font-bold">{DineroHoy}$</span>
+                            <span className="text-4xl font-bold">${DineroHoy}</span>
                         </div>
                     </div>
                 </div>

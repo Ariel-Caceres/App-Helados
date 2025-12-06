@@ -62,7 +62,7 @@ export const Modal = () => {
 
     return (
 
-        <div className="w-full max-w-3xl mx-auto flex flex-col mt-2 md:mt-20 gap-10 px-4">
+        <div className="w-full max-w-3xl mx-auto flex flex-col mt-2 md:mt-20 gap-5 px-4">
             <Header />
 
             <div className='w-full min-h-10 bg-[#DAF5FF]  rounded-2xl flex flex-col items-center'>
