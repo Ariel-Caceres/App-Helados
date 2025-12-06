@@ -37,7 +37,7 @@ export const SellProvider = ({ children }: { children: ReactNode }) => {
 
     const d = new Date();
     const año = d.getFullYear();
-    const mes = String(d.getMonth() + 1).padStart(2, "0");
+    // const mes = String(d.getMonth() + 1).padStart(2, "0");
     const dia = String(d.getDate()).padStart(2, "0");
 
     const hoy = `${año}-05-${dia}`;
