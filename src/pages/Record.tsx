@@ -14,6 +14,7 @@ export const Record = () => {
     const [ventaAEditar, setVentaAEditar] = useState<Venta>()
     const vaciarVentaAEditar = () => setVentaAEditar(undefined)
 
+
     const eliminarTransaccion = (transaccion: Venta) => {
         const transBorrado = ventas.filter(v => v !== transaccion)
         setVentas(transBorrado)
@@ -23,7 +24,7 @@ export const Record = () => {
 
 
     return (
-        <div className="w-full max-w-3xl mx-auto h-full flex flex-col mt-20 gap-10 px-4">
+        <div className={`w-full max-w-3xl mx-auto h-full flex flex-col gap-10 px-2 ${ventaAEditar ? "mt-5" : "mt-20"}`}>
 
             <Header />
             {ventaAEditar ?
@@ -43,7 +44,7 @@ export const Record = () => {
 
 
                         <div className=" flex flex-col md:flex-row justify-evenly gap-4 mt-16 px-2 max-h-[30vh] overflow-auto ">
-                            <div className="flex flex-col w-full min-w-2xl " >
+                            <div className="flex flex-col w-full min-w-xl " >
                                 <div className="  flex justify-between " >
                                     <div className="w-1/4 border-2  border-r-0 ">
                                         <span className="pl-2 text-xl font-bold">Fecha</span>

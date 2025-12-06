@@ -100,6 +100,7 @@ export const Modal = () => {
 
                         />
                     </div>
+
                     {cantUno &&
                         <div className="w-full flex bg-[#B1F6FF] h-20 justify-between px-4 items-center rounded-2xl border-2">
                             <label htmlFor="sabor" className="text-lg sm:text-2xl font-medium w-1/3">Sabor:</label>
