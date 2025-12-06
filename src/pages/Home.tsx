@@ -15,20 +15,21 @@ export const Home = () => {
 
 
     return (
-        <div className="w-full max-w-3xl mx-auto h-full flex flex-col mt-20 gap-10 px-4">
+        <div className="w-full max-w-3xl mx-auto  flex mt-[10vh]  flex-col gap-10 px-2">
 
             <Header />
 
             <div className="w-full bg-[#DAF5FF] rounded-2xl flex  flex-col justify-evenly relative py-6">
 
                 <div className="absolute top-0 left-0 gap-x-10 gap-y-3 right-0 flex flex-wrap w-full  items-center justify-between   bg-amber-200 rounded-2xl px-6 py-4 ">
+
                     <div className="">
                         <span className="text-2xl whitespace-nowrap md:text-3xl font-medium">📊 Panel</span>
 
                     </div>
                     <div className=" justify-end flex items-end ">
                         <button className="" onClick={() => navigate("/record")}>
-                            <span className="text-md text-end whitespace-nowrap sm:text-2xl font-medium self-end justify-self-end border-2 rounded-2xl p-1 cursor-pointer">🗓 Ver historial</span>
+                            <span className="text-xl text-end whitespace-nowrap sm:text-2xl font-medium self-end justify-self-end border-2 rounded-2xl p-1 cursor-pointer">🗓 Ver historial</span>
                         </button>
                     </div>
                 </div>

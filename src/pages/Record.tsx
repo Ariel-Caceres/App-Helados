@@ -24,7 +24,7 @@ export const Record = () => {
 
 
     return (
-        <div className={`w-full max-w-3xl mx-auto h-full flex flex-col gap-10 px-2 ${ventaAEditar ? "mt-5" : "mt-20"}`}>
+        <div className={`w-full max-w-3xl mx-auto  mt-[10vh] flex flex-col gap-10 px-2 ${ventaAEditar ? "mt-5" : "mt-20"}`}>
 
             <Header />
             {ventaAEditar ?
@@ -35,7 +35,9 @@ export const Record = () => {
 
                     <div className="w-full bg-[#DAF5FF] rounded-2xl flex flex-col justify-evenly relative py-6">
 
-                        <div className="absolute top-0 left-0 right-0 flex items-center h-14 bg-amber-200 rounded-2xl justify-between px-6">
+                        {/* <div className="absolute top-0 left-0 right-0 flex items-center h-14 bg-amber-200 rounded-2xl justify-between px-6"> */}
+                        <div className="absolute top-0 left-0 gap-x-10 gap-y-3 right-0 flex flex-wrap w-full  items-center justify-between   bg-amber-200 rounded-2xl px-6 py-4 ">
+
                             <span className="text-2xl md:text-3xl font-medium">🗓 Historial</span>
                             <div className="">
                                 <span className="text-xl sm:text-md font-medium"></span>

@@ -62,7 +62,7 @@ export const Modal = () => {
 
     return (
 
-        <div className="w-full max-w-3xl mx-auto flex flex-col mt-2 md:mt-20 gap-5 px-4">
+        <div className="w-full max-w-3xl mx-auto flex flex-col gap-10 px-2 items-center mt-[10vh]">
             <Header />
 
             <div className='w-full min-h-10 bg-[#DAF5FF]  rounded-2xl flex flex-col items-center'>
@@ -100,7 +100,6 @@ export const Modal = () => {
 
                         />
                     </div>
-
                     {cantUno &&
                         <div className="w-full flex bg-[#B1F6FF] h-20 justify-between px-4 items-center rounded-2xl border-2">
                             <label htmlFor="sabor" className="text-lg sm:text-2xl font-medium w-1/3">Sabor:</label>
