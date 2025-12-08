@@ -1,12 +1,13 @@
 import { useNavigate } from "react-router-dom"
 import { Header } from "../components/Header"
 import { useSell } from "../context/useSell"
+import { useOnline } from "../context/useOnline"
 
 
 export const Home = () => {
     const navigate = useNavigate()
     const { ventas, hoy } = useSell()
-
+    const { online } = useOnline()
 
     const DineroHoy = ventas.reduce((acc, v) => acc + v.precio, 0)
     const ventasHoy = ventas.filter(v => v.fecha === hoy)
@@ -23,13 +24,17 @@ export const Home = () => {
 
                 <div className="absolute top-0 left-0 gap-x-10 gap-y-3 right-0 flex flex-wrap w-full  items-center justify-between   bg-amber-200 rounded-2xl px-6 py-4 ">
 
-                    <div className="">
-                        <span className="text-2xl whitespace-nowrap md:text-3xl font-medium">📊 Panel</span>
+                    <div className="text-2xl whitespace-nowrap md:text-3xl font-medium">
+                        {online ? <i className="fa-solid fa-chart-simple"></i> : "📊"}
+                        <span>
+                            Panel
+                        </span>
                     </div>
 
                     <div className=" justify-end flex items-end ">
-                        <button className="" onClick={() => navigate("/record")}>
-                            <span className="text-xl text-end whitespace-nowrap sm:text-2xl font-medium self-end justify-self-end border-2 rounded-2xl cursor-pointer p-1">🗓 Ver historial</span>
+                        <button className="text-xl text-end whitespace-nowrap sm:text-2xl font-medium self-end justify-self-end border-2 rounded-2xl cursor-pointer p-1" onClick={() => navigate("/record")}>
+                            {online ? <i className="fa-regular fa-calendar-days"></i> : "📆"}
+                            <span className=""> Ver historial</span>
                         </button>
                     </div>
                 </div>
@@ -44,9 +49,10 @@ export const Home = () => {
           border-2 shadow-md
           p-4
         ">
-                        <div className="w-full flex justify-center items-center">
-                            <span className="text-xl md:text-2xl font-medium">
-                                🧊 Ventas hoy:
+                        <div className="w-full flex justify-center items-center text-xl md:text-2xl font-medium">
+                            {online ? <i className="fa-solid fa-cash-register text-3xl"></i> : "🧊"}
+                            <span className="">
+                                Ventas hoy:
                             </span>
                         </div>
                         <div className="w-full flex justify-center items-center flex-1">
@@ -63,9 +69,10 @@ export const Home = () => {
           border-2 shadow-md
           p-4
         ">
-                        <div className="w-full flex justify-center items-center">
-                            <span className="text-xl md:text-2xl font-medium">
-                                💸 Dinero hoy:
+                        <div className="w-full flex justify-center items-center text-xl md:text-2xl font-medium">
+                            {online ? <i className="fa-regular fa-money-bill-1 text-3xl"></i> : "💸"}
+                            <span className="">
+                                Dinero hoy:
                             </span>
                         </div>
                         <div className="w-full flex justify-center items-center flex-1">

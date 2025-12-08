@@ -5,6 +5,9 @@ import { useSell } from "../context/useSell"
 import type { Venta } from "../context/SellContext"
 import { useState } from "react"
 import { ModalDelete } from "../components/ModalDelete"
+import { useOnline } from "../context/useOnline"
+
+
 export const Record = () => {
     const { ventas, setVentas } = useSell()
     const navigate = useNavigate()
@@ -15,18 +18,12 @@ export const Record = () => {
     const [ventaAEditar, setVentaAEditar] = useState<Venta>()
     const [mostrarModalEliminar, setModalEliminar] = useState<boolean>(false)
     const vaciarVentaAEditar = () => setVentaAEditar(undefined)
-
+    const online = useOnline()
 
     const eliminarTransaccion = (transaccion: Venta) => {
         const transBorrado = ventas.filter(v => v !== transaccion)
         setVentas(transBorrado)
     }
-
-    // const modalEliminar = () => {
-    //     if (transaccion) {
-    //         eliminarTransaccion(transaccion)
-    //     }
-    // }
 
 
     return (
@@ -36,15 +33,16 @@ export const Record = () => {
 
             {ventaAEditar ?
                 <Edit ventaAEditar={ventaAEditar} vaciarVentaAEditar={vaciarVentaAEditar} />
-
                 :
                 <div>
 
                     <div className="w-full bg-[#DAF5FF] rounded-2xl flex flex-col justify-evenly relative py-6">
 
                         <div className="absolute top-0 left-0 gap-x-10 gap-y-3 right-0 flex flex-wrap w-full  items-center justify-between   bg-amber-200 rounded-2xl px-6 py-4 ">
-
-                            <span className="text-2xl whitespace-nowrap md:text-3xl font-medium">🗓 Historial</span>
+                            <div className="text-2xl whitespace-nowrap md:text-3xl font-medium">
+                                {online ? <i className="fa-regular fa-calendar-days"></i> : "📆"}
+                                <span className=""> Historial</span>
+                            </div>
 
                         </div>
 
@@ -58,7 +56,7 @@ export const Record = () => {
                                     :
 
                                     <>
-                                        <div className="  flex justify-between " >
+                                        <div className="  flex justify-between  " >
                                             <div className="w-1/4 border-2  border-r-0 ">
                                                 <span className="pl-2 text-xl font-bold">Fecha</span>
                                             </div>
@@ -79,7 +77,7 @@ export const Record = () => {
 
 
                                         {ventas.map((v, i) => (
-                                            <div className="flex justify-between min-h-12" key={i}>
+                                            <div className="flex justify-between min-h-12 " key={i}>
                                                 <div className="flex justify-center w-1/5 border-gray-300 border-2 items-center ">
                                                     <span>{v.fecha}</span>
                                                 </div>
@@ -94,12 +92,13 @@ export const Record = () => {
                                                 </div>
                                                 <div className="flex justify-center w-1/5 border-gray-300 border-2 items-center ">
                                                     <button className="bg-[#87F6FF] w-1/2 h-full" onClick={() => { setVentaAEditar(v) }}>
-                                                        <span>✏</span>
+                                                        <span className="text-2xl">
+                                                            {online ? <i className="fa-regular fa-pen-to-square"></i> : "✏"}
+                                                        </span>
                                                     </button>
                                                     <button className="bg-[#FFBFA0] w-1/2 h-full" onClick={() => { setModalEliminar(true); setTransaccion(v) }}>
-                                                        <span>
-                                                            <i className="fa-solid fa-trash-can"></i>
-                                                            🗑
+                                                        <span className="text-2xl">
+                                                            {online ? <i className="fa-regular fa-trash-can "></i> : "🗑"}
                                                         </span>
                                                     </button>
 

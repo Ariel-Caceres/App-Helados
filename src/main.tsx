@@ -1,9 +1,9 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { SellProvider } from './context/SellContext.tsx'
+import { OnlineProvider } from './context/OnlineContext.tsx'
 import './index.css'
 import App from './App.tsx'
-// register SW
 import { registerSW } from 'virtual:pwa-register'
 
 registerSW({
@@ -19,8 +19,10 @@ registerSW({
 createRoot(document.getElementById('root')!).render(
 
   <StrictMode>
-    <SellProvider>
-      <App />
-    </SellProvider>
+    <OnlineProvider>
+      <SellProvider>
+        <App />
+      </SellProvider>
+    </OnlineProvider>
   </StrictMode>,
 )

@@ -1,6 +1,7 @@
 import type { Venta } from "../context/SellContext"
 
 export const ModalDelete = ({ transaccion, eliminarTransaccion, setModalEliminar }: { transaccion: Venta, eliminarTransaccion: (transaccion: Venta) => void, setModalEliminar: (booleano: boolean) => void }) => {
+    if (!transaccion) return null
     return (
         <div className="flex justify-between min-h-12 flex-col h-ful gap-5">
             <div className="flex justify-center w-full border-gray-300 border-2 items-center py-2">
@@ -20,22 +21,20 @@ export const ModalDelete = ({ transaccion, eliminarTransaccion, setModalEliminar
                     <div className="w-1/4 border-2 ">
                         <span className="pl-2 text-xl font-bold">Precio</span>
                     </div>
-
-
                 </div>
 
                 <div className="flex justify-between min-h-12">
                     <div className="flex justify-center w-1/4 border-gray-300 border-2 items-center ">
-                        <span>{transaccion?.fecha}</span>
+                        <span>{transaccion.fecha}</span>
                     </div>
                     <div className="flex justify-center w-1/4 border-gray-300 border-2 items-center ">
-                        <span>{transaccion?.sabor}</span>
+                        <span>{transaccion.sabor}</span>
                     </div>
                     <div className="flex justify-center w-1/4 border-gray-300 border-2 items-center ">
-                        <span>{transaccion?.cantidad}</span>
+                        <span>{transaccion.cantidad}</span>
                     </div>
                     <div className="flex justify-center w-1/4 border-gray-300 border-2 items-center ">
-                        <span>${transaccion?.precio}</span>
+                        <span>${transaccion.precio}</span>
                     </div>
 
                 </div>

@@ -2,7 +2,7 @@
 import './App.css'
 import { Home } from './pages/Home'
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import { Modal } from './pages/Modal';
+import { Modal } from './pages/Sell';
 import { Record } from './pages/Record';
 
 
