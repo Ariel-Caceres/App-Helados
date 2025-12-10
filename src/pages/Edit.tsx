@@ -1,34 +1,70 @@
 import { useState } from "react"
 import { useSell } from "../context/useSell"
 import type { Venta } from "../context/SellContext"
+import type { Compra } from "../context/BuyContext"
+import { Button } from "../components/Button"
+import { useBuy } from "../context/useBuy"
+import { useOnline } from "../context/useOnline"
+
+type EditProps =
+    | { ventaAEditar: Venta; compraAEditar?: never; onClick: () => void }
+    | { compraAEditar: Compra; ventaAEditar?: never; onClick: () => void };
 
 
-
-export const Edit = ({ ventaAEditar, vaciarVentaAEditar }: { ventaAEditar: Venta, vaciarVentaAEditar: () => void }) => {
+export const Edit = ({ ventaAEditar, compraAEditar, onClick }: EditProps) => {
     const { ventas, setVentas } = useSell()
-    const [editarPrecio, setEditarPrecio] = useState<string>(String(ventaAEditar.precio))
-    const [editarSabor, setEditarSabor] = useState<string>(String(ventaAEditar.sabor))
-    const [editarCantidad, setEditarCantidad] = useState<string>(String(ventaAEditar.cantidad))
-    const cantInvalida = (editarCantidad == "0" || !Number.isInteger(Number(editarCantidad)))
-    const precioInvalido = (editarPrecio == "0" || !Number.isInteger(Number(editarPrecio)))
+    const { online } = useOnline()
+    const { compras, setCompras } = useBuy()
+    const [editarPrecio, setEditarPrecio] = useState<string>(String(ventaAEditar?.precio))
+    const [editarPrecioCompra, setEditarPrecioCompra] = useState<string>(String(compraAEditar?.precio))
+    const [editarCantidadCompra, setEditarCantidadCompra] = useState<string>(String(compraAEditar?.cantidad))
+    const [editarSabor, setEditarSabor] = useState<string>(String(ventaAEditar?.sabor))
+    const [editarCantidad, setEditarCantidad] = useState<string>(String(ventaAEditar?.cantidad))
+    const cantInvalidaCompra = Number(editarCantidadCompra) <= 0 || !Number.isInteger(Number(editarCantidadCompra))
+    const precioInvalidoCompra = Number(editarPrecioCompra) <= 0 || !Number.isInteger(Number(editarPrecioCompra))
+    const precioInvalido = Number(editarPrecio) <= 0 || !Number.isInteger(Number(editarPrecio));
+    const cantInvalida = Number(editarCantidad) <= 0 || !Number.isInteger(Number(editarCantidad))
 
     const editarProducto = () => {
+        if (ventaAEditar) {
+            const actualizado = ventas.map(v =>
+                v === ventaAEditar ?
+                    {
+                        ...v,
+                        precio: Number(editarPrecio),
+                        cantidad: Number(editarCantidad),
+                        sabor: Number(editarCantidad) == 1 ? editarSabor : "",
+                        precioTotal: Number(editarPrecio) * Number(editarCantidad)
+                    }
+                    : v
 
-        const actualizado = ventas.map(v =>
-            v === ventaAEditar ?
-                {
-                    ...v,
-                    precio: Number(editarPrecio),
-                    cantidad: Number(editarCantidad),
-                    sabor: Number(editarCantidad) == 1 ? editarSabor : ""
-                }
-                : v
-
-        )
-        if (!cantInvalida && !precioInvalido) {
-            setVentas(actualizado)
-            vaciarVentaAEditar()
+            )
+            if (!cantInvalida && !precioInvalido) {
+                setVentas(actualizado)
+                onClick()
+            }
         }
+        if (compraAEditar) {
+            const actualizado = compras.map(c =>
+                c === compraAEditar ?
+                    {
+                        ...c,
+                        precio: Number(editarPrecioCompra),
+                        cantidad: Number(editarCantidadCompra)
+                    }
+                    : c
+
+            )
+            if (!cantInvalidaCompra && !precioInvalidoCompra) {
+                setCompras(actualizado)
+                onClick()
+            }
+        }
+
+    }
+
+    const handleChancePrecio = (valor: string) => {
+        setEditarPrecio(valor)
     }
 
 
@@ -43,77 +79,107 @@ export const Edit = ({ ventaAEditar, vaciarVentaAEditar }: { ventaAEditar: Venta
     ];
 
 
-    if (!ventaAEditar) return null
 
     return (
         <>
-            <div className='w-full min-h-10 bg-[#DAF5FF]  rounded-2xl flex flex-col items-center'>
+            <div className={`w-full min-h-10 border ${ventaAEditar ? "bg-[#DAF5FF]" : compraAEditar ? "bg-[#FFBFA0]" : "bg-[#DAF5FF]"} rounded-2xl flex flex-col items-center`}>
 
-                <div className='w-full h-16 flex items-center bg-amber-200 rounded-2xl'>
-                    <span className="text-2xl whitespace-nowrap md:text-3xl font-medium px-6">✏ Editar:</span>
+                <div className='w-full h-16 flex items-center bg-amber-200 border-2 rounded-2xl gap-2 text-2xl whitespace-nowrap md:text-3xl font-medium px-6'>
+                    {online ? <i className="fa-solid fa-file-pen"></i> : "✏"}
+                    <span className=""> Editar:</span>
+                    {ventaAEditar ? " Venta" : compraAEditar ? " Compra" : ""}
                 </div>
 
-                <div className='w-full sm:w-2/3 lg:w-1/2  flex flex-col items-center gap-5 py-10 justify-between'>
-
-
-                    <div className="w-full flex bg-[#B1F6FF] h-20 justify-between px-4 items-center rounded-2xl border-2">
-                        <label htmlFor="cantidad" className="text-lg sm:text-2xl font-medium w-1/3">Cantidad:</label>
-                        <input type="number" id="cantidad" placeholder="Ej. 1" className={`border-2 pl-2 rounded-xl h-10 bg-white w-2/3 ${cantInvalida ? "border-4 border-red-500 animate-pulse" : ""}`}
-                            value={editarCantidad}
-                            onChange={(e) => setEditarCantidad(e.target.value)}
-                            required
-                        />
-                    </div>
-
-                    <div className="w-full flex bg-[#B1F6FF] h-20 justify-between px-4 items-center rounded-2xl border-2">
-                        <label htmlFor="precio" className={`text-lg sm:text-2xl font-medium w-1/3 `}>Precio:</label>
-                        <input
-                            type="number"
-                            id="precio"
-                            placeholder="Ej. 100$"
-                            className={`border-2 pl-2 rounded-xl h-10 bg-white w-2/3 ${precioInvalido ? "border-4 border-red-500 animate-pulse" : ""}`}
-                            value={editarPrecio}
-                            onChange={(e) => setEditarPrecio(e.target.value)}
-                            required
-
-                        />
-                    </div>
-
-                    {editarCantidad === "1" &&
+                {ventaAEditar &&
+                    <div className='w-full sm:w-2/3 lg:w-1/2  flex flex-col items-center gap-5 py-10 justify-between'>
                         <div className="w-full flex bg-[#B1F6FF] h-20 justify-between px-4 items-center rounded-2xl border-2">
-                            <label htmlFor="sabor" className="text-lg sm:text-2xl font-medium w-1/3">Sabor:</label>
-
-                            <select name="" id="sabor" value={editarSabor} onChange={(e) => setEditarSabor(e.target.value)} className="border-2 pl-2 rounded-xl h-10 bg-white w-2/3" >
-                                {!editarSabor &&
-                                    <option value=""></option>}
-
-                                {sabores.map((s, i) => (
-                                    <option key={i} value={s}>{s}</option>
-                                ))}
-
-                            </select>
+                            <label htmlFor="cantidad" className="text-lg sm:text-2xl font-medium w-1/3">Cantidad:</label>
+                            <input type="number" id="cantidad" placeholder="Ej. 1" className={`border-2 pl-2 rounded-xl h-10 bg-white w-2/3 ${cantInvalida ? "border-4 border-red-500 animate-pulse" : ""}`}
+                                value={editarCantidad}
+                                onChange={(e) => setEditarCantidad(e.target.value)}
+                                required
+                            />
                         </div>
-                    }
 
-                </div>
+                        <div className="w-full flex bg-[#B1F6FF] h-20 justify-between px-4 items-center rounded-2xl border-2">
+                            <label htmlFor="precio" className={`text-lg sm:text-2xl font-medium w-1/3 `}>Precio:</label>
+                            <input
+                                type="number"
+                                id="precio"
+                                placeholder="Ej. 100$"
+                                className={`border-2 pl-2 rounded-xl h-10 bg-white w-2/3 ${precioInvalido ? "border-4 border-red-500 animate-pulse" : ""}`}
+                                value={editarPrecio}
+                                onChange={(e) => handleChancePrecio(e.target.value)}
+                                required
+
+                            />
+                        </div>
+                        <div className="w-full flex bg-[#B1F6FF] h-20 justify-between px-4 items-center rounded-2xl border-2">
+                            <label htmlFor="total" className={`text-lg sm:text-2xl font-medium w-1/3 `}>Total:</label>
+                            <input
+                                type="number"
+                                id="total"
+                                readOnly
+                                placeholder="Ej. 100$"
+                                className={`border-2 pl-2 rounded-xl h-10 bg-white w-2/3 ${precioInvalido ? "border-4 border-red-500 animate-pulse" : ""}`}
+                                value={Number(editarCantidad) * Number(editarPrecio)}
+                                onChange={(e) => handleChancePrecio(e.target.value)}
+                                required
+
+                            />
+                        </div>
+
+                        {editarCantidad === "1" &&
+                            <div className="w-full flex bg-[#B1F6FF] h-20 justify-between px-4 items-center rounded-2xl border-2">
+                                <label htmlFor="sabor" className="text-lg sm:text-2xl font-medium w-1/3">Sabor:</label>
+
+                                <select name="" id="sabor" value={editarSabor} onChange={(e) => setEditarSabor(e.target.value)} className="border-2 pl-2 rounded-xl h-10 bg-white w-2/3" >
+                                    {!editarSabor &&
+                                        <option value=""></option>}
+
+                                    {sabores.map((s, i) => (
+                                        <option key={i} value={s}>{s}</option>
+                                    ))}
+
+                                </select>
+                            </div>
+                        }
+
+                    </div>
+                }
+
+                {compraAEditar &&
+                    <div className='w-full sm:w-2/3 lg:w-1/2  flex flex-col items-center gap-5 py-10 justify-between'>
+                        <div className="w-full flex bg-[#FFD3BE] h-20 justify-between px-4 items-center rounded-2xl border-2">
+                            <label htmlFor="cantidad" className="text-lg sm:text-2xl font-medium w-1/3">Cantidad:</label>
+                            <input type="number" id="cantidad" placeholder="Ej. 1" className={`border-2 pl-2 rounded-xl h-10 bg-white w-2/3 ${cantInvalidaCompra ? "border-4 border-red-500 animate-pulse" : ""}`}
+                                value={editarCantidadCompra}
+                                onChange={(e) => setEditarCantidadCompra(e.target.value)}
+                                required
+                            />
+                        </div>
+
+                        <div className="w-full flex bg-[#FFD3BE] h-20 justify-between px-4 items-center rounded-2xl border-2">
+                            <label htmlFor="precio" className={`text-lg sm:text-2xl font-medium w-1/3 `}>Precio:</label>
+                            <input
+                                type="number"
+                                id="precio"
+                                placeholder="Ej. 100$"
+                                className={`border-2 pl-2 rounded-xl h-10 bg-white w-2/3 ${precioInvalidoCompra ? "border-4 border-red-500 animate-pulse" : ""}`}
+                                value={editarPrecioCompra}
+                                onChange={(e) => setEditarPrecioCompra(e.target.value)}
+                                required
+
+                            />
+                        </div>
+                    </div>
+                }
+
             </div>
 
-            <div className='w-full flex flex-col sm:flex-row justify-evenly gap-4 sm:gap-0'>
-
-                <div className="bg-black w-full sm:w-1/4 h-14 flex items-center justify-center border-[#DAF5FF] text-white rounded-2xl border-2 hover:bg-white hover:text-black hover:border-black transition-all">
-                    <button className="w-full h-full hover:cursor-pointer" onClick={vaciarVentaAEditar}>
-                        <span className="text-xl sm:text-2xl font-bold" >Cancelar</span>
-                    </button>
-                </div>
-
-                <div className="bg-white w-full sm:w-1/4 h-14 flex items-center justify-center text-black rounded-2xl border-2 hover:bg-black hover:text-white hover:border-[#DAF5FF] transition-all">
-                    <button className="w-full h-full hover:cursor-pointer" onClick={editarProducto}>
-                        <span className="text-xl sm:text-2xl font-bold" >Guardar</span>
-                    </button>
-                </div>
-
-
-
+            <div className='w-full flex flex-col-reverse sm:flex-row justify-center items-center gap-4 sm:gap-10 sm:justify-evenly'>
+                <Button texto="Cancelar" onClick={onClick} />
+                <Button texto="Guardar" onClick={editarProducto} />
             </div>
         </>
 

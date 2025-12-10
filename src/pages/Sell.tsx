@@ -2,6 +2,8 @@ import { useNavigate } from "react-router-dom"
 import { Header } from "../components/Header"
 import { useSell } from "../context/useSell"
 import { useState } from "react"
+import { Button } from "../components/Button"
+import { useOnline } from "../context/useOnline"
 
 export const Modal = () => {
     const navigate = useNavigate()
@@ -9,9 +11,11 @@ export const Modal = () => {
     const [cantUno, setCantUno] = useState<boolean>(false)
     const [cartelCantidad, setCartelCantidad] = useState<boolean>(false)
     const { sabor, precio, cantidad, setSabor, setPrecio, setCantidad, registrarVenta } = useSell()
+    const { online } = useOnline()
 
-    const changeHandler = (valor: string) => {
+    const changeHandler = (valor: number) => {
         setPrecio(valor)
+
     }
 
     const changeHandlerSabor = (sabor: string) => {
@@ -30,12 +34,12 @@ export const Modal = () => {
     const auth = (precio: string, cantidad: string) => {
         if (!precio || !cantidad || Number(precio) == 0 || Number(cantidad) == 0) {
             if (!precio || Number(precio) == 0) {
-                console.log("agregar precio")
+                console.log("Agregar precio")
                 setCartelPrecio(true)
             }
             if (!cantidad || Number(cantidad) == 0) {
                 setCartelCantidad(true)
-                console.log("agregar cantidad")
+                console.log("Agregar cantidad")
             }
         } else {
             registrarVenta()
@@ -44,9 +48,10 @@ export const Modal = () => {
     }
 
     const cancelar = () => {
-        setPrecio("");
+        setPrecio(precio);
         setCantidad("");
         setSabor("");
+        navigate("/")
     }
 
     const sabores = [
@@ -65,10 +70,11 @@ export const Modal = () => {
         <div className="w-full max-w-3xl mx-auto flex flex-col gap-10 px-2 items-center mt-[5vh]">
             <Header />
 
-            <div className='w-full min-h-10 bg-[#DAF5FF]  rounded-2xl flex flex-col items-center'>
+            <div className='w-full min-h-10 border bg-[#DAF5FF]  rounded-2xl flex flex-col items-center'>
 
-                <div className='w-full h-16 flex items-center bg-amber-200 rounded-2xl'>
-                    <span className="text-2xl whitespace-nowrap md:text-3xl font-medium px-6">🤑 Vender:</span>
+                <div className='w-full border h-16 flex items-center bg-amber-200 rounded-2xl text-2xl whitespace-nowrap md:text-3xl font-medium px-6'>
+                    {online ? <i className="fa-solid fa-cash-register"></i> : "🤑"}
+                    <span className="">Vender:</span>
                 </div>
 
                 <div className='w-full sm:w-2/3 lg:w-1/2  flex flex-col items-center gap-5 py-10 justify-between'>
@@ -95,11 +101,26 @@ export const Modal = () => {
                             placeholder="Ej. 100$"
                             className={`border-2 pl-2 rounded-xl h-10 bg-white w-2/3 ${cartelPrecio ? "border-4 border-red-700" : ""}`}
                             value={precio}
-                            onChange={(e) => changeHandler(e.target.value)}
+                            onChange={(e) => changeHandler(Number(e.target.value))}
                             required
 
                         />
                     </div>
+
+                    <div className="w-full flex bg-[#B1F6FF] h-20 justify-between px-4 items-center rounded-2xl border-2">
+                        <label htmlFor="total" className={`text-lg sm:text-2xl font-medium w-1/3 `}>Total:</label>
+                        <input
+                            type="number"
+                            id="total"
+                            placeholder="Ej. 100$"
+                            className={`border-2 pl-2 rounded-xl h-10 bg-white w-2/3 ${cartelPrecio ? "border-4 border-red-700" : ""}`}
+                            value={Number(precio) * Number(cantidad)}
+                            onChange={(e) => changeHandler(Number(e.target.value))}
+                            readOnly
+
+                        />
+                    </div>
+
                     {cantUno &&
                         <div className="w-full flex bg-[#B1F6FF] h-20 justify-between px-4 items-center rounded-2xl border-2">
                             <label htmlFor="sabor" className="text-lg sm:text-2xl font-medium w-1/3">Sabor:</label>
@@ -116,20 +137,9 @@ export const Modal = () => {
                 </div>
             </div>
 
-            <div className='w-full flex flex-col sm:flex-row justify-evenly gap-4 sm:gap-0'>
-
-                <div className="bg-black w-full sm:w-1/4 h-14 flex items-center justify-center border-[#DAF5FF] text-white rounded-2xl border-2 hover:bg-white hover:text-black hover:border-black transition-all">
-                    <button className="w-full h-full hover:cursor-pointer" onClick={() => { navigate("/"); cancelar() }}>
-                        <span className="text-xl sm:text-2xl font-bold">Cancelar</span>
-                    </button>
-                </div>
-
-                <div className="bg-white w-full sm:w-1/4 h-14 flex items-center justify-center text-black rounded-2xl border-2 hover:bg-black hover:text-white hover:border-[#DAF5FF] transition-all">
-                    <button className="w-full h-full hover:cursor-pointer" onClick={() => auth(precio, cantidad)}>
-                        <span className="text-xl sm:text-2xl font-bold">Confirmar</span>
-                    </button>
-                </div>
-
+            <div className='w-full flex flex-col-reverse sm:flex-row justify-center items-center gap-4 sm:gap-10 sm:justify-evenly'>
+                <Button texto="Cancelar" onClick={() => cancelar()} />
+                <Button texto="Confirmar" onClick={() => auth(String(precio), cantidad)} />
             </div>
         </div >
 

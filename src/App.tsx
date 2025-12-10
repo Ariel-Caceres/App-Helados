@@ -3,6 +3,7 @@ import './App.css'
 import { Home } from './pages/Home'
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { Modal } from './pages/Sell';
+import { Buy } from './pages/Buy';
 import { Record } from './pages/Record';
 
 
@@ -16,6 +17,7 @@ function App() {
           <Route path="/" element={<Home />}></Route>
           <Route path="/sell" element={<Modal />}></Route>
           <Route path="/record" element={<Record />}></Route>
+          <Route path="/buy" element={<Buy />}></Route>
         </Routes>
       </Router>
     </div>

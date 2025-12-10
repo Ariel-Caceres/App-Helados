@@ -4,38 +4,53 @@ import { createContext, useEffect, useState, type ReactNode } from "react";
 
 export interface Venta {
     precio: number;
+    precioTotal: number;
     sabor: string;
     cantidad: number;
     fecha: string;
 }
 
 interface SellContextType {
-    precio: string;
+    precio: number;
     cantidad: string;
     sabor: string;
     ventas: Venta[];
-    setPrecio: (value: string) => void;
+    setPrecio: (value: number) => void;
     setCantidad: (value: string) => void;
     setSabor: (value: string) => void;
     registrarVenta: () => void;
     hoy: string,
+    precioTotal: number
     setVentas: (venta: Venta[]) => void;
 }
 
 export const SellContext = createContext<SellContextType | undefined>(undefined);
 
 export const SellProvider = ({ children }: { children: ReactNode }) => {
-    const [precio, setPrecio] = useState<string>("");
+    const [precio, setPrecio] = useState<number>(() => {
+        const precioAntiguo = localStorage.getItem("precio")
+        if (!precioAntiguo) {
+            return 300
+        }
+        return JSON.parse(precioAntiguo)
+    });
     const [sabor, setSabor] = useState<string>("");
     const [cantidad, setCantidad] = useState<string>("");
     const [ventas, setVentas] = useState<Venta[]>(() => {
         const data = (localStorage.getItem("ventas"))
         if (data) {
-            return JSON.parse(data)
+            const ventasCargadas = JSON.parse(data);
+            // Migración: agregar precioTotal a ventas antiguas que no lo tengan
+            const ventasMigradas = ventasCargadas.map((venta: Venta) => ({
+                ...venta,
+                precioTotal: venta.precioTotal || (venta.precio * venta.cantidad)
+            }));
+            return ventasMigradas;
         }
         return []
 
     });
+    const precioTotal = (Number(precio) * Number(cantidad))
 
     const d = new Date();
     const año = d.getFullYear();
@@ -47,16 +62,17 @@ export const SellProvider = ({ children }: { children: ReactNode }) => {
 
     const registrarVenta = () => {
         const nuevaVenta: Venta = {
-            precio: Number(precio),
+            precio: precio,
             sabor,
             cantidad: Number(cantidad),
             fecha: hoy,
+            precioTotal: precioTotal
         };
 
 
         setVentas([...ventas, nuevaVenta]);
 
-        setPrecio("");
+        setPrecio(precio);
         setCantidad("");
         setSabor("");
     };
@@ -64,6 +80,10 @@ export const SellProvider = ({ children }: { children: ReactNode }) => {
     useEffect(() => {
         localStorage.setItem("ventas", JSON.stringify(ventas))
     }, [ventas])
+
+    useEffect(() => {
+        localStorage.setItem("precio", JSON.stringify(precio));
+    }, [precio]);
 
 
     return (
@@ -78,7 +98,8 @@ export const SellProvider = ({ children }: { children: ReactNode }) => {
                 setSabor,
                 registrarVenta,
                 hoy,
-                setVentas
+                setVentas,
+                precioTotal
             }}
         >
             {children}
