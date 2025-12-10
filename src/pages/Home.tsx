@@ -12,7 +12,7 @@ export const Home = () => {
 
     const ventasHoy = ventas.filter(v => v.fecha === hoy)
     const ventasHoyCant = ventasHoy.reduce((acc, va) => acc + va.cantidad, 0);
-    const DineroHoy = ventas.reduce((acc, v) => v.precioTotal ? acc + v.precioTotal : acc + (v.precio * v.cantidad), 0)
+    const DineroHoy = ventasHoy.reduce((acc, v) => v.precioTotal ? acc + v.precioTotal : acc + (v.precio * v.cantidad), 0)
 
 
 
