@@ -2,17 +2,18 @@ import { useNavigate } from "react-router-dom"
 import { Header } from "../components/Header"
 import { Edit } from "./Edit"
 import { useSell } from "../context/useSell"
-import type { Venta } from "../context/SellContext"
 import { useState } from "react"
 import { ModalDelete } from "../components/ModalDelete"
+import { Month } from "../components/Month"
 import { useOnline } from "../context/useOnline"
 import { Button } from "../components/Button"
 import { useBuy } from "../context/useBuy"
+import type { Venta } from "../context/SellContext"
 import type { Compra } from "../context/BuyContext"
 
 
 export const Record = () => {
-    const { ventas, setVentas } = useSell()
+    const { ventas, setVentas, hoy } = useSell()
     const { compras, setCompras } = useBuy()
     const navigate = useNavigate()
     const hayVentas = ventas.length > 0
@@ -32,6 +33,12 @@ export const Record = () => {
     const hayCompras = compras.length > 0
     const [compraAEliminar, setCompraAEliminar] = useState<Compra>()
 
+
+    // const [mesActual, setMesActual] = useState(Number(hoy.split("-")[1]))
+    // const [ventasMes, setMentasMes] = useState<string>("")
+
+    // console.log(mesActual)
+
     const eliminarTransaccion = (transaccion: Venta) => {
         const transBorrado = ventas.filter(v => v !== transaccion)
         setVentas(transBorrado)
@@ -40,6 +47,7 @@ export const Record = () => {
         const compraBorrada = compras.filter(c => c !== compra)
         setCompras(compraBorrada)
     }
+
 
     return (
         <div className={`w-full max-w-3xl mx-auto  mt-[5vh] flex flex-col gap-10 px-2`}>
@@ -61,6 +69,11 @@ export const Record = () => {
                                     <span className=""> Historial:</span>
                                     {mostrarCompras ? " Compras" : mostrarVentas ? " Ventas" : ""}
                                 </div>
+                                {/* <div>
+                                    <span>{mesActual}</span>
+                                    <i className="fa-solid fa-angle-up p-5 border " onClick={() => { setMentasMes(String(mesActual)); setMesActual(Number(mesActual) + 1) }}></i>
+                                    <i className="fa-solid fa-angle-down" onClick={() => { setMentasMes(String(mesActual)); setMesActual(Number(mesActual) - 1) }}></i>
+                                </div> */}
 
                             </div>
                             {!mostrarCompras && !mostrarVentas &&
@@ -242,8 +255,10 @@ export const Record = () => {
                             <Button texto="Volver" onClick={() => mostrarCompras || mostrarVentas ? cerrarTablas() : navigate("/")} />
                         </div>
                     </div>
+
             }
 
+            {/* <Month mes={String(mesActual)} /> */}
         </div >
     )
 

@@ -1,35 +1,44 @@
 import { useNavigate } from "react-router-dom"
 import { Header } from "../components/Header"
 import { useSell } from "../context/useSell"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Button } from "../components/Button"
 import { useOnline } from "../context/useOnline"
 
 export const Modal = () => {
     const navigate = useNavigate()
     const [cartelPrecio, setCartelPrecio] = useState<boolean>(false)
-    const [cantUno, setCantUno] = useState<boolean>(false)
     const [cartelCantidad, setCartelCantidad] = useState<boolean>(false)
-    const { sabor, precio, cantidad, setSabor, setPrecio, setCantidad, registrarVenta } = useSell()
+    const [cartelPrecioTotal, setCartelPrecioTotal] = useState<boolean>(false)
+    const { precio, cantidad, setSabor, setPrecio, setCantidad, registrarVenta } = useSell()
     const { online } = useOnline()
+    const [precioTotal, setPrecioTotal] = useState<string>("")
+    const [cociente, setCociente] = useState<string>("")
+    const [ultimoEditado, setUltimoEditado] = useState<"precio" | "cantidad" | "total" | null>(null)
 
-    const changeHandler = (valor: number) => {
+    const changeHandlerPrecio = (valor: number) => {
+        setUltimoEditado("precio")
         setPrecio(valor)
-
     }
 
-    const changeHandlerSabor = (sabor: string) => {
-        setSabor(sabor)
-    }
 
-    const changeHandlerCantidad = (cantidad: string) => {
-        setCantidad(cantidad)
-        if (cantidad == "1") {
-            setCantUno(true)
-        } else {
-            setCantUno(false)
+
+    useEffect(() => {
+        if (Number(precioTotal) >= precio) {
+            setCociente(String(Number(precioTotal) / Number(precio)));
         }
+
+    }, [precioTotal, precio]);
+
+    useEffect(() => {
+        setPrecioTotal(String(Number(precio) * Number(cantidad)));
+    }, [cantidad, precio]);
+
+    const changeHandlerCantidad = (valor: string) => {
+        setCantidad(valor)
     }
+
+    console.log(cantidad)
 
     const auth = (precio: string, cantidad: string) => {
         if (!precio || !cantidad || Number(precio) == 0 || Number(cantidad) == 0) {
@@ -41,6 +50,10 @@ export const Modal = () => {
                 setCartelCantidad(true)
                 console.log("Agregar cantidad")
             }
+            if (!precioTotal || Number(precioTotal) == 0) {
+                setCartelPrecioTotal(true)
+                console.log("Agregar cantidad")
+            }
         } else {
             registrarVenta()
             navigate("/")
@@ -49,20 +62,16 @@ export const Modal = () => {
 
     const cancelar = () => {
         setPrecio(precio);
+        setCociente("");
         setCantidad("");
         setSabor("");
         navigate("/")
     }
 
-    const sabores = [
-        "Coco🥥",
-        "Coco quemado 🔥",
-        "Menta ☘",
-        "Frutilla 🍓",
-        "Banana 🍌",
-        "Uva 🍇",
-        "Naranja🟠"
-    ];
+    const handleChangeTotal = (valor: string) => {
+        setUltimoEditado("total")
+        setPrecioTotal(valor)
+    }
 
 
     return (
@@ -87,7 +96,7 @@ export const Modal = () => {
                             id="cantidad"
                             placeholder="Ej. 1"
                             className={`border-2 pl-2 rounded-xl h-10 bg-white w-2/3 ${cartelCantidad ? "border-4 border-red-700" : ""}`}
-                            value={cantidad}
+                            value={cantidad && Number(cociente) == 0 ? cantidad : Number(cociente) != 0 ? cociente : ""}
                             onChange={(e) => changeHandlerCantidad(e.target.value)}
                             required
                         />
@@ -101,7 +110,7 @@ export const Modal = () => {
                             placeholder="Ej. 100$"
                             className={`border-2 pl-2 rounded-xl h-10 bg-white w-2/3 ${cartelPrecio ? "border-4 border-red-700" : ""}`}
                             value={precio}
-                            onChange={(e) => changeHandler(Number(e.target.value))}
+                            onChange={(e) => changeHandlerPrecio(Number(e.target.value))}
                             required
 
                         />
@@ -113,26 +122,14 @@ export const Modal = () => {
                             type="number"
                             id="total"
                             placeholder="Ej. 100$"
-                            className={`border-2 pl-2 rounded-xl h-10 bg-white w-2/3 ${cartelPrecio ? "border-4 border-red-700" : ""}`}
-                            value={Number(precio) * Number(cantidad)}
-                            onChange={(e) => changeHandler(Number(e.target.value))}
-                            readOnly
+                            className={`border-2 pl-2 rounded-xl h-10 bg-white w-2/3 ${cartelPrecioTotal ? "border-4 border-red-700" : ""}`}
+                            value={Number(precioTotal) != 0 ? precioTotal : ""}
+                            onChange={(e) => handleChangeTotal((e.target.value))}
 
                         />
                     </div>
 
-                    {cantUno &&
-                        <div className="w-full flex bg-[#B1F6FF] h-20 justify-between px-4 items-center rounded-2xl border-2">
-                            <label htmlFor="sabor" className="text-lg sm:text-2xl font-medium w-1/3">Sabor:</label>
 
-                            <select name="" id="sabor" value={sabor} className="border-2 pl-2 rounded-xl h-10 bg-white w-2/3" onChange={(e) => changeHandlerSabor(e.target.value)}>
-                                <option value=""></option>
-                                {sabores.map((s, i) => (
-                                    <option key={i} value={s}>{s}</option>
-                                ))}
-                            </select>
-                        </div>
-                    }
 
                 </div>
             </div>
