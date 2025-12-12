@@ -18,7 +18,6 @@ export const Edit = ({ ventaAEditar, compraAEditar, onClick }: EditProps) => {
     const [editarPrecio, setEditarPrecio] = useState<string>(String(ventaAEditar?.precio))
     const [editarPrecioCompra, setEditarPrecioCompra] = useState<string>(String(compraAEditar?.precio))
     const [editarCantidadCompra, setEditarCantidadCompra] = useState<string>(String(compraAEditar?.cantidad))
-    const [editarSabor, setEditarSabor] = useState<string>(String(ventaAEditar?.sabor))
     const [editarCantidad, setEditarCantidad] = useState<string>(String(ventaAEditar?.cantidad))
     const cantInvalidaCompra = Number(editarCantidadCompra) <= 0 || !Number.isInteger(Number(editarCantidadCompra))
     const precioInvalidoCompra = Number(editarPrecioCompra) <= 0 || !Number.isInteger(Number(editarPrecioCompra))
@@ -33,7 +32,6 @@ export const Edit = ({ ventaAEditar, compraAEditar, onClick }: EditProps) => {
                         ...v,
                         precio: Number(editarPrecio),
                         cantidad: Number(editarCantidad),
-                        sabor: Number(editarCantidad) == 1 ? editarSabor : "",
                         precioTotal: Number(editarPrecio) * Number(editarCantidad)
                     }
                     : v
@@ -68,15 +66,6 @@ export const Edit = ({ ventaAEditar, compraAEditar, onClick }: EditProps) => {
     }
 
 
-    const sabores = [
-        "Coco🥥",
-        "Coco quemado 🔥",
-        "Menta ☘",
-        "Frutilla 🍓",
-        "Banana 🍌",
-        "Uva 🍇",
-        "Naranja🟠"
-    ];
 
 
 
@@ -129,21 +118,7 @@ export const Edit = ({ ventaAEditar, compraAEditar, onClick }: EditProps) => {
                             />
                         </div>
 
-                        {editarCantidad === "1" &&
-                            <div className="w-full flex bg-[#B1F6FF] h-20 justify-between px-4 items-center rounded-2xl border-2">
-                                <label htmlFor="sabor" className="text-lg sm:text-2xl font-medium w-1/3">Sabor:</label>
 
-                                <select name="" id="sabor" value={editarSabor} onChange={(e) => setEditarSabor(e.target.value)} className="border-2 pl-2 rounded-xl h-10 bg-white w-2/3" >
-                                    {!editarSabor &&
-                                        <option value=""></option>}
-
-                                    {sabores.map((s, i) => (
-                                        <option key={i} value={s}>{s}</option>
-                                    ))}
-
-                                </select>
-                            </div>
-                        }
 
                     </div>
                 }

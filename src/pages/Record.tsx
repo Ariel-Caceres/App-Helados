@@ -104,9 +104,7 @@ export const Record = () => {
                                                     <div className="w-1/4 border-2  border-r-0 ">
                                                         <span className="pl-2 text-xl font-bold">Fecha</span>
                                                     </div>
-                                                    <div className="w-1/4 border-2 border-r-0">
-                                                        <span className="pl-2 text-xl font-bold">Sabor</span>
-                                                    </div>
+
                                                     <div className="w-1/4 border-2 border-r-0">
                                                         <span className="pl-1 text-xl font-bold">Cantidad</span>
                                                     </div>
@@ -122,19 +120,17 @@ export const Record = () => {
 
                                                 {ventas.map((v, i) => (
                                                     <div className="flex justify-between min-h-12 " key={i}>
-                                                        <div className="flex justify-center w-1/5 border-gray-300 border-2 items-center  ">
+                                                        <div className="flex justify-center w-1/4 border-gray-300 border-2 items-center  ">
                                                             <span>{v.fecha}</span>
                                                         </div>
-                                                        <div className="flex justify-center w-1/5 border-gray-300 border-2 items-center ">
-                                                            <span>{v.sabor}</span>
-                                                        </div>
-                                                        <div className="flex justify-center w-1/5 border-gray-300 border-2 items-center ">
+
+                                                        <div className="flex justify-center w-1/4 border-gray-300 border-2 items-center ">
                                                             <span>{v.cantidad}</span>
                                                         </div>
-                                                        <div className="flex justify-center w-1/5 border-gray-300 border-2 items-center ">
+                                                        <div className="flex justify-center w-1/4 border-gray-300 border-2 items-center ">
                                                             <span>${v.precioTotal}</span>
                                                         </div>
-                                                        <div className="flex justify-center w-1/5 border-gray-300 border-2 items-center ">
+                                                        <div className="flex justify-center w-1/4 border-gray-300 border-2 items-center ">
                                                             <button className="bg-[#87F6FF] w-1/2 h-full border rounded-md" onClick={() => { setVentaAEditar(v) }}>
                                                                 <span className="text-2xl">
                                                                     {online ? <i className="fa-regular fa-pen-to-square"></i> : "✏"}
@@ -151,19 +147,17 @@ export const Record = () => {
                                                 ))}
 
                                                 {hayVentas ?
-                                                    <div className="w-full flex  justify-end">
-                                                        <div className="w-1/5 border-2 border-gray-600 justify-center flex border-r-0">
+                                                    <div className="w-full flex  justify-start">
+                                                        <div className="w-1/4 border-2 border-gray-600 justify-center flex border-r-0">
                                                             <span>Total =</span>
                                                         </div>
-                                                        <div className="w-1/5 border-2 border-gray-600 justify-center flex border-r-0">
+                                                        <div className="w-1/4 border-2 border-gray-600 justify-center flex border-r-0">
                                                             <span>{ventasTotalCantidad}</span>
                                                         </div>
-                                                        <div className="w-1/5 border-2 border-gray-600 justify-center flex">
+                                                        <div className="w-1/4 border-2 border-gray-600 justify-center flex">
                                                             <span>${ventasTotalDinero}</span>
                                                         </div>
-                                                        <div className="w-1/5">
 
-                                                        </div>
                                                     </div>
                                                     :
                                                     <div className="w-full flex justify-center border-2 mt-2 p-2">
