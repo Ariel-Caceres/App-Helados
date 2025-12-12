@@ -9,8 +9,8 @@ export const Modal = () => {
     const navigate = useNavigate()
     const { precio, cantidad, setPrecio, setCantidad, registrarVenta } = useSell()
     const [cartelPrecioTotal, setCartelPrecioTotal] = useState<boolean>(false)
-    const [cartelCantidad, setCartelCantidad] = useState<boolean>(false)
     const [cartelPrecio, setCartelPrecio] = useState<boolean>(false)
+    const [cartelCantidad, setCartelCantidad] = useState<boolean>(false)
     const [precioTotal, setPrecioTotal] = useState<string>("")
     const { online } = useOnline()
 

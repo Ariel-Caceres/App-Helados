@@ -73,7 +73,7 @@ export const Edit = ({ ventaAEditar, compraAEditar, onClick }: EditProps) => {
         <>
             <div className={`w-full min-h-10 border ${ventaAEditar ? "bg-[#DAF5FF]" : compraAEditar ? "bg-[#FFBFA0]" : "bg-[#DAF5FF]"} rounded-2xl flex flex-col items-center`}>
 
-                <div className='w-full h-16 flex items-center bg-amber-200 border-2 rounded-2xl gap-2 text-2xl whitespace-nowrap md:text-3xl font-medium px-6'>
+                <div className='w-full h-16 flex items-center bg-amber-200 border rounded-2xl gap-2 text-2xl whitespace-nowrap md:text-3xl font-medium px-6'>
                     {online ? <i className="fa-solid fa-file-pen"></i> : "✏"}
                     <span className=""> Editar:</span>
                     {ventaAEditar ? " Venta" : compraAEditar ? " Compra" : ""}

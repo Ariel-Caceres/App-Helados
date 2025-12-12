@@ -11,14 +11,10 @@ import { useBuy } from "../context/useBuy"
 import type { Venta } from "../context/SellContext"
 import type { Compra } from "../context/BuyContext"
 
-
 export const Record = () => {
     const { ventas, setVentas, hoy } = useSell()
     const { compras, setCompras } = useBuy()
     const navigate = useNavigate()
-    const hayVentas = ventas.length > 0
-    const ventasTotalDinero = ventas.reduce((acc, v) => v.precioTotal ? acc + v.precioTotal : acc + v.precio, 0)
-    const ventasTotalCantidad = ventas.reduce((acc, v) => acc + v.cantidad, 0)
     const [transaccion, setTransaccion] = useState<Venta>()
     const [ventaAEditar, setVentaAEditar] = useState<Venta>()
     const [compraAEditar, setCompraAEditar] = useState<Compra>()
@@ -30,14 +26,11 @@ export const Record = () => {
     const [mostrarVentas, setMostrarVentas] = useState<boolean>(false)
     const [mostrarCompras, setMostrarCompras] = useState<boolean>(false)
     const cerrarTablas = () => { setMostrarCompras(false); setMostrarVentas(false) }
-    const hayCompras = compras.length > 0
     const [compraAEliminar, setCompraAEliminar] = useState<Compra>()
 
 
-    // const [mesActual, setMesActual] = useState(Number(hoy.split("-")[1]))
-    // const [ventasMes, setMentasMes] = useState<string>("")
+    const [mesActual, setMesActual] = useState(Number(hoy.split("-")[1]))
 
-    // console.log(mesActual)
 
     const eliminarTransaccion = (transaccion: Venta) => {
         const transBorrado = ventas.filter(v => v !== transaccion)
@@ -48,6 +41,20 @@ export const Record = () => {
         setCompras(compraBorrada)
     }
 
+    const mesActualConverter: Record<string, () => string> = {
+        "01": () => "ENE",
+        "02": () => "FEB",
+        "03": () => "MAR",
+        "04": () => "ABR",
+        "05": () => "MAY",
+        "06": () => "JUN",
+        "07": () => "JUL",
+        "08": () => "AGO",
+        "09": () => "SEP",
+        "10": () => "OCT",
+        "11": () => "NOV",
+        "12": () => "DIC"
+    }
 
     return (
         <div className={`w-full max-w-3xl mx-auto  mt-[5vh] flex flex-col gap-10 px-2`}>
@@ -63,19 +70,30 @@ export const Record = () => {
                     <div>
                         <div className={`w-full border-l border-r border-b rounded-2xl flex flex-col justify-evenly relative py-6 mb-10`}>
 
-                            <div className=" absolute top-0 border left-0 border-t gap-x-10 gap-y-3 right-0 flex flex-wrap w-full  items-center justify-between   bg-amber-200 rounded-2xl px-6 py-4 ">
+                            <div className=" absolute top-0 border left-0 gap-x-10 gap-y-3 right-0 flex flex-wrap w-full  items-center justify-between   bg-amber-200 rounded-2xl px-6 py-2 ">
                                 <div className="text-2xl whitespace-nowrap md:text-3xl font-medium ">
-                                    {online ? <i className="fa-regular fa-calendar-days"></i> : "📆"}
+                                    {online ? <i className="fa-regular fa-calendar-days py-3"></i> : "📆"}
                                     <span className=""> Historial:</span>
                                     {mostrarCompras ? " Compras" : mostrarVentas ? " Ventas" : ""}
                                 </div>
-                                {/* <div>
-                                    <span>{mesActual}</span>
-                                    <i className="fa-solid fa-angle-up p-5 border " onClick={() => { setMentasMes(String(mesActual)); setMesActual(Number(mesActual) + 1) }}></i>
-                                    <i className="fa-solid fa-angle-down" onClick={() => { setMentasMes(String(mesActual)); setMesActual(Number(mesActual) - 1) }}></i>
-                                </div> */}
 
+                                {(mostrarCompras || mostrarVentas) &&
+                                    <div className="flex justify-center items-center text-3xl gap-4">
+                                        <div className="flex justify-center items-center shrink-0">
+                                            <span>{mesActualConverter[String(mesActual).padStart(2, "0")]()}</span>
+                                        </div>
+                                        <div className="gap-2 flex shrink-0 ">
+                                            <div className=" flex p-2 border justify-center items-center rounded-2xl" onClick={() => { setMesActual(mesActual < 12 ? Number(mesActual) + 1 : 12) }}>
+                                                <i className="fa-solid fa-angle-up " ></i>
+                                            </div>
+                                            <div className="flex p-2 border justify-center items-center rounded-2xl" onClick={() => { setMesActual(mesActual > 1 ? Number(mesActual) - 1 : 1) }}>
+                                                <i className="fa-solid fa-angle-down" ></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
                             </div>
+
                             {!mostrarCompras && !mostrarVentas &&
                                 <div className="mt-20 w-full justify-center flex items-center gap-5 flex-wrap">
                                     <button className="p-5 bg-[#FFBFA0] rounded-2xl border-2 text-xl cursor-pointer font-medium sm:w-2/3 md:w-1/3 w-4/5"
@@ -98,75 +116,7 @@ export const Record = () => {
                                                 setModalEliminar={(v) => setModalEliminar(v)}
                                             />
                                             :
-
-                                            <>
-                                                <div className="  flex justify-between  " >
-                                                    <div className="w-1/4 border-2  border-r-0 ">
-                                                        <span className="pl-2 text-xl font-bold">Fecha</span>
-                                                    </div>
-
-                                                    <div className="w-1/4 border-2 border-r-0">
-                                                        <span className="pl-1 text-xl font-bold">Cantidad</span>
-                                                    </div>
-                                                    <div className="w-1/4 border-2 border-r-0">
-                                                        <span className="pl-2 text-xl font-bold">Precio</span>
-                                                    </div>
-                                                    <div className="w-1/4 border-2 ">
-                                                        <span className="pl-2 text-xl font-bold">Acciones</span>
-                                                    </div>
-
-                                                </div>
-
-
-                                                {ventas.map((v, i) => (
-                                                    <div className="flex justify-between min-h-12 " key={i}>
-                                                        <div className="flex justify-center w-1/4 border-gray-300 border-2 items-center  ">
-                                                            <span>{v.fecha}</span>
-                                                        </div>
-
-                                                        <div className="flex justify-center w-1/4 border-gray-300 border-2 items-center ">
-                                                            <span>{v.cantidad}</span>
-                                                        </div>
-                                                        <div className="flex justify-center w-1/4 border-gray-300 border-2 items-center ">
-                                                            <span>${v.precioTotal}</span>
-                                                        </div>
-                                                        <div className="flex justify-center w-1/4 border-gray-300 border-2 items-center ">
-                                                            <button className="bg-[#87F6FF] w-1/2 h-full border rounded-md" onClick={() => { setVentaAEditar(v) }}>
-                                                                <span className="text-2xl">
-                                                                    {online ? <i className="fa-regular fa-pen-to-square"></i> : "✏"}
-                                                                </span>
-                                                            </button>
-                                                            <button className="bg-[#FFBFA0] w-1/2 h-full border rounded-md" onClick={() => { setModalEliminar(true); setTransaccion(v) }}>
-                                                                <span className="text-2xl">
-                                                                    {online ? <i className="fa-regular fa-trash-can "></i> : "🗑"}
-                                                                </span>
-                                                            </button>
-
-                                                        </div>
-                                                    </div>
-                                                ))}
-
-                                                {hayVentas ?
-                                                    <div className="w-full flex  justify-start">
-                                                        <div className="w-1/4 border-2 border-gray-600 justify-center flex border-r-0">
-                                                            <span>Total =</span>
-                                                        </div>
-                                                        <div className="w-1/4 border-2 border-gray-600 justify-center flex border-r-0">
-                                                            <span>{ventasTotalCantidad}</span>
-                                                        </div>
-                                                        <div className="w-1/4 border-2 border-gray-600 justify-center flex">
-                                                            <span>${ventasTotalDinero}</span>
-                                                        </div>
-
-                                                    </div>
-                                                    :
-                                                    <div className="w-full flex justify-center border-2 mt-2 p-2">
-                                                        <span className="text-xl">
-                                                            Todavía no hay ventas 😿
-                                                        </span>
-                                                    </div>
-                                                }
-                                            </>
+                                            <Month tipo="venta" mes={String(mesActual)} setModalEliminar={() => setModalEliminar(true)} setTransaccion={setTransaccion} setVentaAEditar={setVentaAEditar} />
                                         }
                                     </div>
                                 </div>
@@ -183,62 +133,7 @@ export const Record = () => {
                                                 setModalEliminarCompra={(v) => setModalEliminarCompra(v)}
                                             />
                                             :
-                                            <>
-                                                <div className="flex flex-col w-full min-w-xl " >
-                                                    <div className="  flex justify-between  " >
-                                                        <div className="w-1/4 border-2  border-r-0 ">
-                                                            <span className="pl-2 text-xl font-bold">Fecha</span>
-                                                        </div>
-
-                                                        <div className="w-1/4 border-2 border-r-0">
-                                                            <span className="pl-1 text-xl font-bold">Cantidad</span>
-                                                        </div>
-                                                        <div className="w-1/4 border-2 border-r-0">
-                                                            <span className="pl-2 text-xl font-bold">Precio</span>
-                                                        </div>
-                                                        <div className="w-1/4 border-2 ">
-                                                            <span className="pl-2 text-xl font-bold">Acciones</span>
-                                                        </div>
-                                                    </div>
-
-
-                                                </div>
-                                                {hayCompras ?
-
-                                                    compras.map((c: Compra, i) => (
-                                                        <div className="flex justify-between min-h-12 " key={i}>
-                                                            <div className="flex justify-center w-1/4 border-gray-300 border-2 items-center ">
-                                                                <span>{c.fecha}</span>
-                                                            </div>
-
-                                                            <div className="flex justify-center w-1/4 border-gray-300 border-2 items-center ">
-                                                                <span>{c.cantidad}</span>
-                                                            </div>
-                                                            <div className="flex justify-center w-1/4 border-gray-300 border-2 items-center ">
-                                                                <span>${c.precio}</span>
-                                                            </div>
-                                                            <div className="flex justify-center w-1/4 border-gray-300 border-2 items-center ">
-                                                                <button className="bg-[#87F6FF] w-1/2 h-full border rounded-md" onClick={() => { setCompraAEditar(c) }}>
-                                                                    <span className="text-2xl">
-                                                                        {online ? <i className="fa-regular fa-pen-to-square"></i> : "✏"}
-                                                                    </span>
-                                                                </button>
-                                                                <button className="bg-[#FFBFA0] w-1/2 h-full border rounded-md" onClick={() => { setModalEliminarCompra(true); setCompraAEliminar(c) }}>
-                                                                    <span className="text-2xl">
-                                                                        {online ? <i className="fa-regular fa-trash-can "></i> : "🗑"}
-                                                                    </span>
-                                                                </button>
-
-                                                            </div>
-                                                        </div>
-                                                    ))
-                                                    :
-                                                    <div className="w-full flex justify-center border-2 mt-2 p-2">
-                                                        <span className="text-xl">
-                                                            Todavía no hay compras 👍
-                                                        </span>
-                                                    </div>}
-                                            </>
+                                            <Month mes={String(mesActual)} tipo="compra" setCompraAEliminar={setCompraAEliminar} setModalEliminarCompra={() => setModalEliminarCompra(true)} setCompraAEditar={setCompraAEditar} />
                                         }
                                     </div>
                                 </div>
@@ -249,10 +144,8 @@ export const Record = () => {
                             <Button texto="Volver" onClick={() => mostrarCompras || mostrarVentas ? cerrarTablas() : navigate("/")} />
                         </div>
                     </div>
-
             }
 
-            {/* <Month mes={String(mesActual)} /> */}
         </div >
     )
 

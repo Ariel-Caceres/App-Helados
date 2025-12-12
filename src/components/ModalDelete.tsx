@@ -26,31 +26,27 @@ export const ModalDelete = (props: DeleteProps) => {
                     </div>
                     <div>
                         <div className="  flex justify-between " >
-                            <div className="w-1/4 border-2  border-r-0 ">
+                            <div className="w-1/3 border-2  border-r-0 ">
                                 <span className="pl-2 text-xl font-bold">Fecha</span>
                             </div>
-                            <div className="w-1/4 border-2 border-r-0">
-                                <span className="pl-2 text-xl font-bold">Sabor</span>
-                            </div>
-                            <div className="w-1/4 border-2 border-r-0">
+
+                            <div className="w-1/3 border-2 border-r-0">
                                 <span className="pl-1 text-xl font-bold">Cantidad</span>
                             </div>
-                            <div className="w-1/4 border-2 ">
+                            <div className="w-1/3 border-2 ">
                                 <span className="pl-2 text-xl font-bold">Precio</span>
                             </div>
                         </div>
 
                         <div className="flex justify-between min-h-12">
-                            <div className="flex justify-center w-1/4 border-gray-300 border-2 items-center ">
+                            <div className="flex justify-center w-1/3 border-gray-300 border-2 items-center ">
                                 <span>{props.transaccion.fecha}</span>
                             </div>
-                            <div className="flex justify-center w-1/4 border-gray-300 border-2 items-center ">
-                                <span>{props.transaccion.sabor}</span>
-                            </div>
-                            <div className="flex justify-center w-1/4 border-gray-300 border-2 items-center ">
+
+                            <div className="flex justify-center w-1/3 border-gray-300 border-2 items-center ">
                                 <span>{props.transaccion.cantidad}</span>
                             </div>
-                            <div className="flex justify-center w-1/4 border-gray-300 border-2 items-center ">
+                            <div className="flex justify-center w-1/3 border-gray-300 border-2 items-center ">
                                 <span>${props.transaccion.precioTotal ? props.transaccion.precioTotal : (props.transaccion.precio * props.transaccion.cantidad)}</span>
                             </div>
 
