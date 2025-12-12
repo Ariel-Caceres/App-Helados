@@ -4,7 +4,7 @@ export const Button = ({ texto, onClick, tipo }: { texto: string, onClick: () =>
     return (
 
         <div className="
-    bg-white w-2/3 md:w-1/5 
+    bg-white w-2/3 md:w-3/5 
     flex items-center justify-center 
     text-black rounded-2xl border-2
     hover:bg-black hover:text-white hover:border-[#DAF5FF]

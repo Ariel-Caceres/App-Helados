@@ -78,8 +78,8 @@ export const Modal = () => {
                     <span className="">Vender:</span>
                 </div>
 
-                <div className='w-full sm:w-2/3 lg:w-1/2  flex flex-col items-center gap-5 py-10 justify-between'>
 
+                <form className="w-full sm:w-2/3 lg:w-1/2  flex flex-col items-center gap-5 py-10 justify-between" action="" onSubmit={(e) => { e.preventDefault(); auth(String(precio), cantidad) }}>
 
                     <div className="w-full flex bg-[#B1F6FF] h-20 justify-between px-4 items-center rounded-2xl border-2">
                         <label htmlFor="cantidad" className="text-lg sm:text-2xl font-medium w-1/3">Cantidad:</label>
@@ -122,15 +122,16 @@ export const Modal = () => {
                     </div>
 
 
-
-                </div>
+                    <div className='w-full flex  flex-col sm:flex-row-reverse justify-center items-center gap-4 sm:gap-10 sm:justify-evenly'>
+                        <Button tipo="submit" texto="Confirmar" onClick={() => { }} />
+                        <Button tipo="button" texto="Cancelar" onClick={() => cancelar()} />
+                    </div>
+                </form>
             </div>
 
-            <div className='w-full flex flex-col-reverse sm:flex-row justify-center items-center gap-4 sm:gap-10 sm:justify-evenly'>
-                <Button tipo="button" texto="Cancelar" onClick={() => cancelar()} />
-                <Button tipo="submit" texto="Confirmar" onClick={() => auth(String(precio), cantidad)} />
-            </div>
+
         </div >
 
     )
+
 }

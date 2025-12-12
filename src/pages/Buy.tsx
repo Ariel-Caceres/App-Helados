@@ -51,8 +51,7 @@ export const Buy = () => {
                         Comprar:</span>
                 </div>
 
-                <div className='w-full sm:w-2/3 lg:w-1/2  flex flex-col items-center gap-5 py-10 justify-between'>
-
+                <form className="w-full sm:w-2/3 lg:w-1/2  flex flex-col items-center gap-5 py-10 justify-between" onSubmit={(e) => { e.preventDefault(); autCompra(precioCompra, cantidadCompra) }}>
 
                     <div className="w-full flex bg-[#FFD3BE] h-20 justify-between px-4 items-center rounded-2xl border-2">
                         <label htmlFor="cantidad" className="text-lg sm:text-2xl font-medium w-1/3">Cantidad:</label>
@@ -81,14 +80,14 @@ export const Buy = () => {
                         />
                     </div>
 
+                    <div className='w-full flex flex-col-reverse sm:flex-row justify-center items-center gap-4 sm:gap-10 sm:justify-evenly'>
+                        <Button tipo="button" onClick={() => cancelar()} texto="Cancelar" />
+                        <Button tipo="submit" onClick={() => { }} texto="Confirmar" />
+                    </div>
+                </form>
 
-                </div>
             </div>
 
-            <div className='w-full flex flex-col-reverse sm:flex-row justify-center items-center gap-4 sm:gap-10 sm:justify-evenly'>
-                <Button tipo="button" onClick={() => cancelar()} texto="Cancelar" />
-                <Button tipo="submit" onClick={() => autCompra(precioCompra, cantidadCompra)} texto="Confirmar" />
-            </div>
         </div >
     )
 }
