@@ -1,6 +1,6 @@
 
 
-export const Button = ({ texto, onClick }: { texto: string, onClick: () => void }) => {
+export const Button = ({ texto, onClick, tipo }: { texto: string, onClick: () => void, tipo: 'submit' | 'reset' | 'button' | undefined }) => {
     return (
 
         <div className="
@@ -12,6 +12,7 @@ export const Button = ({ texto, onClick }: { texto: string, onClick: () => void 
 
     ">
             <button
+                type={tipo}
                 className="w-full h-full py-2 cursor-pointer flex items-center justify-center"
                 onClick={onClick}>
                 {texto == "Volver" ?

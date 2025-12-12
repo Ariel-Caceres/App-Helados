@@ -84,8 +84,8 @@ export const Home = () => {
             </div>
 
             <div className="w-full flex justify-center flex-wrap gap-5 items-center flex-col-reverse sm:flex-col-reverse md:flex-row xl:flex-row">
-                <Button texto={"Comprar"} onClick={() => navigate("/buy")} />
-                <Button texto={"Vender"} onClick={() => navigate("/sell")} />
+                <Button tipo="button" texto={"Comprar"} onClick={() => navigate("/buy")} />
+                <Button tipo="button" texto={"Vender"} onClick={() => navigate("/sell")} />
             </div>
 
         </div>

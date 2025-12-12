@@ -95,7 +95,7 @@ export const Record = () => {
                             </div>
 
                             {!mostrarCompras && !mostrarVentas &&
-                                <div className="mt-20 mb-20 w-full justify-center flex items-center gap-5 flex-wrap">
+                                <div className="mt-10 mb-10 w-full justify-center flex items-center gap-5 max-h-[30vh] flex-wrap">
                                     <button className="p-5 bg-[#FFBFA0] rounded-2xl border-2 text-xl cursor-pointer font-medium sm:w-2/3 md:w-1/3 w-4/5"
                                         onClick={() => { setMostrarVentas(false); setMostrarCompras(true) }
                                         }>Compras</button>
@@ -141,7 +141,7 @@ export const Record = () => {
                         </div>
 
                         <div className="w-full flex justify-center">
-                            <Button texto="Volver" onClick={() => mostrarCompras || mostrarVentas ? cerrarTablas() : navigate("/")} />
+                            <Button texto="Volver" tipo="button" onClick={() => mostrarCompras || mostrarVentas ? cerrarTablas() : navigate("/")} />
                         </div>
                     </div>
             }

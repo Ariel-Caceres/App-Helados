@@ -127,8 +127,8 @@ export const Modal = () => {
             </div>
 
             <div className='w-full flex flex-col-reverse sm:flex-row justify-center items-center gap-4 sm:gap-10 sm:justify-evenly'>
-                <Button texto="Cancelar" onClick={() => cancelar()} />
-                <Button texto="Confirmar" onClick={() => auth(String(precio), cantidad)} />
+                <Button tipo="button" texto="Cancelar" onClick={() => cancelar()} />
+                <Button tipo="submit" texto="Confirmar" onClick={() => auth(String(precio), cantidad)} />
             </div>
         </div >
 

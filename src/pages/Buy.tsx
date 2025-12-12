@@ -86,8 +86,8 @@ export const Buy = () => {
             </div>
 
             <div className='w-full flex flex-col-reverse sm:flex-row justify-center items-center gap-4 sm:gap-10 sm:justify-evenly'>
-                <Button onClick={() => cancelar()} texto="Cancelar" />
-                <Button onClick={() => autCompra(precioCompra, cantidadCompra)} texto="Confirmar" />
+                <Button tipo="button" onClick={() => cancelar()} texto="Cancelar" />
+                <Button tipo="submit" onClick={() => autCompra(precioCompra, cantidadCompra)} texto="Confirmar" />
             </div>
         </div >
     )

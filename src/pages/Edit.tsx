@@ -153,8 +153,8 @@ export const Edit = ({ ventaAEditar, compraAEditar, onClick }: EditProps) => {
             </div>
 
             <div className='w-full flex flex-col-reverse sm:flex-row justify-center items-center gap-4 sm:gap-10 sm:justify-evenly'>
-                <Button texto="Cancelar" onClick={onClick} />
-                <Button texto="Guardar" onClick={editarProducto} />
+                <Button tipo="button" texto="Cancelar" onClick={onClick} />
+                <Button tipo="submit" texto="Guardar" onClick={editarProducto} />
             </div>
         </>
 
