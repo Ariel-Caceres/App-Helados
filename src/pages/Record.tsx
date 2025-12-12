@@ -68,9 +68,9 @@ export const Record = () => {
                     <Edit compraAEditar={compraAEditar} onClick={vaciarCompraAEditar} />
                     :
                     <div>
-                        <div className={`w-full border-l border-r border-b rounded-2xl flex flex-col justify-evenly relative py-6 mb-10`}>
+                        <div className={`w-full border-l border-r border-b rounded-2xl flex flex-col  relative  mb-10`}>
 
-                            <div className=" absolute top-0 border left-0 gap-x-10 gap-y-3 right-0 flex flex-wrap w-full  items-center justify-between   bg-amber-200 rounded-2xl px-6 py-2 ">
+                            <div className="  top-0 border left-0  gap-y-3 gap-x-20 right-0 flex flex-wrap w-full justify-center  items-center md:justify-between sm:justify-center   bg-amber-200 rounded-2xl px-6 py-2 ">
                                 <div className="text-2xl whitespace-nowrap md:text-3xl font-medium ">
                                     {online ? <i className="fa-regular fa-calendar-days py-3"></i> : "📆"}
                                     <span className=""> Historial:</span>
@@ -95,7 +95,7 @@ export const Record = () => {
                             </div>
 
                             {!mostrarCompras && !mostrarVentas &&
-                                <div className="mt-20 w-full justify-center flex items-center gap-5 flex-wrap">
+                                <div className="mt-20 mb-20 w-full justify-center flex items-center gap-5 flex-wrap">
                                     <button className="p-5 bg-[#FFBFA0] rounded-2xl border-2 text-xl cursor-pointer font-medium sm:w-2/3 md:w-1/3 w-4/5"
                                         onClick={() => { setMostrarVentas(false); setMostrarCompras(true) }
                                         }>Compras</button>
@@ -106,7 +106,7 @@ export const Record = () => {
                             }
 
                             {mostrarVentas &&
-                                <div className="flex flex-col md:flex-row justify-evenly gap-4 mt-16 px-2 max-h-[30vh] overflow-auto ">
+                                <div className="flex flex-col md:flex-row justify-evenly gap-4 mt-2 px-2 max-h-[30vh] overflow-auto ">
                                     <div className="flex flex-col w-full min-w-xl " >
                                         {mostrarModalEliminar && transaccion ?
                                             <ModalDelete
@@ -123,7 +123,7 @@ export const Record = () => {
                             }
 
                             {mostrarCompras &&
-                                <div className="flex flex-col md:flex-row justify-evenly gap-4 mt-16 px-2 max-h-[30vh] overflow-auto ">
+                                <div className="flex flex-col md:flex-row justify-evenly gap-4 mt-2 px-2 max-h-[30vh] overflow-auto ">
                                     <div className="flex flex-col w-full min-w-xl " >
                                         {mostrarModalEliminarCompra && compraAEliminar ?
                                             <ModalDelete

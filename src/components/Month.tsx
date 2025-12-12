@@ -41,7 +41,7 @@ export const Month = (props: AccionesProps) => {
 
 
     return (
-        <div>
+        <div className="mb-5">
             {props.tipo == "venta" &&
                 (ventasMes.length != 0 ?
                     <div>

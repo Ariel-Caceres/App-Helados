@@ -20,7 +20,7 @@ export const ModalDelete = (props: DeleteProps) => {
     return (
         <>
             {props.tipo == "venta" &&
-                <div className="flex justify-between min-h-12 flex-col h-ful gap-5">
+                <div className="flex justify-between min-h-12 flex-col h-ful gap-5 mb-5">
                     <div className="flex justify-center w-full border-gray-300 border-2 items-center py-2">
                         <span className="text-lg font-medium">¿Seguro que deseas eliminar esta venta?</span>
                     </div>
