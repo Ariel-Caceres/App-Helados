@@ -17,7 +17,7 @@ export const Home = () => {
 
 
     return (
-        <div className="w-full  max-w-3xl mx-auto  flex mt-[5vh]  flex-col gap-10 px-2">
+        <div className="w-full  max-w-3xl mx-auto  flex mt-[5vh]  flex-col gap-10 px-2 overflow-hidden ">
 
             <Header />
 
@@ -83,7 +83,22 @@ export const Home = () => {
                 </div>
             </div>
 
-            <div className="w-full flex justify-center flex-wrap gap-5 items-center flex-col-reverse sm:flex-col-reverse md:flex-row xl:flex-row">
+            <div
+                className="
+    w-[98%]
+    flex flex-col-reverse
+    justify-center
+    items-center
+    gap-4
+
+    absolute bottom-[20vh]
+
+    sm:static
+    sm:flex-row
+    sm:gap-10
+    sm:justify-evenly
+  "
+            >
                 <Button tipo="button" texto={"Comprar"} onClick={() => navigate("/buy")} />
                 <Button tipo="button" texto={"Vender"} onClick={() => navigate("/sell")} />
             </div>

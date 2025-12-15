@@ -122,9 +122,24 @@ export const Modal = () => {
                     </div>
 
 
-                    <div className='w-full flex  flex-col sm:flex-row-reverse justify-center items-center gap-4 sm:gap-10 sm:justify-evenly'>
-                        <Button tipo="submit" texto="Confirmar" onClick={() => { }} />
+                    <div
+                        className="
+    w-full
+    flex flex-col-reverse
+    justify-center
+    items-center
+    gap-4
+
+    absolute bottom-[20vh]
+
+    sm:static
+    sm:flex-row
+    sm:gap-10
+    sm:justify-evenly
+  "
+                    >
                         <Button tipo="button" texto="Cancelar" onClick={() => cancelar()} />
+                        <Button tipo="submit" texto="Confirmar" onClick={() => { }} />
                     </div>
                 </form>
             </div>

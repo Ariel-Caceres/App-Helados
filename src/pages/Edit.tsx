@@ -71,7 +71,7 @@ export const Edit = ({ ventaAEditar, compraAEditar, onClick }: EditProps) => {
 
     return (
         <>
-            <div className={`w-full min-h-10 border ${ventaAEditar ? "bg-[#DAF5FF]" : compraAEditar ? "bg-[#FFBFA0]" : "bg-[#DAF5FF]"} rounded-2xl flex flex-col items-center`}>
+            <div className={`w-full min-h-10 border ${ventaAEditar ? "bg-[#DAF5FF]" : compraAEditar ? "bg-[#FFBFA0]" : "bg-[#DAF5FF]"} rounded-2xl flex flex-col items-center `}>
 
                 <div className='w-full h-16 flex items-center bg-amber-200 border rounded-2xl gap-2 text-2xl whitespace-nowrap md:text-3xl font-medium px-6'>
                     {online ? <i className="fa-solid fa-file-pen"></i> : "✏"}
@@ -80,7 +80,7 @@ export const Edit = ({ ventaAEditar, compraAEditar, onClick }: EditProps) => {
                 </div>
 
                 {ventaAEditar &&
-                    <div className='w-full sm:w-2/3 lg:w-1/2  flex flex-col items-center gap-5 py-10 justify-between'>
+                    <form className='w-full sm:w-2/3 lg:w-1/2  flex flex-col items-center gap-5 py-10 justify-between' onSubmit={(e) => { e.preventDefault(); editarProducto() }}>
                         <div className="w-full flex bg-[#B1F6FF] h-20 justify-between px-4 items-center rounded-2xl border-2">
                             <label htmlFor="cantidad" className="text-lg sm:text-2xl font-medium w-1/3">Cantidad:</label>
                             <input type="number" id="cantidad" placeholder="Ej. 1" className={`border-2 pl-2 rounded-xl h-10 bg-white w-2/3 ${cantInvalida ? "border-4 border-red-500 animate-pulse" : ""}`}
@@ -103,6 +103,7 @@ export const Edit = ({ ventaAEditar, compraAEditar, onClick }: EditProps) => {
 
                             />
                         </div>
+
                         <div className="w-full flex bg-[#B1F6FF] h-20 justify-between px-4 items-center rounded-2xl border-2">
                             <label htmlFor="total" className={`text-lg sm:text-2xl font-medium w-1/3 `}>Total:</label>
                             <input
@@ -118,13 +119,30 @@ export const Edit = ({ ventaAEditar, compraAEditar, onClick }: EditProps) => {
                             />
                         </div>
 
+                        <div
+                            className="
+    w-[98%]
+    flex flex-col-reverse
+    justify-center
+    items-center
+    gap-4
 
+    absolute bottom-[20vh]
 
-                    </div>
+    sm:static
+    sm:flex-row
+    sm:gap-10
+    sm:justify-evenly
+  "
+                        >                                      <Button tipo="button" texto="Cancelar" onClick={onClick} />
+                            <Button tipo="submit" texto="Guardar" onClick={editarProducto} />
+                        </div>
+
+                    </form>
                 }
 
                 {compraAEditar &&
-                    <div className='w-full sm:w-2/3 lg:w-1/2  flex flex-col items-center gap-5 py-10 justify-between'>
+                    <form className='w-full sm:w-2/3 lg:w-1/2  flex flex-col items-center gap-5 py-10 justify-between '>
                         <div className="w-full flex bg-[#FFD3BE] h-20 justify-between px-4 items-center rounded-2xl border-2">
                             <label htmlFor="cantidad" className="text-lg sm:text-2xl font-medium w-1/3">Cantidad:</label>
                             <input type="number" id="cantidad" placeholder="Ej. 1" className={`border-2 pl-2 rounded-xl h-10 bg-white w-2/3 ${cantInvalidaCompra ? "border-4 border-red-500 animate-pulse" : ""}`}
@@ -147,15 +165,30 @@ export const Edit = ({ ventaAEditar, compraAEditar, onClick }: EditProps) => {
 
                             />
                         </div>
-                    </div>
+
+                        <div
+                            className="
+    w-[98%]
+    flex flex-col-reverse
+    justify-center
+    items-center
+    gap-4
+
+    absolute bottom-[20vh]
+
+    sm:static
+    sm:flex-row
+    sm:gap-10
+    sm:justify-evenly
+  "
+                        >                            <Button tipo="button" texto="Cancelar" onClick={onClick} />
+                            <Button tipo="submit" texto="Guardar" onClick={editarProducto} />
+                        </div>
+                    </form>
                 }
 
             </div>
 
-            <div className='w-full flex flex-col-reverse sm:flex-row justify-center items-center gap-4 sm:gap-10 sm:justify-evenly'>
-                <Button tipo="button" texto="Cancelar" onClick={onClick} />
-                <Button tipo="submit" texto="Guardar" onClick={editarProducto} />
-            </div>
         </>
 
     )

@@ -70,7 +70,7 @@ export const Record = () => {
                     <div>
                         <div className={`w-full border-l border-r border-b rounded-2xl flex flex-col  relative  mb-10`}>
 
-                            <div className="  top-0 border left-0  gap-y-3 gap-x-20 right-0 flex flex-wrap w-full justify-center  items-center md:justify-between sm:justify-center   bg-amber-200 rounded-2xl px-6 py-2 ">
+                            <div className="border  gap-y-3 gap-x-20 right-0 flex flex-wrap w-full justify-center items-center md:justify-between sm:justify-start   bg-amber-200 rounded-2xl px-6 py-2 ">
                                 <div className="text-2xl whitespace-nowrap md:text-3xl font-medium ">
                                     {online ? <i className="fa-regular fa-calendar-days py-3"></i> : "📆"}
                                     <span className=""> Historial:</span>
@@ -140,8 +140,22 @@ export const Record = () => {
                             }
                         </div>
 
-                        <div className="w-full flex justify-center">
-                            <Button texto="Volver" tipo="button" onClick={() => mostrarCompras || mostrarVentas ? cerrarTablas() : navigate("/")} />
+                        <div
+                            className="
+    w-[98%]
+    flex flex-col-reverse
+    justify-center
+    items-center
+    gap-4
+
+    absolute bottom-[20vh]
+
+    sm:static
+    sm:flex-row
+    sm:gap-10
+    sm:justify-evenly
+  "
+                        >                            <Button texto="Volver" tipo="button" onClick={() => mostrarCompras || mostrarVentas ? cerrarTablas() : navigate("/")} />
                         </div>
                     </div>
             }

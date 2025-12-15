@@ -39,7 +39,7 @@ export const Buy = () => {
 
 
     return (
-        <div className="w-full max-w-3xl mx-auto flex flex-col gap-10 px-2 items-center mt-[5vh]">
+        <div className="w-full max-w-3xl mx-auto flex flex-col gap-10 px-2 items-center mt-[5vh] ">
             <Header />
 
             <div className='w-full min-h-10 border bg-[#FFBFA0]  rounded-2xl flex flex-col items-center'>
@@ -80,8 +80,22 @@ export const Buy = () => {
                         />
                     </div>
 
-                    <div className='w-full flex flex-col-reverse sm:flex-row justify-center items-center gap-4 sm:gap-10 sm:justify-evenly'>
-                        <Button tipo="button" onClick={() => cancelar()} texto="Cancelar" />
+                    <div
+                        className="
+    w-full
+    flex flex-col-reverse
+    justify-center
+    items-center
+    gap-4
+
+    absolute bottom-[20vh]
+
+    sm:static
+    sm:flex-row
+    sm:gap-10
+    sm:justify-evenly
+  "
+                    >                        <Button tipo="button" onClick={() => cancelar()} texto="Cancelar" />
                         <Button tipo="submit" onClick={() => { }} texto="Confirmar" />
                     </div>
                 </form>
@@ -91,3 +105,5 @@ export const Buy = () => {
         </div >
     )
 }
+
+// <div className="w-full flex flex-col-reverse justify-center items-center gap-4 absolute bottom-[20vh] sm:static sm:flex-row sm:gap-10 sm:justify-evenly">
