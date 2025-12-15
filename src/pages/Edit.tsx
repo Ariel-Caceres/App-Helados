@@ -134,15 +134,16 @@ export const Edit = ({ ventaAEditar, compraAEditar, onClick }: EditProps) => {
     sm:gap-10
     sm:justify-evenly
   "
-                        >                                      <Button tipo="button" texto="Cancelar" onClick={onClick} />
-                            <Button tipo="submit" texto="Guardar" onClick={editarProducto} />
+                        >
+                            <Button tipo="button" texto="Cancelar" onClick={onClick} />
+                            <Button tipo="submit" texto="Guardar" onClick={() => { }} />
                         </div>
 
                     </form>
                 }
 
                 {compraAEditar &&
-                    <form className='w-full sm:w-2/3 lg:w-1/2  flex flex-col items-center gap-5 py-10 justify-between '>
+                    <form className='w-full sm:w-2/3 lg:w-1/2  flex flex-col items-center gap-5 py-10 justify-between ' onSubmit={(e) => { e.preventDefault(); editarProducto() }}>
                         <div className="w-full flex bg-[#FFD3BE] h-20 justify-between px-4 items-center rounded-2xl border-2">
                             <label htmlFor="cantidad" className="text-lg sm:text-2xl font-medium w-1/3">Cantidad:</label>
                             <input type="number" id="cantidad" placeholder="Ej. 1" className={`border-2 pl-2 rounded-xl h-10 bg-white w-2/3 ${cantInvalidaCompra ? "border-4 border-red-500 animate-pulse" : ""}`}
@@ -181,8 +182,9 @@ export const Edit = ({ ventaAEditar, compraAEditar, onClick }: EditProps) => {
     sm:gap-10
     sm:justify-evenly
   "
-                        >                            <Button tipo="button" texto="Cancelar" onClick={onClick} />
-                            <Button tipo="submit" texto="Guardar" onClick={editarProducto} />
+                        >
+                            <Button tipo="button" texto="Cancelar" onClick={onClick} />
+                            <Button tipo="submit" texto="Guardar" onClick={() => { }} />
                         </div>
                     </form>
                 }
