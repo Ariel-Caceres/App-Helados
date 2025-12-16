@@ -88,7 +88,7 @@ export const Buy = () => {
     items-center
     gap-4
 
-    absolute bottom-[20vh]
+    absolute bottom-[10vh]
 
     sm:static
     sm:flex-row
@@ -106,4 +106,3 @@ export const Buy = () => {
     )
 }
 
-// <div className="w-full flex flex-col-reverse justify-center items-center gap-4 absolute bottom-[20vh] sm:static sm:flex-row sm:gap-10 sm:justify-evenly">

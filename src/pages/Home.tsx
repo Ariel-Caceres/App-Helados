@@ -91,7 +91,7 @@ export const Home = () => {
     items-center
     gap-4
 
-    absolute bottom-[20vh]
+    absolute bottom-[10vh]
 
     sm:static
     sm:flex-row

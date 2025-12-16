@@ -127,7 +127,7 @@ export const Edit = ({ ventaAEditar, compraAEditar, onClick }: EditProps) => {
     items-center
     gap-4
 
-    absolute bottom-[20vh]
+    absolute bottom-[10vh]
 
     sm:static
     sm:flex-row
@@ -175,7 +175,7 @@ export const Edit = ({ ventaAEditar, compraAEditar, onClick }: EditProps) => {
     items-center
     gap-4
 
-    absolute bottom-[20vh]
+    absolute bottom-[10vh]
 
     sm:static
     sm:flex-row
