@@ -11,9 +11,9 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'robots.txt', 'apple-touch-icon.png'],
       manifest: {
-        name: 'Mi App PWA',
-        short_name: 'MiApp',
-        description: 'Mi aplicación React convertida en PWA',
+        name: 'Chupachup`s',
+        short_name: 'Chupachup`s',
+        description: 'Mi aplicación React para manejo de negocio de venta de helados',
         start_url: '/',
         display: 'standalone',
         background_color: '#ffffff',
