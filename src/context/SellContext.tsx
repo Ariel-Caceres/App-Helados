@@ -3,10 +3,12 @@ import { createContext, useEffect, useState, type ReactNode } from "react";
 
 
 export interface Venta {
+    id?: string,
     precio: number;
     precioTotal: number;
     cantidad: number;
     fecha: string;
+    onDb: boolean
 }
 
 interface SellContextType {
@@ -35,24 +37,28 @@ export const SellProvider = ({ children }: { children: ReactNode }) => {
     const [ventas, setVentas] = useState<Venta[]>(() => {
         const data = (localStorage.getItem("ventas"))
         if (data) {
-            const ventasCargadas = JSON.parse(data);
-            // Migración: agregar precioTotal a ventas antiguas que no lo tengan
-            const ventasMigradas = ventasCargadas.map((venta: Venta) => ({
+            const ventasCargadas: Venta[] = JSON.parse(data);
+            const ventasMigradas: Venta[] = ventasCargadas.map((venta: Venta) => ({
                 ...venta,
-                precioTotal: venta.precioTotal || (venta.precio * venta.cantidad)
+                precioTotal: venta.precioTotal || (venta.precio * venta.cantidad),
+                onDb: venta.onDb || false
             }));
-            return ventasMigradas;
+            const ventasOrdenadas = [...ventasMigradas].sort((a, b) =>
+                Number(b.precioTotal) - Number(a.precioTotal)
+            )
+            console.log(ventasOrdenadas)
+            return ventasOrdenadas;
         }
         return []
 
     });
-    const precioTotal = (Number(precio) * Number(cantidad))
 
+    const precioTotal = (Number(precio) * Number(cantidad))
+    // const [ventas, setVentas] = useState<Venta[]>([])
     const d = new Date();
     const año = d.getFullYear();
     const mes = String(d.getMonth() + 1).padStart(2, "0");
     const dia = String(d.getDate()).padStart(2, "0");
-
     const hoy = `${año}-${mes}-${dia}`;
 
 
@@ -61,7 +67,8 @@ export const SellProvider = ({ children }: { children: ReactNode }) => {
             precio: precio,
             cantidad: Number(cantidad),
             fecha: hoy,
-            precioTotal: precioTotal
+            precioTotal: precioTotal,
+            onDb: false
         };
 
 
@@ -70,6 +77,23 @@ export const SellProvider = ({ children }: { children: ReactNode }) => {
         setPrecio(precio);
         setCantidad("");
     };
+
+    // useEffect(() => {
+    //     const traerVentasDb = async () => {
+    //         try {
+    //             const res = await fetch("https://app-helados-backend.onrender.com/sales")
+    //             if (res.ok) {
+    //                 console.log("Fetch exitoso")
+    //             }
+    //             const data = await res.json()
+    //             console.log(data.ventas)
+    //             setVentas(data.ventas)
+    //         } catch (e) {
+    //             console.log("Error al traer los productos de la base de datos", e)
+    //         }
+    //     }
+    //     traerVentasDb()
+    // }, [])
 
     useEffect(() => {
         localStorage.setItem("ventas", JSON.stringify(ventas))
