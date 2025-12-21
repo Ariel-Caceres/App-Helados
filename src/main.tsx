@@ -20,12 +20,12 @@ registerSW({
 createRoot(document.getElementById('root')!).render(
 
   <StrictMode>
-    <OnlineProvider>
-      <SellProvider>
+    <SellProvider>
+      <OnlineProvider>
         <BuyProvider>
           <App />
         </BuyProvider>
-      </SellProvider>
-    </OnlineProvider>
+      </OnlineProvider>
+    </SellProvider>
   </StrictMode>,
 )
