@@ -24,10 +24,33 @@ export const Edit = ({ ventaAEditar, compraAEditar, onClick }: EditProps) => {
     const precioInvalido = Number(editarPrecio) <= 0 || !Number.isInteger(Number(editarPrecio));
     const cantInvalida = Number(editarCantidad) <= 0 || !Number.isInteger(Number(editarCantidad))
 
+
+    const editarVentaDb = async (id: string | undefined) => {
+        try {
+            const ventaActualizada = {
+                precio: Number(editarPrecio),
+                cantidad: Number(editarCantidad),
+                precioTotal: Number(editarPrecio) * Number(editarCantidad),
+            }
+            const res = await fetch(`https://app-helados-backend.onrender.com/edit/${id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-type": "application/json"
+                },
+                body: JSON.stringify(ventaActualizada)
+            })
+            if (res.ok) {
+                console.log("Venta editada con éxito")
+                onClick()
+            }
+        } catch (e) { console.log("Venta editada con error", e) }
+    }
+
     const editarProducto = () => {
         if (ventaAEditar) {
+            console.log(ventaAEditar.id)
             const actualizado = ventas.map(v =>
-                v === ventaAEditar ?
+                v.id === ventaAEditar.id ?
                     {
                         ...v,
                         precio: Number(editarPrecio),
@@ -37,8 +60,10 @@ export const Edit = ({ ventaAEditar, compraAEditar, onClick }: EditProps) => {
                     : v
 
             )
+
             if (!cantInvalida && !precioInvalido) {
                 setVentas(actualizado)
+                editarVentaDb(ventaAEditar.id)
                 onClick()
             }
         }
@@ -64,7 +89,6 @@ export const Edit = ({ ventaAEditar, compraAEditar, onClick }: EditProps) => {
     const handleChancePrecio = (valor: string) => {
         setEditarPrecio(valor)
     }
-
 
 
 
@@ -120,20 +144,7 @@ export const Edit = ({ ventaAEditar, compraAEditar, onClick }: EditProps) => {
                         </div>
 
                         <div
-                            className="
-    w-[98%]
-    flex flex-col-reverse
-    justify-center
-    items-center
-    gap-4
-
-    absolute bottom-[10vh]
-
-    sm:static
-    sm:flex-row
-    sm:gap-10
-    sm:justify-evenly
-  "
+                            className=" w-[98%] flex flex-col-reverse justify-center items-center gap-4 absolute bottom-[10vh] sm:static  sm:flex-row  sm:gap-10 sm:justify-evenly "
                         >
                             <Button tipo="button" texto="Cancelar" onClick={onClick} />
                             <Button tipo="submit" texto="Guardar" onClick={() => { }} />
@@ -168,21 +179,7 @@ export const Edit = ({ ventaAEditar, compraAEditar, onClick }: EditProps) => {
                         </div>
 
                         <div
-                            className="
-    w-[98%]
-    flex flex-col-reverse
-    justify-center
-    items-center
-    gap-4
-
-    absolute bottom-[10vh]
-
-    sm:static
-    sm:flex-row
-    sm:gap-10
-    sm:justify-evenly
-  "
-                        >
+                            className="w-[98%] flex flex-col-reverse justify-center items-center gap-4 absolute bottom-[10vh] sm:static sm:flex-row sm:gap-10 sm:justify-evenly">
                             <Button tipo="button" texto="Cancelar" onClick={onClick} />
                             <Button tipo="submit" texto="Guardar" onClick={() => { }} />
                         </div>
