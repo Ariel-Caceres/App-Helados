@@ -5,12 +5,6 @@ import { HeaderTabla } from "../components/HeaderTabla"
 import type { Compra } from "../context/BuyContext";
 import { useBuy } from "../context/useBuy";
 
-// type AccionesProps = {
-//     mes: string
-//     setVentaAEditar: (v: Venta | undefined) => void
-//     setModalEliminar: () => void
-//     setTransaccion: (v: Venta | undefined) => void
-// }
 
 type AccionesProps =
     | {
