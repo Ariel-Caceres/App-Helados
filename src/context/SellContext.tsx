@@ -1,5 +1,5 @@
 
-import { createContext, useEffect, useState, type ReactNode } from "react";
+import { createContext, useEffect, useState, } from "react";
 
 
 export interface Venta {
@@ -34,6 +34,7 @@ export const SellProvider = ({ children }: { children: ReactNode }) => {
         return JSON.parse(precioAntiguo)
     });
     const [cantidad, setCantidad] = useState<string>("");
+    // const [orden, setOrden] = useState("")s
     const [ventas, setVentas] = useState<Venta[]>(() => {
         const data = (localStorage.getItem("ventas"))
         if (data) {
@@ -44,7 +45,7 @@ export const SellProvider = ({ children }: { children: ReactNode }) => {
                 onDb: venta.onDb || false
             }));
             const ventasOrdenadas = [...ventasMigradas].sort((a, b) =>
-                Number(b.precioTotal) - Number(a.precioTotal)
+                Number(b.cantidad) - Number(a.cantidad)
             )
             console.log(ventasOrdenadas)
             return ventasOrdenadas;
@@ -54,7 +55,6 @@ export const SellProvider = ({ children }: { children: ReactNode }) => {
     });
 
     const precioTotal = (Number(precio) * Number(cantidad))
-    // const [ventas, setVentas] = useState<Venta[]>([])
     const d = new Date();
     const año = d.getFullYear();
     const mes = String(d.getMonth() + 1).padStart(2, "0");
