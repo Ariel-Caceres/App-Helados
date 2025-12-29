@@ -1,14 +1,14 @@
 
-import { createContext, useEffect, useState, } from "react";
-
+import { v4 as uuidv4 } from 'uuid';
+import { createContext, useEffect, useState, type ReactNode, } from "react";
 
 export interface Venta {
-    id?: string,
+    id: string,
     precio: number;
     precioTotal: number;
     cantidad: number;
     fecha: string;
-    onDb: boolean
+    status: "synced" | "pending-create" | "pending-delete" | "pending-update"
 }
 
 interface SellContextType {
@@ -21,6 +21,8 @@ interface SellContextType {
     hoy: string,
     precioTotal: number
     setVentas: (venta: Venta[]) => void;
+    setOrden: (orden: string) => void,
+    orden: string
 }
 
 export const SellContext = createContext<SellContextType | undefined>(undefined);
@@ -34,26 +36,21 @@ export const SellProvider = ({ children }: { children: ReactNode }) => {
         return JSON.parse(precioAntiguo)
     });
     const [cantidad, setCantidad] = useState<string>("");
-    // const [orden, setOrden] = useState("")s
+    const [orden, setOrden] = useState("")
     const [ventas, setVentas] = useState<Venta[]>(() => {
         const data = (localStorage.getItem("ventas"))
         if (data) {
             const ventasCargadas: Venta[] = JSON.parse(data);
-            const ventasMigradas: Venta[] = ventasCargadas.map((venta: Venta) => ({
-                ...venta,
-                precioTotal: venta.precioTotal || (venta.precio * venta.cantidad),
-                onDb: venta.onDb || false
-            }));
-            const ventasOrdenadas = [...ventasMigradas].sort((a, b) =>
-                Number(b.cantidad) - Number(a.cantidad)
-            )
-            console.log(ventasOrdenadas)
-            return ventasOrdenadas;
+            const ventasMigradas: Venta[] = ventasCargadas.map((v: Venta) => ({
+                ...v,
+                status: v.status || "pending-create"
+            }))
+            return ventasMigradas;
         }
         return []
 
     });
-
+    // const [ventasDb, setVentasDb] = useState()
     const precioTotal = (Number(precio) * Number(cantidad))
     const d = new Date();
     const año = d.getFullYear();
@@ -61,14 +58,37 @@ export const SellProvider = ({ children }: { children: ReactNode }) => {
     const dia = String(d.getDate()).padStart(2, "0");
     const hoy = `${año}-${mes}-${dia}`;
 
+    useEffect(() => {
+
+        const ventasOrdenadas = ventas.sort((a, b) =>
+            orden == "cantidad Des" ?
+                Number(a.cantidad) - Number(b.cantidad) :
+                orden == "cantidad Asd" ?
+                    Number(b.cantidad) - Number(a.cantidad) :
+                    orden == "precioTotal Des" ?
+                        Number(a.precioTotal) - Number(b.precioTotal) :
+                        orden == "precioTotal Asd" ?
+                            Number(b.precioTotal) - Number(a.precioTotal) :
+                            orden == "fecha Asd" ?
+                                Number(a.fecha.split("-")[2]) - Number(b.fecha.split("-")[2]) :
+                                orden == "fecha Des" ?
+                                    Number(b.fecha.split("-")[2]) - Number(a.fecha.split("-")[2]) :
+                                    Number(a.fecha.split("-")[2]) - Number(b.fecha.split("-")[2])
+
+
+        )
+        setVentas(ventasOrdenadas)
+
+    }, [orden])
 
     const registrarVenta = () => {
         const nuevaVenta: Venta = {
+            id: uuidv4(),
             precio: precio,
             cantidad: Number(cantidad),
             fecha: hoy,
             precioTotal: precioTotal,
-            onDb: false
+            status: "pending-create"
         };
 
 
@@ -79,20 +99,21 @@ export const SellProvider = ({ children }: { children: ReactNode }) => {
     };
 
     // useEffect(() => {
-    //     const traerVentasDb = async () => {
+    //     const traerVentasDb = async (mes: string) => {
     //         try {
-    //             const res = await fetch("https://app-helados-backend.onrender.com/sales")
-    //             if (res.ok) {
+    //             const res = await fetch(`${import.meta.env.VITE_API_URL}/sales/${mes}`)
+    //             if (!res.ok) {
+    //                 console.log("Error al traer los productos de la base de datos")
+    //             } else {
     //                 console.log("Fetch exitoso")
     //             }
     //             const data = await res.json()
-    //             console.log(data.ventas)
-    //             setVentas(data.ventas)
+    //             setVentasDb(data)
     //         } catch (e) {
     //             console.log("Error al traer los productos de la base de datos", e)
     //         }
     //     }
-    //     traerVentasDb()
+    //     traerVentasDb(mes)
     // }, [])
 
     useEffect(() => {
@@ -115,7 +136,9 @@ export const SellProvider = ({ children }: { children: ReactNode }) => {
                 registrarVenta,
                 hoy,
                 setVentas,
-                precioTotal
+                precioTotal,
+                orden,
+                setOrden
             }}
         >
             {children}
