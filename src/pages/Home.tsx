@@ -10,9 +10,8 @@ export const Home = () => {
     const { ventas, hoy } = useSell()
     const online = useOnline()
     const ventasHoy = ventas.filter(v => {
-        return v.fecha.split("-")[1] == hoy.split("-")[1]
+        return v.fecha.split("-")[2] == hoy.split("-")[2]
     })
-    console.log(ventasHoy)
     const DineroHoy = ventasHoy.reduce((acc, v) => v.status !== "pending-delete" ? acc + v.precioTotal : acc, 0)
     const ventasHoyCant = ventasHoy.reduce((acc, va) => va.status !== "pending-delete" ? acc + va.cantidad : acc, 0);
 
