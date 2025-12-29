@@ -17,6 +17,8 @@ type DeleteProps =
 
 export const ModalDelete = (props: DeleteProps) => {
 
+
+
     return (
         <>
             {props.tipo == "venta" &&

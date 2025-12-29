@@ -12,7 +12,7 @@ export const Modal = () => {
     const [cartelPrecio, setCartelPrecio] = useState<boolean>(false)
     const [cartelCantidad, setCartelCantidad] = useState<boolean>(false)
     const [precioTotal, setPrecioTotal] = useState<string>("")
-    const { online } = useOnline()
+    const online = useOnline()
 
 
 
@@ -136,8 +136,7 @@ export const Modal = () => {
     sm:flex-row
     sm:gap-10
     sm:justify-evenly
-  "
-                    >
+  ">
                         <Button tipo="button" texto="Cancelar" onClick={() => cancelar()} />
                         <Button tipo="submit" texto="Confirmar" onClick={() => { }} />
                     </div>
