@@ -13,7 +13,7 @@ type EditProps =
 
 export const Edit = ({ ventaAEditar, compraAEditar, onClick }: EditProps) => {
     const { ventas, setVentas } = useSell()
-    const { online } = useOnline()
+    const online = useOnline()
     const { compras, setCompras } = useBuy()
     const [editarPrecio, setEditarPrecio] = useState<string>(String(ventaAEditar?.precio))
     const [editarPrecioCompra, setEditarPrecioCompra] = useState<string>(String(compraAEditar?.precio))
@@ -25,26 +25,6 @@ export const Edit = ({ ventaAEditar, compraAEditar, onClick }: EditProps) => {
     const cantInvalida = Number(editarCantidad) <= 0 || !Number.isInteger(Number(editarCantidad))
 
 
-    const editarVentaDb = async (id: string | undefined) => {
-        try {
-            const ventaActualizada = {
-                precio: Number(editarPrecio),
-                cantidad: Number(editarCantidad),
-                precioTotal: Number(editarPrecio) * Number(editarCantidad),
-            }
-            const res = await fetch(`https://app-helados-backend.onrender.com/edit/${id}`, {
-                method: "PUT",
-                headers: {
-                    "Content-type": "application/json"
-                },
-                body: JSON.stringify(ventaActualizada)
-            })
-            if (res.ok) {
-                console.log("Venta editada con éxito")
-                onClick()
-            }
-        } catch (e) { console.log("Venta editada con error", e) }
-    }
 
     const editarProducto = () => {
         if (ventaAEditar) {
@@ -55,18 +35,19 @@ export const Edit = ({ ventaAEditar, compraAEditar, onClick }: EditProps) => {
                         ...v,
                         precio: Number(editarPrecio),
                         cantidad: Number(editarCantidad),
-                        precioTotal: Number(editarPrecio) * Number(editarCantidad)
-                    }
+                        precioTotal: Number(editarPrecio) * Number(editarCantidad),
+                        status: ventaAEditar.status == "pending-create" ? "pending-create" : "pending-update"
+                    } as Venta
                     : v
 
             )
 
             if (!cantInvalida && !precioInvalido) {
                 setVentas(actualizado)
-                editarVentaDb(ventaAEditar.id)
                 onClick()
             }
         }
+
         if (compraAEditar) {
             const actualizado = compras.map(c =>
                 c === compraAEditar ?
