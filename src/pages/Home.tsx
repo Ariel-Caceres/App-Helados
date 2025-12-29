@@ -7,11 +7,14 @@ import { Button } from "../components/Button"
 
 export const Home = () => {
     const navigate = useNavigate()
-    const { ventas, } = useSell()
+    const { ventas, hoy } = useSell()
     const online = useOnline()
-
-    const DineroHoy = ventas.reduce((acc, v) => v.status !== "pending-delete" ? acc + v.precioTotal : acc, 0)
-    const ventasHoyCant = ventas.reduce((acc, va) => va.status !== "pending-delete" ? acc + va.cantidad : acc, 0);
+    const ventasHoy = ventas.filter(v => {
+        return v.fecha.split("-")[1] == hoy.split("-")[1]
+    })
+    console.log(ventasHoy)
+    const DineroHoy = ventasHoy.reduce((acc, v) => v.status !== "pending-delete" ? acc + v.precioTotal : acc, 0)
+    const ventasHoyCant = ventasHoy.reduce((acc, va) => va.status !== "pending-delete" ? acc + va.cantidad : acc, 0);
 
 
     return (
