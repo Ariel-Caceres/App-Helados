@@ -7,13 +7,11 @@ import { Button } from "../components/Button"
 
 export const Home = () => {
     const navigate = useNavigate()
-    const { ventas, hoy } = useSell()
-    const { online } = useOnline()
+    const { ventas, } = useSell()
+    const online = useOnline()
 
-    const ventasHoy = ventas.filter(v => v.fecha === hoy)
-    const ventasHoyCant = ventasHoy.reduce((acc, va) => acc + va.cantidad, 0);
-    const DineroHoy = ventasHoy.reduce((acc, v) => v.precioTotal ? acc + v.precioTotal : acc + (v.precio * v.cantidad), 0)
-
+    const DineroHoy = ventas.reduce((acc, v) => v.status !== "pending-delete" ? acc + v.precioTotal : acc, 0)
+    const ventasHoyCant = ventas.reduce((acc, va) => va.status !== "pending-delete" ? acc + va.cantidad : acc, 0);
 
 
     return (
