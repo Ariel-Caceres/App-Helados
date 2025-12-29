@@ -25,11 +25,12 @@ type AccionesProps =
 export const Month = (props: AccionesProps) => {
     const { ventas } = useSell()
     const { compras } = useBuy()
-    const { online } = useOnline()
+    const online = useOnline()
     const ventasMes = ventas.filter(v => v.fecha.split("-")[1] === props.mes)
     const comprasMes = compras.filter(v => v.fecha.split("-")[1] === props.mes)
-    const ventasTotalDinero = ventasMes.reduce((acc, v) => acc + v.precioTotal, 0)
-    const ventasTotalCantidad = ventasMes.reduce((acc, v) => acc + v.cantidad, 0)
+
+    const ventasTotalDinero = ventasMes.reduce((acc, v) => v.status !== "pending-delete" ? acc + v.precioTotal : acc, 0)
+    const ventasTotalCantidad = ventasMes.reduce((acc, v) => v.status !== "pending-delete" ? acc + v.cantidad : acc, 0)
     const comprasTotalDinero = comprasMes.reduce((acc, v) => v.precio ? acc + v.precio : acc + v.precio, 0)
     const comprasTotalCantidad = comprasMes.reduce((acc, v) => acc + v.cantidad, 0)
 
@@ -37,11 +38,11 @@ export const Month = (props: AccionesProps) => {
     return (
         <div className="mb-5">
             {props.tipo == "venta" &&
-                (ventasMes.length != 0 ?
+                (ventasMes.length != 0 && ventasTotalDinero != 0 && ventasTotalCantidad != 0 ?
                     <div>
                         <HeaderTabla />
                         {ventasMes.map((v, i) => (
-                            <div className="flex justify-between min-h-12 " key={i}>
+                            <div className={`flex justify-between min-h-12 ${v.status == "pending-delete" ? "hidden" : ""}`} key={i}>
                                 <div className="flex justify-center w-1/4 border-gray-300 border-2 items-center  ">
                                     <span>{v.fecha}</span>
                                 </div>
@@ -66,7 +67,8 @@ export const Month = (props: AccionesProps) => {
 
                                 </div>
                             </div>))}
-                        <div className="w-full flex  justify-start">
+
+                        <div className={`w-full flex  justify-start`}>
                             <div className="w-1/4 border-2 border-gray-600 justify-center flex border-r-0">
                                 <span>Total =</span>
                             </div>
@@ -77,6 +79,8 @@ export const Month = (props: AccionesProps) => {
                                 <span>${ventasTotalDinero}</span>
                             </div>
                         </div>
+
+
                     </div>
                     :
                     <div className="w-full flex justify-center border-2 mt-2 p-2">
