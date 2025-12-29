@@ -33,9 +33,27 @@ export const Record = () => {
 
 
     const eliminarTransaccion = (transaccion: Venta) => {
-        const transBorrado = ventas.filter(v => v !== transaccion)
-        setVentas(transBorrado)
+        if (transaccion.status == "pending-create") {
+            const ventaLocalDelete = ventas.filter(v =>
+                v.id !== transaccion.id
+            )
+            setVentas(ventaLocalDelete)
+            return
+        } else {
+            const transBorrado = ventas.map(v =>
+                v.id == transaccion.id ?
+                    {
+                        ...v,
+                        status: "pending-delete"
+                    } as Venta
+                    : v
+            )
+            setVentas(transBorrado)
+        }
+
     }
+
+
     const eliminarCompra = (compra: Compra) => {
         const compraBorrada = compras.filter(c => c !== compra)
         setCompras(compraBorrada)
@@ -141,21 +159,8 @@ export const Record = () => {
                         </div>
 
                         <div
-                            className="
-    w-[98%]
-    flex flex-col-reverse
-    justify-center
-    items-center
-    gap-4
-
-    absolute bottom-[10vh]
-
-    sm:static
-    sm:flex-row
-    sm:gap-10
-    sm:justify-evenly
-  "
-                        >                            <Button texto="Volver" tipo="button" onClick={() => mostrarCompras || mostrarVentas ? cerrarTablas() : navigate("/")} />
+                            className=" w-[98%] flex flex-col-reverse justify-center items-center gap-4 absolute bottom-[10vh] sm:static sm:flex-row sm:gap-10 sm:justify-evenly "        >
+                            <Button texto="Volver" tipo="button" onClick={() => mostrarCompras || mostrarVentas ? cerrarTablas() : navigate("/")} />
                         </div>
                     </div>
             }
