@@ -10,13 +10,13 @@ export const OnlineContext = createContext<OnlineContextInterface | undefined>(u
 
 export const OnlineProvider = ({ children }: { children: ReactNode }) => {
 
-    const { ventas } = useSell()
+    const { ventas, setVentas } = useSell()
 
-    const [online, setOnline] = useState<boolean>(navigator.onLine)
+    const [online, setOnline] = useState<boolean>(true)
 
 
     useEffect(() => {
-        const handleChange = () => setOnline(navigator.onLine)
+        const handleChange = () => setOnline(true)
         window.addEventListener("online", handleChange)
         window.addEventListener("offline", handleChange)
 
@@ -24,13 +24,12 @@ export const OnlineProvider = ({ children }: { children: ReactNode }) => {
         window.removeEventListener("offline", handleChange)
 
     }, [])
-
+    console.log(online)
 
     useEffect(() => {
         if (online && ventas != undefined) {
             ventas.forEach(async (v) => {
                 if (v.status == "pending-create") {
-                    v.status = "synced"
                     try {
                         const res = await fetch(`${import.meta.env.VITE_API_URL}/sell`, {
                             method: "POST",
@@ -43,6 +42,16 @@ export const OnlineProvider = ({ children }: { children: ReactNode }) => {
                         if (!res.ok) {
                             console.log("Error al enviar la venta a la base de datos", "venta en cuestión:", v)
                         } else {
+
+                            console.log("cambiando el status")
+                            setVentas(prev => {
+                                return prev.map((venta: Venta) => {
+                                    return venta.id === v.id
+                                        ? { ...venta, status: "synced" }
+                                        : venta
+                                })
+                            })
+
                             console.log("Venta agregada a la base de datos exitosamente", v)
                         }
                     } catch (e) {
@@ -51,7 +60,6 @@ export const OnlineProvider = ({ children }: { children: ReactNode }) => {
                 }
 
                 if (v.status == "pending-update") {
-                    v.status = "synced"
                     try {
                         const res = await fetch(`${import.meta.env.VITE_API_URL}/edit/${v.id}`, {
                             method: "PUT",
@@ -62,6 +70,13 @@ export const OnlineProvider = ({ children }: { children: ReactNode }) => {
                         })
                         if (res.ok) {
                             console.log("Venta editada con éxito")
+                            setVentas(prev => {
+                                return prev.map((venta: Venta) => {
+                                    return venta.id === v.id
+                                        ? { ...venta, status: "synced" }
+                                        : venta
+                                })
+                            })
                         }
                     } catch (e) { console.log("Venta editada con error", e) }
                 }
@@ -86,7 +101,7 @@ export const OnlineProvider = ({ children }: { children: ReactNode }) => {
             })
         }
 
-    }, [online, ventas])
+    }, [online])
 
 
 
