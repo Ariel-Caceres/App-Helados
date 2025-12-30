@@ -20,7 +20,7 @@ interface SellContextType {
     registrarVenta: () => void;
     hoy: string,
     precioTotal: number
-    setVentas: (venta: Venta[]) => void;
+    setVentas: React.Dispatch<React.SetStateAction<Venta[]>>;
     setOrden: (orden: string) => void,
     orden: string
 }
