@@ -5,6 +5,8 @@ import { useEffect, useState } from "react"
 import { Button } from "../components/Button"
 import { useOnline } from "../context/useOnline"
 
+
+
 export const Modal = () => {
     const navigate = useNavigate()
     const { precio, cantidad, setPrecio, setCantidad, registrarVenta } = useSell()
@@ -14,11 +16,15 @@ export const Modal = () => {
     const [precioTotal, setPrecioTotal] = useState<string>("")
     const online = useOnline()
 
-
-
     useEffect(() => {
-        if (Number(precioTotal) >= precio) {
-            setCantidad(String(Number(precioTotal) / Number(precio)));
+        if (Number(precioTotal) >= Number(precio)) {
+            const cociente = (Number(precioTotal) / Number(precio))
+            const cocienteEsEntero = Number.isInteger(cociente)
+            if (cocienteEsEntero) {
+                setCantidad(String(cociente))
+            } else {
+                setCantidad(String(cociente));
+            }
         }
         if (precioTotal == "") {
             setCantidad("")
@@ -34,7 +40,6 @@ export const Modal = () => {
         const precioInvalido = Number(precio) <= 0 || !Number.isInteger(Number(precio));
         const cantInvalida = Number(cantidad) <= 0 || !Number.isInteger(Number(cantidad))
         const precioTotalInvalido = !precioTotal || Number(precioTotal) === 0;
-
 
         if (precioInvalido || cantInvalida || precioTotalInvalido) {
             if (precioInvalido) {
@@ -102,7 +107,7 @@ export const Modal = () => {
                             placeholder="Ej. 100$"
                             className={`border-2 pl-2 rounded-xl h-10 bg-white w-2/3 ${cartelPrecio ? "border-4 border-red-700" : ""}`}
                             value={precio}
-                            onChange={(e) => setPrecio(Number(e.target.value))}
+                            onChange={(e) => setPrecio(e.target.value)}
                             required
 
                         />
