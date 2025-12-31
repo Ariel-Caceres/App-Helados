@@ -1,21 +1,14 @@
 
 import { v4 as uuidv4 } from 'uuid';
 import { createContext, useEffect, useState, type ReactNode, } from "react";
-
-export interface Venta {
-    id: string,
-    precio: number;
-    precioTotal: number;
-    cantidad: number;
-    fecha: string;
-    status: "synced" | "pending-create" | "pending-delete" | "pending-update"
-}
+import type { UUID } from '../types/uuid';
+import type { Venta } from '../types/venta.entity';
 
 interface SellContextType {
-    precio: number;
+    precio: string;
     cantidad: string;
     ventas: Venta[];
-    setPrecio: (value: number) => void;
+    setPrecio: (value: string) => void;
     setCantidad: (value: string) => void;
     registrarVenta: () => void;
     hoy: string,
@@ -28,7 +21,7 @@ interface SellContextType {
 export const SellContext = createContext<SellContextType | undefined>(undefined);
 
 export const SellProvider = ({ children }: { children: ReactNode }) => {
-    const [precio, setPrecio] = useState<number>(() => {
+    const [precio, setPrecio] = useState<string>(() => {
         const precioAntiguo = localStorage.getItem("precio")
         if (!precioAntiguo) {
             return 300
@@ -83,8 +76,8 @@ export const SellProvider = ({ children }: { children: ReactNode }) => {
 
     const registrarVenta = () => {
         const nuevaVenta: Venta = {
-            id: uuidv4(),
-            precio: precio,
+            id: uuidv4() as UUID,
+            precio: Number(precio),
             cantidad: Number(cantidad),
             fecha: hoy,
             precioTotal: precioTotal,
