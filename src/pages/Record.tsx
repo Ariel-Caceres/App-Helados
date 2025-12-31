@@ -8,8 +8,8 @@ import { Month } from "../components/Month"
 import { useOnline } from "../context/useOnline"
 import { Button } from "../components/Button"
 import { useBuy } from "../context/useBuy"
-import type { Venta } from "../context/SellContext"
-import type { Compra } from "../context/BuyContext"
+import type { Venta } from "../types/venta.entity"
+import type { Compra } from "../types/compra.entity"
 
 export const Record = () => {
     const { ventas, setVentas, hoy } = useSell()
@@ -55,8 +55,19 @@ export const Record = () => {
 
 
     const eliminarCompra = (compra: Compra) => {
-        const compraBorrada = compras.filter(c => c !== compra)
-        setCompras(compraBorrada)
+        if (compra.status == "pending-create") {
+            const compraLocal = compras.filter(c => c.id != compra.id)
+            setCompras(compraLocal)
+            return
+        }
+        else {
+            const compraBorrada = compras.map(c =>
+                c.id == compra.id ?
+                    { ...c, status: "pending-delete" } as Compra :
+                    c
+            )
+            setCompras(compraBorrada)
+        }
     }
 
     const mesActualConverter: Record<string, () => string> = {
