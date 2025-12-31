@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useSell } from "../context/useSell"
-import type { Venta } from "../context/SellContext"
-import type { Compra } from "../context/BuyContext"
+import type { Venta } from "../types/venta.entity"
+import type { Compra } from "../types/compra.entity"
 import { Button } from "../components/Button"
 import { useBuy } from "../context/useBuy"
 import { useOnline } from "../context/useOnline"
@@ -50,12 +50,13 @@ export const Edit = ({ ventaAEditar, compraAEditar, onClick }: EditProps) => {
 
         if (compraAEditar) {
             const actualizado = compras.map(c =>
-                c === compraAEditar ?
+                c.id === compraAEditar.id ?
                     {
                         ...c,
                         precio: Number(editarPrecioCompra),
-                        cantidad: Number(editarCantidadCompra)
-                    }
+                        cantidad: Number(editarCantidadCompra),
+                        status: compraAEditar.status == "pending-create" ? "pending-create" : "pending-update"
+                    } as Compra
                     : c
 
             )
