@@ -1,11 +1,8 @@
 import { createContext, useEffect, useState, type ReactNode } from "react";
 import { useSell } from "./useSell";
-
-export interface Compra {
-    precio: number;
-    cantidad: number;
-    fecha: string;
-}
+import type { Compra } from "../types/compra.entity";
+import { v4 as uuidv4 } from 'uuid';
+import type { UUID } from "../types/uuid";
 
 interface BuyContextInterface {
     precioCompra: string,
@@ -14,7 +11,7 @@ interface BuyContextInterface {
     setCantidadCompra: (valor: string) => void
     setPrecioCompra: (valor: string) => void
     compras: Compra[]
-    setCompras: (compra: Compra[]) => void
+    setCompras: React.Dispatch<React.SetStateAction<Compra[]>>
 }
 
 
@@ -37,9 +34,11 @@ export const BuyProvider = ({ children }: { children: ReactNode }) => {
 
     const registrarCompra = () => {
         const nuevaCompra: Compra = {
+            id: uuidv4() as UUID,
             fecha: hoy,
             cantidad: Number(cantidadCompra),
-            precio: Number(precioCompra)
+            precio: Number(precioCompra),
+            status: "pending-create"
         }
 
         setCompras([...compras, nuevaCompra])
