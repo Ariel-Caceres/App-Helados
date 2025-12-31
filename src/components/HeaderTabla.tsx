@@ -18,7 +18,6 @@ export const HeaderTabla = () => {
         setOrden(nuevoEstado);
     };
 
-    console.log(orden)
     return (
         <div className="  flex justify-between  " >
             <div className={`w-1/4 border-2  border-r-0 flex justify-evenly ${orden.includes("fecha") ? "bg-red-200" : ""}`} onClick={() => ordenHandler("fecha")}>

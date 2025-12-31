@@ -21,11 +21,11 @@ createRoot(document.getElementById('root')!).render(
 
   <StrictMode>
     <SellProvider>
-      <OnlineProvider>
-        <BuyProvider>
+      <BuyProvider>
+        <OnlineProvider>
           <App />
-        </BuyProvider>
-      </OnlineProvider>
+        </OnlineProvider>
+      </BuyProvider>
     </SellProvider>
   </StrictMode>,
 )
