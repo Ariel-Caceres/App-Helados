@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState, type ReactNode } from "react";
 import { useSell } from "./useSell";
-import type { Venta } from "./SellContext";
+import type { Venta } from "../types/venta.entity";
+import { useBuy } from "./useBuy";
 
 interface OnlineContextInterface {
     online: boolean
@@ -11,12 +12,12 @@ export const OnlineContext = createContext<OnlineContextInterface | undefined>(u
 export const OnlineProvider = ({ children }: { children: ReactNode }) => {
 
     const { ventas, setVentas } = useSell()
-
-    const [online, setOnline] = useState<boolean>(true)
+    const { compras, setCompras } = useBuy()
+    const [online, setOnline] = useState<boolean>(navigator.onLine)
 
 
     useEffect(() => {
-        const handleChange = () => setOnline(true)
+        const handleChange = () => setOnline(navigator.onLine)
         window.addEventListener("online", handleChange)
         window.addEventListener("offline", handleChange)
 
@@ -24,7 +25,6 @@ export const OnlineProvider = ({ children }: { children: ReactNode }) => {
         window.removeEventListener("offline", handleChange)
 
     }, [])
-    console.log(online)
 
     useEffect(() => {
         if (online && ventas != undefined) {
@@ -104,8 +104,82 @@ export const OnlineProvider = ({ children }: { children: ReactNode }) => {
     }, [online])
 
 
+    useEffect(() => {
+        if (online && compras != undefined) {
+            compras.forEach(async (c) => {
+                if (c.status == "pending-create") {
+                    try {
+                        const res = await fetch(`${import.meta.env.VITE_API_URL}/purchase`, {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify(c)
+                        })
+                        if (!res.ok) {
+                            console.log("error al crear compra");
+                        } else {
+                            setCompras(prev => {
+                                return prev.map(p => {
+                                    return p.id == c.id ?
+                                        { ...p, status: "synced" } :
+                                        p
+                                })
+                            })
+                            console.log("Compra creada con éxito");
 
+                        }
+                    } catch (e) {
+                        console.log("error al crear compra", e);
 
+                    }
+                }
+                if (c.status == "pending-update") {
+                    console.log("compra a editar ", c.id)
+                    try {
+                        const res = await fetch(`${import.meta.env.VITE_API_URL}/purchase/${c.id}`, {
+                            method: "PUT",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify(c)
+                        })
+                        if (!res.ok) {
+                            console.log("Error al editar la compra", "compra en cuestión", c);
+
+                        } else {
+                            console.log("Compra editada con éxito", c.id);
+                            setCompras(prev => {
+                                return prev.map(p => {
+                                    return p.id == c.id ?
+                                        { ...p, status: "synced" }
+                                        : p
+                                })
+                            })
+                        }
+                    } catch (e) {
+                        console.log("Error al editar la venta", "venta id:", c.id, e)
+                    }
+
+                }
+                if (c.status == "pending-delete") {
+                    try {
+                        const res = await fetch(`${import.meta.env.VITE_API_URL}/purchase/${c.id}`, {
+                            method: "DELETE"
+                        })
+                        if (!res.ok) {
+                            console.log("Error al eliminar la compra", c.id);
+                        } else {
+                            console.log("Compra eliminada exitosamente", c.id);
+                            const compraBorradaParaSiempre = compras.filter(compra =>
+                                compra.id != c.id
+                            )
+                            setCompras(compraBorradaParaSiempre)
+                        }
+                    } catch (e) {
+                        console.log(e);
+
+                    }
+                }
+            })
+        }
+    }, [online])
 
 
 
