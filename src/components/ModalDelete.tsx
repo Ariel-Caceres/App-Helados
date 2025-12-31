@@ -1,5 +1,5 @@
-import type { Venta } from "../context/SellContext"
-import type { Compra } from "../context/BuyContext"
+import type { Venta } from "../types/venta.entity"
+import type { Compra } from "../types/compra.entity"
 
 type DeleteProps =
     | {

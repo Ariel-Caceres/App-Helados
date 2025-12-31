@@ -1,8 +1,8 @@
 import { useOnline } from "../context/useOnline"
 import { useSell } from "../context/useSell"
-import type { Venta } from "../context/SellContext"
+import type { Venta } from "../types/venta.entity"
 import { HeaderTabla } from "../components/HeaderTabla"
-import type { Compra } from "../context/BuyContext";
+import type { Compra } from "../types/compra.entity";
 import { useBuy } from "../context/useBuy";
 
 
