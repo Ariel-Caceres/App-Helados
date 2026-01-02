@@ -162,7 +162,7 @@ export const Record = () => {
                                                 setModalEliminarCompra={(v) => setModalEliminarCompra(v)}
                                             />
                                             :
-                                            <Month mes={String(mesActual)} tipo="compra" setCompraAEliminar={setCompraAEliminar} setModalEliminarCompra={() => setModalEliminarCompra(true)} setCompraAEditar={setCompraAEditar} />
+                                            <Month tipo="compra" mes={String(mesActual)} setCompraAEliminar={setCompraAEliminar} setModalEliminarCompra={() => setModalEliminarCompra(true)} setCompraAEditar={setCompraAEditar} />
                                         }
                                     </div>
                                 </div>

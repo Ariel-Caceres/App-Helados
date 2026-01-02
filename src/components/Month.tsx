@@ -26,13 +26,14 @@ export const Month = (props: AccionesProps) => {
     const { ventas } = useSell()
     const { compras } = useBuy()
     const online = useOnline()
-    const ventasMes = ventas.filter(v => v.fecha.split("-")[1] === props.mes)
-    const comprasMes = compras.filter(v => v.fecha.split("-")[1] === props.mes)
+    const ventasMes = ventas.filter(v => v.fecha.split("-")[1] === props.mes.padStart(2, "0") && v.status !== "pending-delete")
+    const comprasMes = compras.filter(c => c.fecha.split("-")[1] === props.mes.padStart(2, "0") && c.status !== "pending-delete")
 
     const ventasTotalDinero = ventasMes.reduce((acc, v) => v.status !== "pending-delete" ? acc + v.precioTotal : acc, 0)
     const ventasTotalCantidad = ventasMes.reduce((acc, v) => v.status !== "pending-delete" ? acc + v.cantidad : acc, 0)
-    const comprasTotalDinero = comprasMes.reduce((acc, v) => v.precio ? acc + v.precio : acc + v.precio, 0)
-    const comprasTotalCantidad = comprasMes.reduce((acc, v) => acc + v.cantidad, 0)
+    const comprasTotalDinero = comprasMes.reduce((acc, v) => v.status !== "pending-delete" ? acc + v.precio : acc, 0)
+    const comprasTotalCantidad = comprasMes.reduce((acc, v) => v.status !== "pending-delete" ? acc + v.cantidad : acc, 0)
+
 
 
     return (
@@ -42,7 +43,7 @@ export const Month = (props: AccionesProps) => {
                     <div>
                         <HeaderTabla />
                         {ventasMes.map((v, i) => (
-                            <div className={`flex justify-between min-h-12 ${v.status == "pending-delete" ? "hidden" : ""}`} key={i}>
+                            <div className={`flex justify-between min-h-12`} key={i}>
                                 <div className="flex justify-center w-1/4 border-gray-300 border-2 items-center  ">
                                     <span>{v.fecha}</span>
                                 </div>
