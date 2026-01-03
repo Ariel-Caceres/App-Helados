@@ -31,7 +31,7 @@ export const OnlineProvider = ({ children }: { children: ReactNode }) => {
             ventas.forEach(async (v) => {
                 if (v.status == "pending-create") {
                     try {
-                        const res = await fetch(`${import.meta.env.VITE_API_URL}/sell`, {
+                        const res = await fetch(`${import.meta.env.VITE_API_URL}/sales`, {
                             method: "POST",
                             headers: {
                                 "Content-Type": "application/json"
@@ -61,7 +61,7 @@ export const OnlineProvider = ({ children }: { children: ReactNode }) => {
 
                 if (v.status == "pending-update") {
                     try {
-                        const res = await fetch(`${import.meta.env.VITE_API_URL}/edit/${v.id}`, {
+                        const res = await fetch(`${import.meta.env.VITE_API_URL}/sales/${v.id}`, {
                             method: "PUT",
                             headers: {
                                 "Content-type": "application/json"
@@ -83,7 +83,7 @@ export const OnlineProvider = ({ children }: { children: ReactNode }) => {
 
                 if (v.status == "pending-delete") {
                     try {
-                        const res = await fetch(`${import.meta.env.VITE_API_URL}/delete/${v.id}`, {
+                        const res = await fetch(`${import.meta.env.VITE_API_URL}/sales/${v.id}`, {
                             method: "DELETE"
                         })
                         if (!res.ok) {
@@ -109,7 +109,7 @@ export const OnlineProvider = ({ children }: { children: ReactNode }) => {
             compras.forEach(async (c) => {
                 if (c.status == "pending-create") {
                     try {
-                        const res = await fetch(`${import.meta.env.VITE_API_URL}/purchase`, {
+                        const res = await fetch(`${import.meta.env.VITE_API_URL}/purchases`, {
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
                             body: JSON.stringify(c)
@@ -135,7 +135,7 @@ export const OnlineProvider = ({ children }: { children: ReactNode }) => {
                 if (c.status == "pending-update") {
                     console.log("compra a editar ", c.id)
                     try {
-                        const res = await fetch(`${import.meta.env.VITE_API_URL}/purchase/${c.id}`, {
+                        const res = await fetch(`${import.meta.env.VITE_API_URL}/purchases/${c.id}`, {
                             method: "PUT",
                             headers: { "Content-Type": "application/json" },
                             body: JSON.stringify(c)
@@ -160,7 +160,7 @@ export const OnlineProvider = ({ children }: { children: ReactNode }) => {
                 }
                 if (c.status == "pending-delete") {
                     try {
-                        const res = await fetch(`${import.meta.env.VITE_API_URL}/purchase/${c.id}`, {
+                        const res = await fetch(`${import.meta.env.VITE_API_URL}/purchases/${c.id}`, {
                             method: "DELETE"
                         })
                         if (!res.ok) {
