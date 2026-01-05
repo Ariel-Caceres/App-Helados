@@ -16,26 +16,6 @@ export const Home = () => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     return (
         <div className="w-full  max-w-3xl mx-auto  flex mt-[5vh]  flex-col gap-10 px-2 overflow-hidden ">
 
@@ -107,7 +87,7 @@ export const Home = () => {
     items-center
     gap-4
 
-    absolute bottom-[10vh]
+    absolute bottom-[5vh]
 
     sm:static
     sm:flex-row
