@@ -5,6 +5,7 @@ import { useOnline } from "../context/useOnline"
 import { Button } from "../components/Button"
 
 
+
 export const Home = () => {
     const navigate = useNavigate()
     const { ventas, hoy } = useSell()
@@ -14,7 +15,6 @@ export const Home = () => {
     })
     const DineroHoy = ventasHoy.reduce((acc, v) => v.status !== "pending-delete" ? acc + v.precioTotal : acc, 0)
     const ventasHoyCant = ventasHoy.reduce((acc, va) => va.status !== "pending-delete" ? acc + va.cantidad : acc, 0);
-
 
     return (
         <div className="w-full  max-w-3xl mx-auto  flex mt-[5vh]  flex-col gap-10 px-2 overflow-hidden ">
@@ -28,7 +28,7 @@ export const Home = () => {
                     <div className="text-2xl whitespace-nowrap md:text-3xl font-medium">
                         {online ? <i className="fa-solid fa-chart-simple"></i> : "📊"}
                         <span>
-                            Panel
+                            Panel diario
                         </span>
                     </div>
 
@@ -40,10 +40,10 @@ export const Home = () => {
                     </div>
                 </div>
 
-                <div className="w-full flex flex-col md:flex-row justify-evenly gap-4 mt-16 px-2">
+                <div className="w-full flex flex-row md:flex-row justify-evenly gap-4 mt-16 px-2">
 
                     {/* Venta hoy */}
-                    <div className="w-full md:w-1/3  
+                    <div className="w-1/2 md:w-1/3  
           bg-[#FFBFA0] 
           min-h-32 md:h-40 
           rounded-2xl flex flex-col 
@@ -63,7 +63,7 @@ export const Home = () => {
 
                     {/* Dinero hoy */}
                     <div className="
-          w-full md:w-1/3  
+          w-1/2 md:w-1/3  
           bg-[#87F6FF] 
           min-h-32 md:h-40 
           rounded-2xl flex flex-col 
@@ -81,6 +81,15 @@ export const Home = () => {
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div className="w-full border bg-[#DAF5FF] rounded-2xl flex  flex-col justify-evenly relative py-6 max-h-[30vh] overflow-auto">
+                {ventas.map((v, i) => (
+                    <pre key={i} className="bg-red-300 p-2 text-xs overflow-x-auto">
+                        {JSON.stringify(v, null, 2)}
+                    </pre>
+                ))}
+
             </div>
 
             <div
