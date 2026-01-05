@@ -8,7 +8,7 @@ import { useState } from "react";
 export const Buy = () => {
     const navigate = useNavigate()
     const { online } = useOnline()
-    const { setPrecioCompra, setCantidadCompra, precioCompra, cantidadCompra, registrarCompra } = useBuy()
+    const { setPrecioCompra, setCantidadCompra, precioCompra, cantidadCompra, registrarCompra, setProducto, producto } = useBuy()
     const [cantidadInvalida, setCantidadInvalida] = useState<boolean>(false)
     const [precioInvalido, setPrecioInvalido] = useState<boolean>(false)
 
@@ -53,6 +53,16 @@ export const Buy = () => {
 
                 <form className="w-full sm:w-2/3 lg:w-1/2  flex flex-col items-center gap-5 py-10 justify-between" onSubmit={(e) => { e.preventDefault(); autCompra(precioCompra, cantidadCompra) }}>
 
+                    <div className="w-full flex bg-[#FFD3BE] h-20 justify-between px-4 items-center rounded-2xl border-2" >
+                        <label htmlFor="producto">Producto</label>
+                        <select name="producto" id="producto" className={`border-2 pl-2 rounded-xl h-10 bg-white w-2/3 `} value={producto} onChange={(e) => setProducto(e.target.value)}>
+                            <option value="helado">Helado</option>
+                            <option value="pollo-trozado">Pollo trozado</option>
+                            <option value="carne-picada">Carne picada</option>
+                            <option value="hielo">Fokin hielo</option>
+                        </select>
+                    </div>
+
                     <div className="w-full flex bg-[#FFD3BE] h-20 justify-between px-4 items-center rounded-2xl border-2">
                         <label htmlFor="cantidad" className="text-lg sm:text-2xl font-medium w-1/3">Cantidad:</label>
                         <input
@@ -80,6 +90,7 @@ export const Buy = () => {
                         />
                     </div>
 
+
                     <div
                         className="
     w-full
@@ -88,7 +99,7 @@ export const Buy = () => {
     items-center
     gap-4
 
-    absolute bottom-[10vh]
+    absolute bottom-[5vh]
 
     sm:static
     sm:flex-row

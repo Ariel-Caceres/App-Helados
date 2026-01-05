@@ -4,42 +4,45 @@ import { useSell } from "../context/useSell"
 import { useEffect, useState } from "react"
 import { Button } from "../components/Button"
 import { useOnline } from "../context/useOnline"
+import type { Producto } from "../context/SellContext"
 
 
 
 export const Modal = () => {
     const navigate = useNavigate()
-    const { precio, cantidad, setPrecio, setCantidad, registrarVenta } = useSell()
+    const { precios, cantidad, setPrecios, setCantidad, registrarVenta, producto, setProducto } = useSell()
     const [cartelPrecioTotal, setCartelPrecioTotal] = useState<boolean>(false)
     const [cartelPrecio, setCartelPrecio] = useState<boolean>(false)
     const [cartelCantidad, setCartelCantidad] = useState<boolean>(false)
     const [precioTotal, setPrecioTotal] = useState<string>("")
     const online = useOnline()
+    const [modoCalculo, setModoCalculo] = useState<"cantidad" | "total">("cantidad");
 
-    useEffect(() => {
-        if (Number(precioTotal) >= Number(precio)) {
-            const cociente = (Number(precioTotal) / Number(precio))
-            const cocienteEsEntero = Number.isInteger(cociente)
-            if (cocienteEsEntero) {
-                setCantidad(String(cociente))
-            } else {
-                setCantidad(String(cociente));
-            }
-        }
-        if (precioTotal == "") {
-            setCantidad("")
-        }
-    }, [precioTotal, precio]);
+    // useEffect(() => {
+    //     if (Number(precioTotal) >= Number(precios[producto])) {
+    //         const cociente = (Number(precioTotal) / Number(precios[producto]))
+    //         const cocienteEsEntero = Number.isInteger(cociente)
+    //         if (cocienteEsEntero) {
+    //             setCantidad(String(cociente))
+    //         } else {
+    //             setCantidad(String(cociente));
+    //         }
+    //     }
+    //     if (precioTotal == "") {
+    //         setCantidad("")
+    //     }
+    // }, [precioTotal, precios]);
 
-    useEffect(() => {
-        setPrecioTotal(String(Number(precio) * Number(cantidad)));
-    }, [cantidad, precio]);
+    // useEffect(() => {
+    //     setPrecioTotal(String(Number(precios[producto]) * Number(cantidad)));
+    // }, [cantidad, precios]);
 
 
     const auth = (precio: string, cantidad: string) => {
         const precioInvalido = Number(precio) <= 0 || !Number.isInteger(Number(precio));
         const cantInvalida = Number(cantidad) <= 0 || !Number.isInteger(Number(cantidad))
         const precioTotalInvalido = !precioTotal || Number(precioTotal) === 0;
+        console.log(cantInvalida);
 
         if (precioInvalido || cantInvalida || precioTotalInvalido) {
             if (precioInvalido) {
@@ -63,13 +66,34 @@ export const Modal = () => {
     }
 
     const cancelar = () => {
-        setPrecio(precio);
         setCantidad("");
         navigate("/")
     }
 
+    useEffect(() => {
+        setCantidad("");
+        setPrecioTotal("");
+    }, [producto]);
 
 
+    useEffect(() => {
+        const precioUnitario = precios[producto];
+        if (!precioUnitario) return;
+
+        if (modoCalculo === "cantidad") {
+            setPrecioTotal(
+                cantidad ? String(precioUnitario * Number(cantidad)) : ""
+            );
+        }
+
+        if (modoCalculo === "total") {
+            setCantidad(
+                precioTotal ? String(Number(precioTotal) / precioUnitario) : ""
+            );
+        }
+    }, [cantidad, precioTotal, producto, precios, modoCalculo]);
+
+    console.log(precioTotal);
 
     return (
 
@@ -84,7 +108,18 @@ export const Modal = () => {
                 </div>
 
 
-                <form className="w-full sm:w-2/3 lg:w-1/2  flex flex-col items-center gap-5 py-10 justify-between" action="" onSubmit={(e) => { e.preventDefault(); auth(String(precio), cantidad) }}>
+                <form className="w-full sm:w-2/3 lg:w-1/2  flex flex-col items-center gap-5 py-10 justify-between" action="" onSubmit={(e) => { e.preventDefault(); auth(String(precios[producto]), cantidad) }}>
+
+                    <div className="w-full flex bg-[#B1F6FF] h-20 justify-between px-4 items-center rounded-2xl border-2">
+                        <label htmlFor="producto" className={`text-lg sm:text-2xl font-medium w-1/3 `}>Producto:</label>
+                        <select name="producto" id="producto" className={`border-2 pl-2 rounded-xl h-10 bg-white w-2/3 ${cartelCantidad ? "border-4 border-red-700" : ""}`}
+                            onChange={(e) => setProducto(e.target.value as Producto)} value={producto}>
+                            <option value="helado">Helado</option>
+                            <option value="pollo-trozado">Pollo trozado</option>
+                            <option value="carne-picada">Carne picada</option>
+                            <option value="hielo">Fokin hielo</option>
+                        </select>
+                    </div>
 
                     <div className="w-full flex bg-[#B1F6FF] h-20 justify-between px-4 items-center rounded-2xl border-2">
                         <label htmlFor="cantidad" className="text-lg sm:text-2xl font-medium w-1/3">Cantidad:</label>
@@ -94,7 +129,7 @@ export const Modal = () => {
                             placeholder="Ej. 1"
                             className={`border-2 pl-2 rounded-xl h-10 bg-white w-2/3 ${cartelCantidad ? "border-4 border-red-700" : ""}`}
                             value={cantidad}
-                            onChange={(e) => setCantidad(e.target.value)}
+                            onChange={(e) => { setCantidad(e.target.value); setModoCalculo("cantidad") }}
                             required
                         />
                     </div>
@@ -102,15 +137,22 @@ export const Modal = () => {
                     <div className="w-full flex bg-[#B1F6FF] h-20 justify-between px-4 items-center rounded-2xl border-2">
                         <label htmlFor="precio" className={`text-lg sm:text-2xl font-medium w-1/3 `}>Precio:</label>
                         <input
+                            className={`border-2 pl-2 rounded-xl h-10 bg-white w-2/3 ${cartelPrecio ? "border-4 border-red-700" : ""}`}
+                            required
                             type="number"
                             id="precio"
-                            placeholder="Ej. 100$"
-                            className={`border-2 pl-2 rounded-xl h-10 bg-white w-2/3 ${cartelPrecio ? "border-4 border-red-700" : ""}`}
-                            value={precio}
-                            onChange={(e) => setPrecio(e.target.value)}
-                            required
+                            value={precios[producto] != 0 ? precios[producto] : ""}
+                            onChange={(e) => {
+                                const nuevoPrecio = Number(e.target.value);
 
+                                setPrecios(prev => ({
+                                    ...prev,
+                                    [producto]: nuevoPrecio
+                                }));
+                            }}
                         />
+
+
                     </div>
 
                     <div className="w-full flex bg-[#B1F6FF] h-20 justify-between px-4 items-center rounded-2xl border-2">
@@ -121,7 +163,7 @@ export const Modal = () => {
                             placeholder="Ej. 100$"
                             className={`border-2 pl-2 rounded-xl h-10 bg-white w-2/3 ${cartelPrecioTotal ? "border-4 border-red-700" : ""}`}
                             value={Number(precioTotal) != 0 ? precioTotal : ""}
-                            onChange={(e) => setPrecioTotal((e.target.value))}
+                            onChange={(e) => { setPrecioTotal(e.target.value); setModoCalculo("total") }}
 
                         />
                     </div>
@@ -135,7 +177,7 @@ export const Modal = () => {
     items-center
     gap-4
 
-    absolute bottom-[10vh]
+    absolute bottom-[5vh]
 
     sm:static
     sm:flex-row
