@@ -12,6 +12,8 @@ interface BuyContextInterface {
     setPrecioCompra: (valor: string) => void
     compras: Compra[]
     setCompras: React.Dispatch<React.SetStateAction<Compra[]>>
+    producto: string,
+    setProducto: (valor: string) => void
 }
 
 
@@ -20,6 +22,7 @@ export const BuyContext = createContext<BuyContextInterface | undefined>(undefin
 export const BuyProvider = ({ children }: { children: ReactNode }) => {
     const [precioCompra, setPrecioCompra] = useState<string>("")
     const [cantidadCompra, setCantidadCompra] = useState<string>("")
+    const [producto, setProducto] = useState<string>("")
     const { hoy } = useSell()
 
     const [compras, setCompras] = useState<Compra[]>(() => {
@@ -34,6 +37,7 @@ export const BuyProvider = ({ children }: { children: ReactNode }) => {
 
     const registrarCompra = () => {
         const nuevaCompra: Compra = {
+            producto: producto,
             id: uuidv4() as UUID,
             fecha: hoy,
             cantidad: Number(cantidadCompra),
@@ -59,7 +63,9 @@ export const BuyProvider = ({ children }: { children: ReactNode }) => {
             setCantidadCompra,
             setPrecioCompra,
             compras,
-            setCompras
+            setCompras,
+            producto,
+            setProducto
         }} >
             {children}
         </BuyContext.Provider>
