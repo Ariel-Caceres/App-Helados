@@ -3,31 +3,43 @@ import { v4 as uuidv4 } from 'uuid';
 import { createContext, useEffect, useState, type ReactNode, } from "react";
 import type { UUID } from '../types/uuid';
 import type { Venta } from '../types/venta.entity';
+export type Producto = "helado" | "pollo-trozado" | "carne-picada" | "hielo"
+
+export type Precios = Record<Producto, number>;
 
 interface SellContextType {
-    precio: string;
+    precios: Precios;
     cantidad: string;
     ventas: Venta[];
-    setPrecio: (value: string) => void;
+    setPrecios: React.Dispatch<React.SetStateAction<Precios>>
     setCantidad: (value: string) => void;
     registrarVenta: () => void;
-    hoy: string,
-    precioTotal: number
+    hoy: string;
+    precioTotal: number;
     setVentas: React.Dispatch<React.SetStateAction<Venta[]>>;
-    setOrden: (orden: string) => void,
-    orden: string
+    setOrden: (orden: string) => void;
+    orden: string;
+    producto: Producto;
+    setProducto: (value: Producto) => void;
 }
+
 
 export const SellContext = createContext<SellContextType | undefined>(undefined);
 
 export const SellProvider = ({ children }: { children: ReactNode }) => {
-    const [precio, setPrecio] = useState<string>(() => {
-        const precioAntiguo = localStorage.getItem("precio")
-        if (!precioAntiguo) {
-            return 300
+    const [precios, setPrecios] = useState<Precios>(() => {
+        const guardado = localStorage.getItem("precios");
+        if (!guardado) {
+            return {
+                helado: 300,
+                "pollo-trozado": 2700,
+                "carne-picada": 2000,
+                "hielo": 500
+            };
         }
-        return JSON.parse(precioAntiguo)
+        return JSON.parse(guardado);
     });
+
     const [cantidad, setCantidad] = useState<string>("");
     const [orden, setOrden] = useState("")
     const [ventas, setVentas] = useState<Venta[]>(() => {
@@ -43,8 +55,7 @@ export const SellProvider = ({ children }: { children: ReactNode }) => {
         return []
 
     });
-    // const [ventasDb, setVentasDb] = useState()
-    const precioTotal = (Number(precio) * Number(cantidad))
+    const [producto, setProducto] = useState<Producto>("helado")
     const d = new Date();
     const año = d.getFullYear();
     const mes = String(d.getMonth() + 1).padStart(2, "0");
@@ -74,10 +85,16 @@ export const SellProvider = ({ children }: { children: ReactNode }) => {
 
     }, [orden])
 
+    const productoFinal = producto ?? "helado";
+    const precioUnitario = precios[productoFinal];
+    const precioTotal = precioUnitario * Number(cantidad);
+
+
     const registrarVenta = () => {
         const nuevaVenta: Venta = {
+            producto: producto,
             id: uuidv4() as UUID,
-            precio: Number(precio),
+            precio: Number(precioUnitario),
             cantidad: Number(cantidad),
             fecha: hoy,
             precioTotal: precioTotal,
@@ -87,51 +104,42 @@ export const SellProvider = ({ children }: { children: ReactNode }) => {
 
         setVentas([...ventas, nuevaVenta]);
 
-        setPrecio(precio);
+        setPrecios(precios);
         setCantidad("");
     };
 
-    // useEffect(() => {
-    //     const traerVentasDb = async (mes: string) => {
-    //         try {
-    //             const res = await fetch(`${import.meta.env.VITE_API_URL}/sales/${mes}`)
-    //             if (!res.ok) {
-    //                 console.log("Error al traer los productos de la base de datos")
-    //             } else {
-    //                 console.log("Fetch exitoso")
-    //             }
-    //             const data = await res.json()
-    //             setVentasDb(data)
-    //         } catch (e) {
-    //             console.log("Error al traer los productos de la base de datos", e)
-    //         }
-    //     }
-    //     traerVentasDb(mes)
-    // }, [])
+
 
     useEffect(() => {
         localStorage.setItem("ventas", JSON.stringify(ventas))
     }, [ventas])
 
     useEffect(() => {
-        localStorage.setItem("precio", JSON.stringify(precio));
-    }, [precio]);
+        localStorage.setItem("precios", JSON.stringify(precios));
+    }, [precios]);
+
+
+
+
+
 
 
     return (
         <SellContext.Provider
             value={{
-                precio,
+                precios,
                 cantidad,
                 ventas,
-                setPrecio,
+                setPrecios,
                 setCantidad,
                 registrarVenta,
                 hoy,
                 setVentas,
                 precioTotal,
                 orden,
-                setOrden
+                setOrden,
+                producto,
+                setProducto
             }}
         >
             {children}
