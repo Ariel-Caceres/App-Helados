@@ -85,7 +85,7 @@ export const Home = () => {
 
             <div className="w-full border bg-[#DAF5FF] rounded-2xl flex  flex-col justify-evenly relative py-6 max-h-[30vh] overflow-auto">
                 {ventas.map((v, i) => (
-                    <pre key={i} className="bg-red-300 p-2 text-xs overflow-x-auto">
+                    <pre key={i} className="bg-red-300 p-2 w-10 text-xs overflow-x-auto">
                         {JSON.stringify(v, null, 2)}
                     </pre>
                 ))}
