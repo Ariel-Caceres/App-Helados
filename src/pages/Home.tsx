@@ -21,7 +21,7 @@ export const Home = () => {
 
             <Header />
 
-            <div className="w-full border bg-[#DAF5FF] rounded-2xl flex  flex-col justify-evenly relative py-6">
+            <div className="w-full border hidden bg-[#DAF5FF] rounded-2xl flex  flex-col justify-evenly relative py-6">
 
                 <div className="absolute border top-0 left-0 gap-x-10 gap-y-3 right-0 flex flex-wrap w-full  items-center justify-between   bg-amber-200 rounded-2xl px-6 py-4 ">
 
