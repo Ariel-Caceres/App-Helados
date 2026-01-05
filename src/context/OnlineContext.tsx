@@ -16,6 +16,7 @@ export const OnlineProvider = ({ children }: { children: ReactNode }) => {
     const [online, setOnline] = useState<boolean>(navigator.onLine)
 
 
+
     useEffect(() => {
         const handleChange = () => setOnline(navigator.onLine)
         window.addEventListener("online", handleChange)

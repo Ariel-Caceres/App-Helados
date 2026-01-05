@@ -27,8 +27,6 @@ export const Record = () => {
     const [mostrarCompras, setMostrarCompras] = useState<boolean>(false)
     const cerrarTablas = () => { setMostrarCompras(false); setMostrarVentas(false) }
     const [compraAEliminar, setCompraAEliminar] = useState<Compra>()
-
-
     const [mesActual, setMesActual] = useState(Number(hoy.split("-")[1]))
 
 
@@ -52,7 +50,6 @@ export const Record = () => {
         }
 
     }
-
 
     const eliminarCompra = (compra: Compra) => {
         if (compra.status == "pending-create") {
@@ -170,7 +167,7 @@ export const Record = () => {
                         </div>
 
                         <div
-                            className=" w-[98%] flex flex-col-reverse justify-center items-center gap-4 absolute bottom-[10vh] sm:static sm:flex-row sm:gap-10 sm:justify-evenly "        >
+                            className=" w-[98%] flex flex-col-reverse justify-center items-center gap-4 absolute bottom-[5vh] sm:static sm:flex-row sm:gap-10 sm:justify-evenly "        >
                             <Button texto="Volver" tipo="button" onClick={() => mostrarCompras || mostrarVentas ? cerrarTablas() : navigate("/")} />
                         </div>
                     </div>
