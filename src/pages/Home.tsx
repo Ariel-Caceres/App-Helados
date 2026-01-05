@@ -3,7 +3,6 @@ import { Header } from "../components/Header"
 import { useSell } from "../context/useSell"
 import { useOnline } from "../context/useOnline"
 import { Button } from "../components/Button"
-import { MonthResume } from "../components/MonthResume"
 
 export const Home = () => {
     const navigate = useNavigate()
