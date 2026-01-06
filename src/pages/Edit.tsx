@@ -13,7 +13,7 @@ type EditProps =
 
 export const Edit = ({ ventaAEditar, compraAEditar, onClick }: EditProps) => {
     const { ventas, setVentas } = useSell()
-    const online = useOnline()
+    const { online } = useOnline()
     const { compras, setCompras } = useBuy()
     const [editarPrecio, setEditarPrecio] = useState<string>(String(ventaAEditar?.precio))
     const [editarPrecioCompra, setEditarPrecioCompra] = useState<string>(String(compraAEditar?.precio))

@@ -7,7 +7,7 @@ import { Button } from "../components/Button"
 export const Home = () => {
     const navigate = useNavigate()
     const { ventas, hoy } = useSell()
-    const online = useOnline()
+    const { online } = useOnline()
     const ventasHoy = ventas.filter(v => {
         return v.fecha.split("-")[2] == hoy.split("-")[2]
     })

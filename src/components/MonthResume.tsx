@@ -8,7 +8,7 @@ export const MonthResume = () => {
     const navigate = useNavigate()
     const { ventas, hoy } = useSell()
     const { compras } = useBuy()
-    const online = useOnline()
+    const { online } = useOnline()
 
     const ventasMes = ventas.filter(v => v.fecha.split("-")[1] === hoy.split("-")[1].padStart(2, "0") && v.status !== "pending-delete")
     const comprasMes = compras.filter(c => c.fecha.split("-")[1] === hoy.split("-")[1].padStart(2, "0") && c.status !== "pending-delete")

@@ -41,7 +41,6 @@ export const SellProvider = ({ children }: { children: ReactNode }) => {
     });
 
     const [cantidad, setCantidad] = useState<string>("");
-    const [orden, setOrden] = useState("")
     const [ventas, setVentas] = useState<Venta[]>(() => {
         const data = (localStorage.getItem("ventas"))
         if (data) {
@@ -62,28 +61,7 @@ export const SellProvider = ({ children }: { children: ReactNode }) => {
     const dia = String(d.getDate()).padStart(2, "0");
     const hoy = `${año}-${mes}-${dia}`;
 
-    useEffect(() => {
 
-        const ventasOrdenadas = ventas.sort((a, b) =>
-            orden == "cantidad Des" ?
-                Number(a.cantidad) - Number(b.cantidad) :
-                orden == "cantidad Asd" ?
-                    Number(b.cantidad) - Number(a.cantidad) :
-                    orden == "precioTotal Des" ?
-                        Number(a.precioTotal) - Number(b.precioTotal) :
-                        orden == "precioTotal Asd" ?
-                            Number(b.precioTotal) - Number(a.precioTotal) :
-                            orden == "fecha Asd" ?
-                                Number(a.fecha.split("-")[2]) - Number(b.fecha.split("-")[2]) :
-                                orden == "fecha Des" ?
-                                    Number(b.fecha.split("-")[2]) - Number(a.fecha.split("-")[2]) :
-                                    Number(a.fecha.split("-")[2]) - Number(b.fecha.split("-")[2])
-
-
-        )
-        setVentas(ventasOrdenadas)
-
-    }, [orden])
 
     const productoFinal = producto ?? "helado";
     const precioUnitario = precios[productoFinal];
@@ -136,8 +114,6 @@ export const SellProvider = ({ children }: { children: ReactNode }) => {
                 hoy,
                 setVentas,
                 precioTotal,
-                orden,
-                setOrden,
                 producto,
                 setProducto
             }}
