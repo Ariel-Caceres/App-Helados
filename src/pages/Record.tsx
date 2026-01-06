@@ -96,15 +96,15 @@ export const Record = () => {
                     <div>
                         <div className={`w-full border-l border-r border-b rounded-2xl flex flex-col  relative  mb-10`}>
 
-                            <div className="border  gap-y-3 gap-x-20 right-0 flex flex-wrap w-full justify-center items-center md:justify-between sm:justify-start   bg-amber-200 rounded-2xl px-6 py-2 ">
-                                <div className="text-2xl whitespace-nowrap md:text-3xl font-medium ">
+                            <div className="border  gap-y-3  right-0 flex  w-full justify-between items-center md:justify-between sm:justify-between    bg-amber-200 rounded-2xl px-6 py-2 ">
+                                <div className="text-md whitespace-nowrap md:text-xl sm:text-md xl:text-3xl font-medium ">
                                     {online ? <i className="fa-regular fa-calendar-days py-3"></i> : "📆"}
                                     <span className=""> Historial:</span>
                                     {mostrarCompras ? " Compras" : mostrarVentas ? " Ventas" : ""}
                                 </div>
 
                                 {(mostrarCompras || mostrarVentas) &&
-                                    <div className="flex justify-center items-center text-3xl gap-4">
+                                    <div className="flex justify-center items-center md:text-xl xl:text-3xl  text-xl gap-4">
                                         <div className="flex justify-center items-center shrink-0">
                                             <span>{mesActualConverter[String(mesActual).padStart(2, "0")]()}</span>
                                         </div>
