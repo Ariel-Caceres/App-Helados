@@ -15,7 +15,7 @@ export const Modal = () => {
     const [cartelPrecio, setCartelPrecio] = useState<boolean>(false)
     const [cartelCantidad, setCartelCantidad] = useState<boolean>(false)
     const [precioTotal, setPrecioTotal] = useState<string>("")
-    const online = useOnline()
+    const { online } = useOnline()
     const [modoCalculo, setModoCalculo] = useState<"cantidad" | "total">("cantidad");
 
     // useEffect(() => {
