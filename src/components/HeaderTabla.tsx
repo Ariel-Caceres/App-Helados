@@ -23,6 +23,9 @@ export const HeaderTabla = () => {
             <div className={`w-1/4 border-2  border-r-0 flex justify-evenly ${orden.includes("fecha") ? "bg-red-200" : ""}`} onClick={() => ordenHandler("fecha")}>
                 <span className="pl-2 text-xl font-bold">Fecha</span>
             </div>
+            <div className="w-1/4 border-2 ">
+                <span className="pl-2 text-xl font-bold">Producto</span>
+            </div>
             <div className="w-1/4 border-2 border-r-0" onClick={() => ordenHandler("cantidad")}>
                 <span className="pl-1 text-xl font-bold">Cantidad</span>
             </div>
@@ -32,6 +35,8 @@ export const HeaderTabla = () => {
             <div className="w-1/4 border-2 ">
                 <span className="pl-2 text-xl font-bold">Acciones</span>
             </div>
+
+
 
         </div>
 
