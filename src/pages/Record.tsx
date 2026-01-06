@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom"
 import { Header } from "../components/Header"
 import { Edit } from "./Edit"
 import { useSell } from "../context/useSell"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { ModalDelete } from "../components/ModalDelete"
 import { Month } from "../components/Month"
 import { useOnline } from "../context/useOnline"
@@ -22,13 +22,20 @@ export const Record = () => {
     const [mostrarModalEliminarCompra, setModalEliminarCompra] = useState<boolean>(false)
     const vaciarVentaAEditar = () => setVentaAEditar(undefined)
     const vaciarCompraAEditar = () => setCompraAEditar(undefined)
-    const online = useOnline()
+    const { online } = useOnline()
     const [mostrarVentas, setMostrarVentas] = useState<boolean>(false)
     const [mostrarCompras, setMostrarCompras] = useState<boolean>(false)
     const cerrarTablas = () => { setMostrarCompras(false); setMostrarVentas(false) }
     const [compraAEliminar, setCompraAEliminar] = useState<Compra>()
     const [mesActual, setMesActual] = useState(Number(hoy.split("-")[1]))
+    const [productoAFiltrar, setProductoAFiltrar] = useState<string>("todos")
+    const [animar, setAnimar] = useState<boolean>(false)
 
+    useEffect(() => {
+        if (productoAFiltrar != "todos") {
+            setAnimar(true)
+        }
+    }, [productoAFiltrar])
 
     const eliminarTransaccion = (transaccion: Venta) => {
         if (transaccion.status == "pending-create") {
@@ -64,6 +71,16 @@ export const Record = () => {
                     c
             )
             setCompras(compraBorrada)
+        }
+    }
+
+    const volver = () => {
+        if (mostrarCompras || mostrarVentas) {
+            cerrarTablas()
+            setProductoAFiltrar("todos")
+            setAnimar(false)
+        } else {
+            navigate("/")
         }
     }
 
@@ -142,7 +159,7 @@ export const Record = () => {
                                                 setModalEliminar={(v) => setModalEliminar(v)}
                                             />
                                             :
-                                            <Month tipo="venta" mes={String(mesActual)} setModalEliminar={() => setModalEliminar(true)} setTransaccion={setTransaccion} setVentaAEditar={setVentaAEditar} />
+                                            <Month tipo="venta" mes={String(mesActual)} productoAFitrar={productoAFiltrar} setModalEliminar={() => setModalEliminar(true)} setTransaccion={setTransaccion} setVentaAEditar={setVentaAEditar} />
                                         }
                                     </div>
                                 </div>
@@ -159,16 +176,31 @@ export const Record = () => {
                                                 setModalEliminarCompra={(v) => setModalEliminarCompra(v)}
                                             />
                                             :
-                                            <Month tipo="compra" mes={String(mesActual)} setCompraAEliminar={setCompraAEliminar} setModalEliminarCompra={() => setModalEliminarCompra(true)} setCompraAEditar={setCompraAEditar} />
+                                            <Month tipo="compra" mes={String(mesActual)} productoAFitrar={productoAFiltrar} setCompraAEliminar={setCompraAEliminar} setModalEliminarCompra={() => setModalEliminarCompra(true)} setCompraAEditar={setCompraAEditar} />
                                         }
                                     </div>
                                 </div>
                             }
                         </div>
+                        {(mostrarVentas || mostrarCompras) &&
+                            <div className="w-[98%]  flex justify-center absolute sm:static sm:mb-5  bottom-[20vh]">
+                                <div className="relative w-44 sm:w-1/4 border-2 rounded-xl  flex justify-center items-center text-md">
+                                    <i className={`fa-solid fa-filter absolute left-3 text-xl ${animar ? "animate-bounce text-red-600" : ""}`}></i>
+                                    <select name="select" id="select" className=" text-center appearance-none p-2  focus:animate-pulse h-full outline-0 w-full"
+                                        onChange={(e) => setProductoAFiltrar(e.target.value)}
+                                    >
+                                        <option value="todos" className="p-2">Todos</option>
+                                        <option value="helado" className="p-2">Helados</option>
+                                        <option value="carne-picada" className="p-2">Carne Picada</option>
+                                        <option value="pollo-trozado" className="p-9 flex">Pollo Trozado</option>
+                                    </select>
+                                </div>
+                            </div>
+                        }
 
                         <div
                             className=" w-[98%] flex flex-col-reverse justify-center items-center gap-4 absolute bottom-[5vh] sm:static sm:flex-row sm:gap-10 sm:justify-evenly "        >
-                            <Button texto="Volver" tipo="button" onClick={() => mostrarCompras || mostrarVentas ? cerrarTablas() : navigate("/")} />
+                            <Button texto="Volver" tipo="button" onClick={() => volver()} />
                         </div>
                     </div>
             }
