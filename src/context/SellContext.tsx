@@ -17,8 +17,7 @@ interface SellContextType {
     hoy: string;
     precioTotal: number;
     setVentas: React.Dispatch<React.SetStateAction<Venta[]>>;
-    setOrden: (orden: string) => void;
-    orden: string;
+
     producto: Producto;
     setProducto: (value: Producto) => void;
 }
