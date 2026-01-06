@@ -97,7 +97,7 @@ export const Modal = () => {
 
     return (
 
-        <div className="w-full max-w-3xl mx-auto flex flex-col gap-10 px-2 items-center mt-[5vh]">
+        <div className="w-full max-w-3xl mx-auto flex flex-col gap-5 px-2 items-center mt-[5vh]">
             <Header />
 
             <div className='w-full min-h-10 border bg-[#DAF5FF]  rounded-2xl flex flex-col items-center'>
@@ -108,7 +108,7 @@ export const Modal = () => {
                 </div>
 
 
-                <form className="w-full sm:w-2/3 lg:w-1/2  flex flex-col items-center gap-5 py-10 justify-between" action="" onSubmit={(e) => { e.preventDefault(); auth(String(precios[producto]), cantidad) }}>
+                <form className="w-full sm:w-2/3 lg:w-1/2  flex flex-col items-center gap-2 py-2 justify-between" action="" onSubmit={(e) => { e.preventDefault(); auth(String(precios[producto]), cantidad) }}>
 
                     <div className="w-full flex bg-[#B1F6FF] h-20 justify-between px-4 items-center rounded-2xl border-2">
                         <label htmlFor="producto" className={`text-lg sm:text-2xl font-medium w-1/3 `}>Producto:</label>
