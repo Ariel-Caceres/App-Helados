@@ -72,7 +72,7 @@ export const Month = (props: AccionesProps) => {
     useEffect(() => {
         if (hoy.split("-")[1] == props.mes.padStart(2, "0")) {
             const ventasSinPd = ventas.filter(v =>
-                v.status != "pending-delete"
+                v.status != "pending-delete" && v.fecha.split("-")[1] == props.mes.padStart(2, "0")
             )
             setVentaAMostrar(ventasSinPd)
             return
