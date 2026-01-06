@@ -94,16 +94,20 @@ export const Month = (props: AccionesProps) => {
 
                         {ventasAMostrar && ventasAMostrar.map((v, i) => (
                             <div className={`flex justify-between min-h-12`} key={i}>
+
                                 <div className="flex justify-center w-1/4 border-gray-300 border-2 items-center  ">
                                     <span>{v.fecha}</span>
                                 </div>
-
+                                <div className="flex justify-center w-1/4 border-gray-300 border-2 items-center ">
+                                    <span>{v.producto ? v.producto : "Helado"}</span>
+                                </div>
                                 <div className="flex justify-center w-1/4 border-gray-300 border-2 items-center ">
                                     <span>{v.cantidad}</span>
                                 </div>
                                 <div className="flex justify-center w-1/4 border-gray-300 border-2 items-center ">
                                     <span>${v.precioTotal}</span>
                                 </div>
+
                                 <div className="flex justify-center w-1/4 border-gray-300 border-2 items-center ">
                                     <button className="bg-[#87F6FF] w-1/2 h-full border rounded-md" onClick={() => props.setVentaAEditar(v)}>
                                         <span className="text-2xl">
