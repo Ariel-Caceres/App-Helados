@@ -39,7 +39,7 @@ export const Buy = () => {
 
 
     return (
-        <div className="w-full max-w-3xl mx-auto flex flex-col gap-10 px-2 items-center mt-[5vh] ">
+        <div className="w-full max-w-3xl mx-auto flex flex-col gap-5 px-2 items-center mt-[5vh] ">
             <Header />
 
             <div className='w-full min-h-10 border bg-[#FFBFA0]  rounded-2xl flex flex-col items-center'>
@@ -51,7 +51,7 @@ export const Buy = () => {
                         Comprar:</span>
                 </div>
 
-                <form className="w-full sm:w-2/3 lg:w-1/2  flex flex-col items-center gap-5 py-10 justify-between" onSubmit={(e) => { e.preventDefault(); autCompra(precioCompra, cantidadCompra) }}>
+                <form className="w-full sm:w-2/3 lg:w-1/2  flex flex-col items-center gap-2 py-2 justify-between" onSubmit={(e) => { e.preventDefault(); autCompra(precioCompra, cantidadCompra) }}>
 
                     <div className="w-full flex bg-[#FFD3BE] h-20 justify-between px-4 items-center rounded-2xl border-2" >
                         <label htmlFor="producto">Producto</label>
