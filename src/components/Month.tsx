@@ -32,8 +32,9 @@ export const Month = (props: AccionesProps) => {
     const { online } = useOnline()
     const mes = props.mes.padStart(2, "0")
 
-    const [dataAMostrar, setDataAMostrar] = useState<Venta[] | Compra[]>()
-    const [dataDb, setDataDb] = useState<Venta[]>()
+    const [ventasAMostrar, setVentasAMostrar] = useState<Venta[]>()
+    const [comprasAMostrar, setComprasAMostrar] = useState<Compra[]>()
+    const [dataDb, setDataDb] = useState<Venta[] | Compra[]>()
     const [mesFiltro, setMesFiltro] = useState<string>("")
     const [cargando, setCargando] = useState<boolean>(false)
 
@@ -45,8 +46,8 @@ export const Month = (props: AccionesProps) => {
     const [CPTotalPrecio, setCPTotalPrecio] = useState<number>()
 
     const calcularTotal = () => {
-        if (dataAMostrar && !cargando) {
-            const ventasHelado = dataAMostrar.filter(v =>
+        if (ventasAMostrar && !cargando) {
+            const ventasHelado = ventasAMostrar.filter(v =>
                 v.producto == "helado" || v.producto == undefined
             )
 
@@ -55,8 +56,8 @@ export const Month = (props: AccionesProps) => {
             setTotalHeladoCantidad(HTotalCantidad)
             setTotalHeladoPrecio(HTotalPrecio)
         }
-        if (dataAMostrar && !cargando) {
-            const ventasPT = dataAMostrar.filter(v =>
+        if (ventasAMostrar && !cargando) {
+            const ventasPT = ventasAMostrar.filter(v =>
                 v.producto == "pollo-trozado"
             )
             const PTTotalCantidad = ventasPT.reduce((acc, v) => v.status != "pending-delete" ? acc + v.cantidad : acc, 0)
@@ -64,12 +65,42 @@ export const Month = (props: AccionesProps) => {
             setPTTotalCantidad(PTTotalCantidad)
             setPTTotalPrecio(PTTotalPrecio)
         }
-        if (dataAMostrar && !cargando) {
-            const ventasCP = dataAMostrar.filter(v =>
+        if (ventasAMostrar && !cargando) {
+            const ventasCP = ventasAMostrar.filter(v =>
                 v.producto == "carne-picada"
             )
             const CPTotalCantidad = ventasCP.reduce((acc, v) => v.status != "pending-delete" ? acc + v.cantidad : acc, 0)
             const CPTotalPrecio = ventasCP.reduce((acc, v) => v.status != "pending-delete" ? v.precioTotal ? acc + v.precioTotal : acc + v.precio : acc, 0)
+            setCPTotalCantidad(CPTotalCantidad)
+            setCPTotalPrecio(CPTotalPrecio)
+        }
+    }
+    const calcularTotalCompras = () => {
+        if (comprasAMostrar && !cargando) {
+            const ventasHelado = comprasAMostrar.filter(v =>
+                v.producto == "helado" || v.producto == undefined
+            )
+
+            const HTotalCantidad = ventasHelado.reduce((acc, v) => v.status != "pending-delete" ? acc + v.cantidad : acc, 0)
+            const HTotalPrecio = ventasHelado.reduce((acc, v) => v.status != "pending-delete" ? acc + v.precio : acc, 0)
+            setTotalHeladoCantidad(HTotalCantidad)
+            setTotalHeladoPrecio(HTotalPrecio)
+        }
+        if (comprasAMostrar && !cargando) {
+            const ventasPT = comprasAMostrar.filter(v =>
+                v.producto == "pollo-trozado"
+            )
+            const PTTotalCantidad = ventasPT.reduce((acc, v) => v.status != "pending-delete" ? acc + v.cantidad : acc, 0)
+            const PTTotalPrecio = ventasPT.reduce((acc, v) => v.status != "pending-delete" ? acc + v.precio : acc, 0)
+            setPTTotalCantidad(PTTotalCantidad)
+            setPTTotalPrecio(PTTotalPrecio)
+        }
+        if (comprasAMostrar && !cargando) {
+            const ventasCP = comprasAMostrar.filter(v =>
+                v.producto == "carne-picada"
+            )
+            const CPTotalCantidad = ventasCP.reduce((acc, v) => v.status != "pending-delete" ? acc + v.cantidad : acc, 0)
+            const CPTotalPrecio = ventasCP.reduce((acc, v) => v.status != "pending-delete" ? acc + v.precio : acc, 0)
             setCPTotalCantidad(CPTotalCantidad)
             setCPTotalPrecio(CPTotalPrecio)
         }
@@ -81,9 +112,11 @@ export const Month = (props: AccionesProps) => {
         "helado": () => "Helado",
     }
 
+
     useEffect(() => {
         calcularTotal()
-    }, [props.tipo, dataAMostrar])
+        calcularTotalCompras()
+    }, [props.tipo, ventasAMostrar, comprasAMostrar])
 
     useEffect(() => {
         setMesFiltro(mes)
@@ -128,7 +161,7 @@ export const Month = (props: AccionesProps) => {
                     )
                 )
 
-                setDataAMostrar(ventasFiltradas)
+                setVentasAMostrar(ventasFiltradas)
                 return
             }
             if (props.tipo == "compra") {
@@ -142,7 +175,7 @@ export const Month = (props: AccionesProps) => {
                 })
                 console.log(comprasFiltradas);
 
-                setDataAMostrar(comprasFiltradas)
+                setComprasAMostrar(comprasFiltradas)
 
             }
             return
@@ -158,10 +191,10 @@ export const Month = (props: AccionesProps) => {
                     return d.producto === props.productoAFitrar
                 })
                 if (props.tipo == "venta") {
-                    setDataAMostrar(dataFiltrada as Venta[])
+                    setVentasAMostrar(dataFiltrada as Venta[])
                 }
                 if (props.tipo == "compra") {
-                    setDataAMostrar(dataFiltrada as Compra[])
+                    setComprasAMostrar(dataFiltrada as Compra[])
                 }
             }
         }
@@ -174,11 +207,11 @@ export const Month = (props: AccionesProps) => {
     return (
         <div className="mb-5">
             {props.tipo == "venta" &&
-                (dataAMostrar && dataAMostrar.length != 0 ?
+                (ventasAMostrar && ventasAMostrar.length != 0 ?
                     <div className="">
                         <HeaderTabla />
 
-                        {dataAMostrar && dataAMostrar.map((v, i) => (
+                        {ventasAMostrar && ventasAMostrar.map((v, i) => (
                             <div className={`flex justify-between min-h-12`} key={i}>
 
                                 <div className="flex justify-center w-1/5 border-gray-300 border-2 items-center  ">
@@ -265,10 +298,10 @@ export const Month = (props: AccionesProps) => {
 
 
             {props.tipo == "compra" &&
-                (dataAMostrar && dataAMostrar.length != 0 ?
+                (comprasAMostrar && comprasAMostrar.length != 0 ?
                     <div>
                         <HeaderTabla />
-                        {dataAMostrar.map((c, i) => (
+                        {comprasAMostrar.map((c, i) => (
                             <div className="flex justify-between min-h-12 " key={i}>
                                 <div className="flex justify-center w-1/5 border-gray-300 border-2 items-center  ">
                                     <span>{c.fecha}</span>
