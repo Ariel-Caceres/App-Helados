@@ -70,7 +70,7 @@ export const Month = (props: AccionesProps) => {
 
 
     useEffect(() => {
-        if (hoy.split("-")[1] == props.mes.padStart(2, "0")) {
+        if (hoy.split("-")[1] == props.mes.padStart(2, "0") && !online) {
             const ventasSinPd = ventas.filter(v =>
                 v.status != "pending-delete" && v.fecha.split("-")[1] == props.mes.padStart(2, "0")
             )
