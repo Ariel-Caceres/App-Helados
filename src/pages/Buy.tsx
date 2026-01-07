@@ -59,7 +59,6 @@ export const Buy = () => {
                             <option value="helado">Helado</option>
                             <option value="pollo-trozado">Pollo trozado</option>
                             <option value="carne-picada">Carne picada</option>
-                            <option value="hielo">Fokin hielo</option>
                         </select>
                     </div>
 
