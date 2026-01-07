@@ -31,6 +31,9 @@ export const ModalDelete = (props: DeleteProps) => {
                             <div className="w-1/3 border-2  border-r-0 ">
                                 <span className="pl-2 text-xl font-bold">Fecha</span>
                             </div>
+                            <div className="w-1/3 border-2  border-r-0 ">
+                                <span className="pl-2 text-xl font-bold">Producto</span>
+                            </div>
 
                             <div className="w-1/3 border-2 border-r-0">
                                 <span className="pl-1 text-xl font-bold">Cantidad</span>
@@ -44,10 +47,14 @@ export const ModalDelete = (props: DeleteProps) => {
                             <div className="flex justify-center w-1/3 border-gray-300 border-2 items-center ">
                                 <span>{props.transaccion.fecha}</span>
                             </div>
+                            <div className="flex justify-center w-1/3 border-gray-300 border-2 items-center ">
+                                <span>{props.transaccion.producto ? props.transaccion.producto : "Helado"}</span>
+                            </div>
 
                             <div className="flex justify-center w-1/3 border-gray-300 border-2 items-center ">
                                 <span>{props.transaccion.cantidad}</span>
                             </div>
+
                             <div className="flex justify-center w-1/3 border-gray-300 border-2 items-center ">
                                 <span>${props.transaccion.precioTotal ? props.transaccion.precioTotal : (props.transaccion.precio * props.transaccion.cantidad)}</span>
                             </div>
@@ -72,6 +79,9 @@ export const ModalDelete = (props: DeleteProps) => {
                             <div className="w-1/3 border-2  border-r-0 ">
                                 <span className="pl-2 text-xl font-bold">Fecha</span>
                             </div>
+                            <div className="w-1/3 border-2  border-r-0 ">
+                                <span className="pl-2 text-xl font-bold">Producto</span>
+                            </div>
                             <div className="w-1/3 border-2 border-r-0">
                                 <span className="pl-1 text-xl font-bold">Cantidad</span>
                             </div>
@@ -84,7 +94,9 @@ export const ModalDelete = (props: DeleteProps) => {
                             <div className="flex justify-center w-1/3 border-gray-300 border-2 items-center ">
                                 <span>{props.compraAEliminar.fecha}</span>
                             </div>
-
+                            <div className="flex justify-center w-1/3 border-gray-300 border-2 items-center ">
+                                <span>{props.compraAEliminar.producto ? props.compraAEliminar.producto : "Helado"}</span>
+                            </div>
                             <div className="flex justify-center w-1/3 border-gray-300 border-2 items-center ">
                                 <span>{props.compraAEliminar.cantidad}</span>
                             </div>
