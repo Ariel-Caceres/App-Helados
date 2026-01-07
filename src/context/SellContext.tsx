@@ -15,9 +15,10 @@ interface SellContextType {
     setCantidad: (value: string) => void;
     registrarVenta: () => void;
     hoy: string;
-    precioTotal: number;
     setVentas: React.Dispatch<React.SetStateAction<Venta[]>>;
-
+    totalManual: number | null
+    totalSugerido: number
+    setTotalManual: (valor: number | null) => void
     producto: Producto;
     setProducto: (value: Producto) => void;
 }
@@ -38,6 +39,7 @@ export const SellProvider = ({ children }: { children: ReactNode }) => {
         }
         return JSON.parse(guardado);
     });
+    const [totalManual, setTotalManual] = useState<number | null>(null);
 
     const [cantidad, setCantidad] = useState<string>("");
     const [ventas, setVentas] = useState<Venta[]>(() => {
@@ -61,29 +63,28 @@ export const SellProvider = ({ children }: { children: ReactNode }) => {
     const hoy = `${año}-${mes}-${dia}`;
 
 
+    const precioUnitario = precios[producto];
+    const totalSugerido = precioUnitario * Number(cantidad);
 
-    const productoFinal = producto ?? "helado";
-    const precioUnitario = precios[productoFinal];
-    const precioTotal = precioUnitario * Number(cantidad);
-
+    const totalFinal =
+        totalManual !== null ? totalManual : totalSugerido;
 
     const registrarVenta = () => {
         const nuevaVenta: Venta = {
-            producto: producto,
             id: uuidv4() as UUID,
-            precio: Number(precioUnitario),
+            producto,
+            precio: precioUnitario,
             cantidad: Number(cantidad),
             fecha: hoy,
-            precioTotal: precioTotal,
+            precioTotal: totalFinal,
             status: "pending-create"
         };
 
-
-        setVentas([...ventas, nuevaVenta]);
-
-        setPrecios(precios);
+        setVentas(prev => [...prev, nuevaVenta]);
         setCantidad("");
+        setTotalManual(null);
     };
+
 
 
 
@@ -104,6 +105,9 @@ export const SellProvider = ({ children }: { children: ReactNode }) => {
     return (
         <SellContext.Provider
             value={{
+                setTotalManual,
+                totalManual,
+                totalSugerido,
                 precios,
                 cantidad,
                 ventas,
@@ -112,7 +116,6 @@ export const SellProvider = ({ children }: { children: ReactNode }) => {
                 registrarVenta,
                 hoy,
                 setVentas,
-                precioTotal,
                 producto,
                 setProducto
             }}

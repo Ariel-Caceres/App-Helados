@@ -10,11 +10,10 @@ import type { Producto } from "../context/SellContext"
 
 export const Modal = () => {
     const navigate = useNavigate()
-    const { precios, cantidad, setPrecios, setCantidad, registrarVenta, producto, setProducto } = useSell()
+    const { precios, cantidad, setPrecios, setCantidad, registrarVenta, producto, setProducto, totalManual, totalSugerido, setTotalManual } = useSell()
     const [cartelPrecioTotal, setCartelPrecioTotal] = useState<boolean>(false)
     const [cartelPrecio, setCartelPrecio] = useState<boolean>(false)
     const [cartelCantidad, setCartelCantidad] = useState<boolean>(false)
-    const [precioTotal, setPrecioTotal] = useState<string>("")
     const { online } = useOnline()
     const [modoCalculo, setModoCalculo] = useState<"cantidad" | "total">("cantidad");
 
@@ -41,8 +40,9 @@ export const Modal = () => {
     const auth = (precio: string, cantidad: string) => {
         const precioInvalido = Number(precio) <= 0 || !Number.isInteger(Number(precio));
         const cantInvalida = Number(cantidad) <= 0 || !Number.isInteger(Number(cantidad))
-        const precioTotalInvalido = !precioTotal || Number(precioTotal) === 0;
-        console.log(cantInvalida);
+        const totalFinal = totalManual ?? totalSugerido;
+        const precioTotalInvalido = totalFinal <= 0;
+
 
         if (precioInvalido || cantInvalida || precioTotalInvalido) {
             if (precioInvalido) {
@@ -72,28 +72,21 @@ export const Modal = () => {
 
     useEffect(() => {
         setCantidad("");
-        setPrecioTotal("");
+        setTotalManual(null);
     }, [producto]);
+
 
 
     useEffect(() => {
         const precioUnitario = precios[producto];
         if (!precioUnitario) return;
 
-        if (modoCalculo === "cantidad") {
-            setPrecioTotal(
-                cantidad ? String(precioUnitario * Number(cantidad)) : ""
-            );
-        }
 
-        if (modoCalculo === "total") {
-            setCantidad(
-                precioTotal ? String(Number(precioTotal) / precioUnitario) : ""
-            );
-        }
-    }, [cantidad, precioTotal, producto, precios, modoCalculo]);
 
-    console.log(precioTotal);
+    }, [cantidad, producto, precios, modoCalculo]);
+
+
+
 
     return (
 
@@ -161,9 +154,9 @@ export const Modal = () => {
                             id="total"
                             placeholder="Ej. 100$"
                             className={`border-2 pl-2 rounded-xl h-10 bg-white w-2/3 ${cartelPrecioTotal ? "border-4 border-red-700" : ""}`}
-                            value={Number(precioTotal) != 0 ? precioTotal : ""}
-                            onChange={(e) => { setPrecioTotal(e.target.value); setModoCalculo("total") }}
 
+                            value={(totalManual ?? totalSugerido) ?? ""}
+                            onChange={(e) => setTotalManual(Number(e.target.value))}
                         />
                     </div>
 
