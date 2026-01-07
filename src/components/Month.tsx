@@ -295,7 +295,7 @@ export const Month = (props: AccionesProps) => {
                         :
                         <div className="w-full flex justify-center border-2 mt-2 p-2">
                             <span className="text-xl">
-                                No hay ventas este mes / No hay internet 😿
+                                No hay ventas este mes  😿
                             </span>
                         </div>)
                 }
