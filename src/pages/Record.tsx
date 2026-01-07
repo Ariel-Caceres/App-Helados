@@ -159,7 +159,7 @@ export const Record = () => {
                                                 setModalEliminar={(v) => setModalEliminar(v)}
                                             />
                                             :
-                                            <Month tipo="venta" mes={String(mesActual)} productoAFitrar={productoAFiltrar} setModalEliminar={() => setModalEliminar(true)} setTransaccion={setTransaccion} setVentaAEditar={setVentaAEditar} />
+                                            <Month tipo="venta" mes={String(mesActual)} setModalEliminar={() => setModalEliminar(true)} setTransaccion={setTransaccion} setVentaAEditar={setVentaAEditar} />
                                         }
                                     </div>
                                 </div>
@@ -176,13 +176,13 @@ export const Record = () => {
                                                 setModalEliminarCompra={(v) => setModalEliminarCompra(v)}
                                             />
                                             :
-                                            <Month tipo="compra" mes={String(mesActual)} productoAFitrar={productoAFiltrar} setCompraAEliminar={setCompraAEliminar} setModalEliminarCompra={() => setModalEliminarCompra(true)} setCompraAEditar={setCompraAEditar} />
+                                            <Month tipo="compra" mes={String(mesActual)} setCompraAEliminar={setCompraAEliminar} setModalEliminarCompra={() => setModalEliminarCompra(true)} setCompraAEditar={setCompraAEditar} />
                                         }
                                     </div>
                                 </div>
                             }
                         </div>
-                        {(mostrarVentas || mostrarCompras) &&
+                        {/* {(mostrarVentas || mostrarCompras) &&
                             <div className="w-[98%]  flex justify-center absolute sm:static sm:mb-5  bottom-[20vh]">
                                 <div className="relative w-44 sm:w-1/4 border-2 rounded-xl  flex justify-center items-center text-md">
                                     <i className={`fa-solid fa-filter absolute left-3 text-xl ${animar ? "animate-bounce text-red-600" : ""}`}></i>
@@ -196,10 +196,10 @@ export const Record = () => {
                                     </select>
                                 </div>
                             </div>
-                        }
+                        } */}
 
                         <div
-                            className=" w-[98%] flex flex-col-reverse justify-center items-center gap-4 absolute bottom-[5vh] sm:static sm:flex-row sm:gap-10 sm:justify-evenly "        >
+                            className=" w-[98%] flex flex-col-reverse justify-center items-center gap-4 absolute bottom-[5vh] sm:static mt-50 sm:flex-row sm:gap-10 sm:justify-evenly "        >
                             <Button texto="Volver" tipo="button" onClick={() => volver()} />
                         </div>
                     </div>
