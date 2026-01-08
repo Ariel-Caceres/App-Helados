@@ -57,14 +57,16 @@ export const MonthResume = ({ producto, animar }: { producto: string, animar: bo
     useEffect(() => {
         if (!ventasTotalDinero || !comprasTotalDinero) return
         const calculo = comprasTotalDinero - ventasTotalDinero
+        console.log(calculo);
+
         setResultado(calculo)
     }, [comprasTotalDinero, ventasTotalDinero])
 
     useEffect(() => {
         if (!online) return
         const traerDataDb = async () => {
+            setCargado(true)
             try {
-                setCargado(true)
                 const res = await fetch(`${import.meta.env.VITE_API_URL}/purchases/month/${mesActual}`)
                 if (!res.ok) {
                     console.log("Error al traer las compras de la base de datos");
@@ -73,11 +75,13 @@ export const MonthResume = ({ producto, animar }: { producto: string, animar: bo
                     console.log("Fetch exitoso");
                     setComprasDb(data)
                 }
-                setCargado(false)
 
             } catch (e) {
                 console.log("Error al traer las compras de la base de datos", e);
 
+            } finally {
+
+                setCargado(false)
             }
         }
         traerDataDb()
@@ -86,8 +90,8 @@ export const MonthResume = ({ producto, animar }: { producto: string, animar: bo
     useEffect(() => {
         if (!online) return
         const traerDataDb = async () => {
+            setCargado(true)
             try {
-                setCargado(true)
                 const res = await fetch(`${import.meta.env.VITE_API_URL}/sales/month/${mesActual}`)
                 const data = await res.json()
                 if (!res.ok) {
@@ -96,15 +100,18 @@ export const MonthResume = ({ producto, animar }: { producto: string, animar: bo
                     setVentasDb(data)
                     console.log("Fetch exitoso");
                 }
-                setCargado(false)
 
             } catch (e) {
                 console.log("Error al traer las compras de la base de datos", e);
+            } finally {
+                setCargado(false)
             }
         }
         traerDataDb()
     }, [online])
 
+
+    if (!online) return null
     return (
         <div className="w-full border bg-[#DAF5FF] rounded-2xl flex text-xl md:text-2xl flex-col justify-between relative overflow-hidden">
 
@@ -129,12 +136,15 @@ export const MonthResume = ({ producto, animar }: { producto: string, animar: bo
                     <span>
                         Cargando
                     </span>
-                    <span className="animate-bounce">
-                        ☁
-                    </span>
+                    {!online ?
+                        <span className="animate-bounce">
+                            ☁
+                        </span>
+                        :
+                        <span><i className="fa-solid fa-cloud-arrow-down animate-bounce"></i></span>
+                    }
                 </div>
                 :
-
                 <div
                     className={`  w-full flex flex-row md:flex-row justify-evenly gap-4 p-2 px-2 transition-all duration-300 ease-in-out filter${animar ? "scale-110 -translate-y-12/12" : "translate-y-0"}`} >
 
@@ -148,12 +158,12 @@ export const MonthResume = ({ producto, animar }: { producto: string, animar: bo
                             <span className="font-bold">${ventasTotalDinero}</span>
                         </div>
                         {resultado && ventasTotalDinero && resultado < ventasTotalDinero ?
-                            <div className="">
+                            <div className={`${resultado == undefined ? "hidden" : ""}`}>
                                 <span className="font-semibold">Ganancia: </span>
                                 <span className="font-bold text-green-300 animate-pulse">${resultado * -1}</span>
                             </div>
                             :
-                            <div>
+                            <div >
                                 <span className="font-semibold">A recuperar: </span>
                                 <span className="font-bold text-red-300">${resultado}</span>
                             </div>}
@@ -164,5 +174,5 @@ export const MonthResume = ({ producto, animar }: { producto: string, animar: bo
                 </div>
 
             }
-        </div>)
+        </div >)
 }

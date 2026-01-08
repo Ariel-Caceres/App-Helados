@@ -38,7 +38,6 @@ export const Home = () => {
     }, [mpd])
 
 
-    console.log(animar);
 
     useEffect(() => {
         if (firstRender.current) {
@@ -72,12 +71,7 @@ export const Home = () => {
                         </span>
                     </div>
 
-                    {/* <div className=" justify-end flex items-end ">
-                        <button className="text-xl text-end whitespace-nowrap sm:text-2xl font-medium self-end justify-self-end border-2 rounded-2xl cursor-pointer p-1" onClick={() => navigate("/record")}>
-                            {online ? <i className="fa-regular fa-calendar-days"></i> : "📆"}
-                            <span className=""> Historial</span>
-                        </button>
-                    </div> */}
+
                 </div>
 
                 <div
@@ -85,7 +79,7 @@ export const Home = () => {
     w-full flex flex-row md:flex-row justify-evenly gap-4 p-2 px-2
     transition-all duration-300 ease-in-out
     filter
-    ${animar ? "scale-110 -translate-y-11/12" : "translate-y-0"}
+    ${animar ? "-translate-y-12/12" : "translate-y-0"}
   `}
                 >
 
