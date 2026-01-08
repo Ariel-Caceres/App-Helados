@@ -3,7 +3,8 @@ import { Header } from "../components/Header"
 import { useSell } from "../context/useSell"
 import { useOnline } from "../context/useOnline"
 import { Button } from "../components/Button"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
+import { MonthResume } from "../components/MonthResume"
 
 export const Home = () => {
     const navigate = useNavigate()
@@ -13,11 +14,10 @@ export const Home = () => {
     const ventasHoy = ventas.filter(v => {
         return v.fecha.split("-")[2] == hoy.split("-")[2] && v.status != "pending-delete"
     })
-
     const [mpd, setmpd] = useState(1)
     const [dineroHoy, setDineroHy] = useState<number>()
     const [cantHoy, setCantHoy] = useState<number>()
-    const [animar, setAnimar] = useState<boolean>()
+    const [animar, setAnimar] = useState<boolean>(false)
     const productos: Record<string, () => string> = {
         1: () => "helado",
         2: () => "carne-picada",
@@ -31,13 +31,27 @@ export const Home = () => {
         setDineroHy(dineroAMostrar)
         setCantHoy(cantAMostrar)
     }
+    const firstRender = useRef(true)
 
     useEffect(() => {
+        calcularTotal(productos[mpd]())
+    }, [mpd])
+
+
+    console.log(animar);
+
+    useEffect(() => {
+        if (firstRender.current) {
+            firstRender.current = false
+            return
+        }
+
         setAnimar(true)
-        setTimeout(() => {
+        const timeout = setTimeout(() => {
             setAnimar(false)
         }, 500)
-        calcularTotal(productos[mpd]())
+
+        return () => clearTimeout(timeout)
     }, [mpd])
 
 
@@ -47,26 +61,33 @@ export const Home = () => {
 
             <Header />
 
-            <div className="w-full border flex bg-[#DAF5FF] rounded-2xl   flex-col justify-evenly relative pt-6 overflow-hidden" >
+            <div className="w-full border flex bg-[#DAF5FF] rounded-2xl   flex-col justify-between relative  overflow-hidden" >
 
-                <div className="absolute border top-0 left-0 gap-x-10 gap-y-3 right-0 flex flex-wrap w-full  items-center justify-between z-10   bg-amber-200 rounded-2xl px-6 py-4 ">
+                <div className=" border top-0 left-0 gap-x-10 gap-y-3 right-0 flex flex-wrap w-full  items-center justify-between z-10   bg-amber-200 rounded-2xl px-6 py-4 ">
 
-                    <div className="text-2xl whitespace-nowrap md:text-3xl font-medium">
+                    <div className="text-xl whitespace-nowrap md:text-3xl font-medium">
                         {online ? <i className="fa-solid fa-chart-simple"></i> : "📊"}
                         <span>
-                            Panel diario
+                            Panel Diario
                         </span>
                     </div>
 
-                    <div className=" justify-end flex items-end ">
+                    {/* <div className=" justify-end flex items-end ">
                         <button className="text-xl text-end whitespace-nowrap sm:text-2xl font-medium self-end justify-self-end border-2 rounded-2xl cursor-pointer p-1" onClick={() => navigate("/record")}>
                             {online ? <i className="fa-regular fa-calendar-days"></i> : "📆"}
                             <span className=""> Historial</span>
                         </button>
-                    </div>
+                    </div> */}
                 </div>
 
-                <div className={`w-full flex flex-row md:flex-row justify-evenly gap-4 mt-16 px-2 transition-all ease-in-out   ${animar ? "invert-100 -translate-y-150 " : ""}`}>
+                <div
+                    className={`
+    w-full flex flex-row md:flex-row justify-evenly gap-4 p-2 px-2
+    transition-all duration-300 ease-in-out
+    filter
+    ${animar ? "scale-110 -translate-y-11/12" : "translate-y-0"}
+  `}
+                >
 
                     {/* Venta hoy */}
                     <div className="w-1/2 md:w-1/3    bg-[#FFBFA0] min-h-20 md:h-25 rounded-2xl flex flex-col border-2 shadow-md p-2 ">
@@ -95,17 +116,20 @@ export const Home = () => {
                     </div>
                 </div>
 
-                <div className={`flex w-full justify-center text-2xl p-4 text-center items-center`}>
-                    <div className="w-80 sm:w-2/3 flex justify-center items-center">
-                        <div className=" border-2 rounded-2xl " onClick={() => setmpd(mpd > 1 ? mpd - 1 : 3)}>
-                            <span ><i className="fa-solid fa-angle-left p-2"></i></span>
-                        </div>
-                        <div className={`w-2/3 font-bold ${animar ? "animate-bounce" : ""}`}>
-                            <span>{productos[mpd]() == "helado" ? "Helado" : productos[mpd]() == "pollo-trozado" ? "Pollo Trozado" : productos[mpd]() == "carne-picada" ? "Carne Picada" : ""}</span>
-                        </div>
-                        <div className="border-2 rounded-2xl" onClick={() => setmpd(mpd < 3 ? mpd + 1 : 1)}>
-                            <span ><i className="fa-solid fa-angle-right p-2"></i></span>
-                        </div>
+            </div>
+
+            <MonthResume producto={productos[mpd]()} animar={animar} />
+
+            <div className={`flex w-full justify-center text-2xl p-4 text-center items-center`}>
+                <div className="w-80 sm:w-2/3 flex justify-center items-center">
+                    <div className=" border-2 rounded-2xl " onClick={() => setmpd(mpd > 1 ? mpd - 1 : 3)}>
+                        <span ><i className="fa-solid fa-angle-left p-2"></i></span>
+                    </div>
+                    <div className={`w-2/3 font-bold ${animar ? "animate-bounce" : ""}`}>
+                        <span>{productos[mpd]() == "helado" ? "Helado" : productos[mpd]() == "pollo-trozado" ? "Pollo Trozado" : productos[mpd]() == "carne-picada" ? "Carne Picada" : ""}</span>
+                    </div>
+                    <div className="border-2 rounded-2xl" onClick={() => setmpd(mpd < 3 ? mpd + 1 : 1)}>
+                        <span ><i className="fa-solid fa-angle-right p-2"></i></span>
                     </div>
                 </div>
             </div>
