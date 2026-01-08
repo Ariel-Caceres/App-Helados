@@ -105,7 +105,7 @@ export const Modal = () => {
 
                     <div className="w-full flex bg-[#B1F6FF] h-20 justify-between px-4 items-center rounded-2xl border-2">
                         <label htmlFor="producto" className={`text-lg sm:text-2xl font-medium w-1/3 `}>Producto:</label>
-                        <select name="producto" id="producto" className={`border-2 pl-2 rounded-xl h-10 bg-white w-2/3 ${cartelCantidad ? "border-4 border-red-700" : ""}`}
+                        <select name="producto" id="producto" className={`border-2 pl-2 rounded-xl h-10 animate-pulse    bg-white w-2/3 ${cartelCantidad ? "border-4 border-red-700" : ""}`}
                             onChange={(e) => setProducto(e.target.value as Producto)} value={producto}>
                             <option value="helado">Helado</option>
                             <option value="pollo-trozado">Pollo trozado</option>
