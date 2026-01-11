@@ -57,7 +57,6 @@ export const MonthResume = ({ producto, animar }: { producto: string, animar: bo
     useEffect(() => {
         if (!ventasTotalDinero || !comprasTotalDinero) return
         const calculo = comprasTotalDinero - ventasTotalDinero
-        console.log(calculo);
 
         setResultado(calculo)
     }, [comprasTotalDinero, ventasTotalDinero])
@@ -157,10 +156,10 @@ export const MonthResume = ({ producto, animar }: { producto: string, animar: bo
                             <span className="font-semibold">Ventas: </span>
                             <span className="font-bold">${ventasTotalDinero}</span>
                         </div>
-                        {resultado && ventasTotalDinero && resultado < ventasTotalDinero ?
+                        {comprasTotalDinero && ventasTotalDinero && comprasTotalDinero < ventasTotalDinero ?
                             <div className={`${resultado == undefined ? "hidden" : ""}`}>
                                 <span className="font-semibold">Ganancia: </span>
-                                <span className="font-bold text-green-300 animate-pulse">${resultado * -1}</span>
+                                <span className="font-bold text-green-300 animate-pulse">${resultado}</span>
                             </div>
                             :
                             <div >
