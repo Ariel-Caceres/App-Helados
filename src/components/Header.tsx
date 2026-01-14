@@ -1,4 +1,4 @@
-import { useOnline } from "../context/useOnline"
+import { useOnline } from "../hooks/useOnline"
 export const Header = () => {
     const { online } = useOnline()
     return (

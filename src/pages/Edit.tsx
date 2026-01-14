@@ -1,10 +1,10 @@
 import { useState } from "react"
-import { useSell } from "../context/useSell"
+import { useSell } from "../hooks/useSell"
 import type { Venta } from "../types/venta.entity"
 import type { Compra } from "../types/compra.entity"
 import { Button } from "../components/Button"
-import { useBuy } from "../context/useBuy"
-import { useOnline } from "../context/useOnline"
+import { useBuy } from "../hooks/useBuy"
+import { useOnline } from "../hooks/useOnline"
 
 type EditProps =
     | { ventaAEditar: Venta; compraAEditar?: never; onClick: () => void }

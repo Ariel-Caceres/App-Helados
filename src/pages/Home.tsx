@@ -1,16 +1,17 @@
 import { useNavigate } from "react-router-dom"
 import { Header } from "../components/Header"
-import { useSell } from "../context/useSell"
-import { useOnline } from "../context/useOnline"
+import { useSell } from "../hooks/useSell"
+import { useOnline } from "../hooks/useOnline"
 import { Button } from "../components/Button"
 import { useEffect, useRef, useState } from "react"
 import { MonthResume } from "../components/MonthResume"
+import { useSalesDb } from "../hooks/useSalesDb"
 
 export const Home = () => {
     const navigate = useNavigate()
     const { ventas, hoy } = useSell()
     const { online } = useOnline()
-
+    const { ventasDb } = useSalesDb()
     const ventasHoy = ventas.filter(v => {
         return v.fecha.split("-")[2] == hoy.split("-")[2] && v.status != "pending-delete"
     })

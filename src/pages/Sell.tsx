@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom"
 import { Header } from "../components/Header"
-import { useSell } from "../context/useSell"
+import { useSell } from "../hooks/useSell"
 import { useEffect, useState } from "react"
 import { Button } from "../components/Button"
-import { useOnline } from "../context/useOnline"
+import { useOnline } from "../hooks/useOnline"
 import type { Producto } from "../context/SellContext"
 
 
@@ -17,24 +17,6 @@ export const Modal = () => {
     const { online } = useOnline()
     const [modoCalculo, setModoCalculo] = useState<"cantidad" | "total">("cantidad");
 
-    // useEffect(() => {
-    //     if (Number(precioTotal) >= Number(precios[producto])) {
-    //         const cociente = (Number(precioTotal) / Number(precios[producto]))
-    //         const cocienteEsEntero = Number.isInteger(cociente)
-    //         if (cocienteEsEntero) {
-    //             setCantidad(String(cociente))
-    //         } else {
-    //             setCantidad(String(cociente));
-    //         }
-    //     }
-    //     if (precioTotal == "") {
-    //         setCantidad("")
-    //     }
-    // }, [precioTotal, precios]);
-
-    // useEffect(() => {
-    //     setPrecioTotal(String(Number(precios[producto]) * Number(cantidad)));
-    // }, [cantidad, precios]);
 
 
     const auth = (precio: string, cantidad: string) => {

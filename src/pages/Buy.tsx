@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "../components/Button";
 import { Header } from "../components/Header";
-import { useOnline } from "../context/useOnline"
-import { useBuy } from "../context/useBuy";
+import { useOnline } from "../hooks/useOnline"
+import { useBuy } from "../hooks/useBuy";
 import { useState } from "react";
 
 export const Buy = () => {

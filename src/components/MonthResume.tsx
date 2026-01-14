@@ -1,25 +1,22 @@
 import { useNavigate } from "react-router-dom"
-import { useSell } from "../context/useSell"
-import { useBuy } from "../context/useBuy"
-import { useOnline } from "../context/useOnline"
+import { useSell } from "../hooks/useSell"
+import { useBuy } from "../hooks/useBuy"
+import { useOnline } from "../hooks/useOnline"
 import { useEffect, useState } from "react"
-import type { Compra } from "../types/compra.entity"
-import type { Venta } from "../types/venta.entity"
-
+import { useSalesDb } from "../hooks/useSalesDb"
+import { usePurchases } from "../hooks/usePurchasesDb"
 
 export const MonthResume = ({ producto, animar }: { producto: string, animar: boolean }) => {
     const navigate = useNavigate()
     const { ventas, hoy } = useSell()
     const { compras } = useBuy()
     const { online } = useOnline()
-    const mesActual = hoy.split("-")[1].padStart(2, "0")
-    const [comprasDb, setComprasDb] = useState<Compra[]>()
-    const [ventasDb, setVentasDb] = useState<Venta[]>()
-    const [cargando, setCargado] = useState<boolean>(false)
+
+    const { comprasDb } = usePurchases()
     const [resultado, setResultado] = useState<number>()
     const [ventasTotalDinero, setVentasTotalDinero] = useState<number>()
     const [comprasTotalDinero, setComprasTotalDinero] = useState<number>()
-
+    const { ventasDb, error, cargando } = useSalesDb()
 
     const comprasMes = compras.filter(c =>
         c.fecha.split("-")[1] === hoy.split("-")[1].padStart(2, "0")
@@ -51,9 +48,6 @@ export const MonthResume = ({ producto, animar }: { producto: string, animar: bo
         }
     }, [online, comprasDb, ventasDb, producto, comprasMes, ventasMes])
 
-
-
-
     useEffect(() => {
         if (!ventasTotalDinero || !comprasTotalDinero) return
         const calculo = comprasTotalDinero - ventasTotalDinero
@@ -61,56 +55,11 @@ export const MonthResume = ({ producto, animar }: { producto: string, animar: bo
         setResultado(calculo)
     }, [comprasTotalDinero, ventasTotalDinero])
 
-    useEffect(() => {
-        if (!online) return
-        const traerDataDb = async () => {
-            setCargado(true)
-            try {
-                const res = await fetch(`${import.meta.env.VITE_API_URL}/purchases/month/${mesActual}`)
-                if (!res.ok) {
-                    console.log("Error al traer las compras de la base de datos");
-                } else {
-                    const data = await res.json()
-                    console.log("Fetch exitoso");
-                    setComprasDb(data)
-                }
-
-            } catch (e) {
-                console.log("Error al traer las compras de la base de datos", e);
-
-            } finally {
-
-                setCargado(false)
-            }
-        }
-        traerDataDb()
-    }, [online])
-
-    useEffect(() => {
-        if (!online) return
-        const traerDataDb = async () => {
-            setCargado(true)
-            try {
-                const res = await fetch(`${import.meta.env.VITE_API_URL}/sales/month/${mesActual}`)
-                const data = await res.json()
-                if (!res.ok) {
-                    console.log("Error al traer las compras de la base de datos");
-                } else {
-                    setVentasDb(data)
-                    console.log("Fetch exitoso");
-                }
-
-            } catch (e) {
-                console.log("Error al traer las compras de la base de datos", e);
-            } finally {
-                setCargado(false)
-            }
-        }
-        traerDataDb()
-    }, [online])
 
 
     if (!online) return null
+    if (error) return <p>{error}</p>
+
     return (
         <div className="w-full border bg-[#DAF5FF] rounded-2xl flex text-xl md:text-2xl flex-col justify-between relative overflow-hidden">
 

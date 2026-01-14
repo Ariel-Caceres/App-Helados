@@ -1,9 +1,9 @@
-import { useOnline } from "../context/useOnline"
-import { useSell } from "../context/useSell"
+import { useOnline } from "../hooks/useOnline"
+import { useSell } from "../hooks/useSell"
 import type { Venta } from "../types/venta.entity"
 import { HeaderTabla } from "../components/HeaderTabla"
 import type { Compra } from "../types/compra.entity";
-import { useBuy } from "../context/useBuy";
+import { useBuy } from "../hooks/useBuy";
 import { useEffect, useState } from "react";
 
 
@@ -138,6 +138,8 @@ export const Month = (props: AccionesProps) => {
                     console.log("Fetch exitoso")
                     const data = await res.json()
                     setDataDb(data)
+                    console.log("fech del componente month para ver renders", data);
+
                 }
                 setCargando(false)
             } catch (e) {
@@ -277,7 +279,6 @@ export const Month = (props: AccionesProps) => {
                                     </div>
                                 }
                                 {(productoAFiltrar == "todos" || productoAFiltrar == "pollo-trozado") &&
-
                                     <div className={`w-full flex  justify-center`}>
                                         <div className="w-1/5 border-2 border-gray-600 justify-start flex border-r-0 ">
                                             <span>Pollo Trozado =</span>
