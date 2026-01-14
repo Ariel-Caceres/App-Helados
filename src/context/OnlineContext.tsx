@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState, type ReactNode } from "react";
-import { useSell } from "./useSell";
+import { useSell } from "../hooks/useSell";
 import type { Venta } from "../types/venta.entity";
-import { useBuy } from "./useBuy";
+import { useBuy } from "../hooks/useBuy";
 
 interface OnlineContextInterface {
     online: boolean

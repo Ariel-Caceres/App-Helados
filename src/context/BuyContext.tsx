@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState, type ReactNode } from "react";
-import { useSell } from "./useSell";
+import { useSell } from "../hooks/useSell";
 import type { Compra } from "../types/compra.entity";
 import { v4 as uuidv4 } from 'uuid';
 import type { UUID } from "../types/uuid";
