@@ -108,7 +108,7 @@ export const MonthResume = ({ producto, animar }: { producto: string, animar: bo
                         {comprasTotalDinero && ventasTotalDinero && comprasTotalDinero < ventasTotalDinero ?
                             <div className={`${resultado == undefined ? "hidden" : ""}`}>
                                 <span className="font-semibold">Ganancia: </span>
-                                <span className="font-bold text-green-300 animate-pulse">${resultado}</span>
+                                <span className="font-bold text-green-300 animate-pulse">${resultado ? resultado * -1 : resultado}</span>
                             </div>
                             :
                             <div >
@@ -122,5 +122,6 @@ export const MonthResume = ({ producto, animar }: { producto: string, animar: bo
                 </div>
 
             }
-        </div >)
+        </div >
+    )
 }
