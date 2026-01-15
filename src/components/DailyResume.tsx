@@ -13,12 +13,11 @@ export const DailyResume = ({ producto, animar }: { producto: string, animar: bo
     const navigate = useNavigate()
 
     const ventasHoy = useMemo(() => {
-        const fuente = online ? ventasDb : ventas
+        const fuente = online && !cargando ? ventasDb : ventas
         if (fuente) {
             return fuente.filter(v => { return v.fecha.split("-")[2] == hoy.split("-")[2] })
         }
     }, [hoy, online, ventas, ventasDb])
-
 
     const calcularTotal = (parametro: string) => {
         if (ventasHoy) {
@@ -27,6 +26,9 @@ export const DailyResume = ({ producto, animar }: { producto: string, animar: bo
             const cantAMostrar = ventasAMostrar.reduce((acc, v) => v.cantidad + acc, 0)
             setDineroHy(dineroAMostrar)
             setCantHoy(cantAMostrar)
+        } else {
+            setDineroHy(0)
+            setCantHoy(0)
         }
     }
 
@@ -93,4 +95,4 @@ export const DailyResume = ({ producto, animar }: { producto: string, animar: bo
 
         </div>
     )
-}
+}   
