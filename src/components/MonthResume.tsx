@@ -5,7 +5,6 @@ import { useOnline } from "../hooks/useOnline"
 import { useEffect, useState } from "react"
 import { useSalesDb } from "../hooks/useSalesDb"
 import { usePurchases } from "../hooks/usePurchasesDb"
-import type { Compra } from "../types/compra.entity"
 
 export const MonthResume = ({ producto, animar }: { producto: string, animar: boolean }) => {
     const navigate = useNavigate()
