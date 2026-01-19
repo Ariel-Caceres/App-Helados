@@ -198,8 +198,10 @@ export const Month = (props: AccionesProps) => {
                     setVentasAMostrar(ventasOrdenadas as Venta[])
                 }
                 if (props.tipo == "compra") {
+                    const comprasOrdenadas = dataFiltrada.sort((a, b) => Number(a.fecha.split("-")[2]) - Number(b.fecha.split("-")[2]))
+
                     setCargando(true)
-                    setComprasAMostrar(dataFiltrada as Compra[])
+                    setComprasAMostrar(comprasOrdenadas as Compra[])
                     setCargando(false)
                 }
             }
