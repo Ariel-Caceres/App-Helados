@@ -5,6 +5,7 @@ import { useOnline } from "../hooks/useOnline"
 import { useEffect, useState } from "react"
 import { useSalesDb } from "../hooks/useSalesDb"
 import { usePurchases } from "../hooks/usePurchasesDb"
+import type { Compra } from "../types/compra.entity"
 
 export const MonthResume = ({ producto, animar }: { producto: string, animar: boolean }) => {
     const navigate = useNavigate()
@@ -17,32 +18,44 @@ export const MonthResume = ({ producto, animar }: { producto: string, animar: bo
     const [ventasTotalDinero, setVentasTotalDinero] = useState<number>()
     const [comprasTotalDinero, setComprasTotalDinero] = useState<number>()
     const { ventasDb, error, cargando } = useSalesDb()
-
     const comprasMes = compras.filter(c =>
         c.fecha.split("-")[1] === hoy.split("-")[1].padStart(2, "0")
             && c.status !== "pending-delete"
-            && c.producto ? c.producto == producto : true)
+            && c.producto ? c.producto == producto : true).sort((a, b) => Number(a.fecha.split("-")[2]) - Number(b.fecha.split("-")[2]))
     const ventasMes = ventas.filter(v =>
         v.fecha.split("-")[1] === hoy.split("-")[1].padStart(2, "0")
             && v.status !== "pending-delete"
             && v.producto ? v.producto == producto : true)
 
+    const ultimaCompra = comprasDb ?
+        comprasDb
+            .filter(c => c.producto === producto)
+            .sort((a, b) => Number(b.fecha.split("-")[2]) - Number(a.fecha.split("-")[2]))[0]
+
+        : null
+
+
 
     useEffect(() => {
+
         if (!online) {
             const ventasTotalDinero = ventasMes.reduce((acc, v) => v.status !== "pending-delete" ? acc + v.precioTotal : acc, 0)
             const comprasTotalDinero = comprasMes.reduce((acc, v) => v.status !== "pending-delete" ? acc + v.precio : acc, 0)
             setVentasTotalDinero(ventasTotalDinero)
             setComprasTotalDinero(comprasTotalDinero)
         } else {
-            if (ventasDb) {
+            if (ventasDb && ultimaCompra) {
                 const venasProducto = ventasDb.filter(p => p.producto ? p.producto == producto : producto == "helado" ? true : false)
-                const ventasTotalDinero = venasProducto.reduce((acc, v) => acc + v.precioTotal, 0)
+                const ventasDesdeReposicion = venasProducto.filter(v => {
+                    return (Number(v.fecha.split("-")[2])) > Number(ultimaCompra.fecha.split("-")[2])
+                })
+                const ventasTotalDinero = ventasDesdeReposicion.reduce((acc, v) => acc + v.precioTotal, 0)
                 setVentasTotalDinero(ventasTotalDinero)
             }
             if (comprasDb) {
                 const comprasProducto = comprasDb.filter(p => p.producto == producto)
-                const comprasTotalDinero = comprasProducto.reduce((acc, v) => acc + v.precio, 0)
+                    .sort((a, b) => Number(b.fecha.split("-")[2]) - Number(a.fecha.split("-")[2]))[0]
+                const comprasTotalDinero = comprasProducto.precio
                 setComprasTotalDinero(comprasTotalDinero)
             }
         }
