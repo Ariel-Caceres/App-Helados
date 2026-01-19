@@ -195,7 +195,7 @@ export const Month = (props: AccionesProps) => {
                 if (props.tipo == "venta") {
                     const ventasOrdenadas = dataFiltrada.sort((a, b) => Number(a.fecha.split("-")[2]) - Number(b.fecha.split("-")[2]))
                     console.log(ventasOrdenadas);
-                    setVentasAMostrar(dataFiltrada as Venta[])
+                    setVentasAMostrar(ventasOrdenadas as Venta[])
                 }
                 if (props.tipo == "compra") {
                     setCargando(true)

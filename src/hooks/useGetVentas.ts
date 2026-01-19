@@ -19,7 +19,6 @@ export const useGetVentas = (mes: string) => {
                         console.log("Error al traer las ventas de la base de datos");
                     } else {
                         setVentasDb(data)
-                        console.log("Fetch exitoso a ventas de db");
                     }
 
                 } catch (e) {

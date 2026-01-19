@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { createContext, useEffect, useState, type ReactNode, } from "react";
 import type { UUID } from '../types/uuid';
 import type { Venta } from '../types/venta.entity';
-export type Producto = "helado" | "pollo-trozado" | "carne-picada" | "hielo"
+export type Producto = "helado" | "pollo-trozado" | "carne-picada"
 
 export type Precios = Record<Producto, number>;
 
@@ -72,7 +72,7 @@ export const SellProvider = ({ children }: { children: ReactNode }) => {
     const registrarVenta = () => {
         const nuevaVenta: Venta = {
             id: uuidv4() as UUID,
-            producto,
+            producto: producto,
             precio: precioUnitario,
             cantidad: Number(cantidad),
             fecha: hoy,
