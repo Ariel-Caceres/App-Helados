@@ -3,6 +3,7 @@ import { useSell } from "../hooks/useSell";
 import type { Compra } from "../types/compra.entity";
 import { v4 as uuidv4 } from 'uuid';
 import type { UUID } from "../types/uuid";
+import type { Producto } from "./SellContext";
 
 interface BuyContextInterface {
     precioCompra: string,
@@ -13,7 +14,7 @@ interface BuyContextInterface {
     compras: Compra[]
     setCompras: React.Dispatch<React.SetStateAction<Compra[]>>
     producto: string,
-    setProducto: (valor: string) => void
+    setProducto: (valor: Producto) => void
 }
 
 
@@ -22,7 +23,7 @@ export const BuyContext = createContext<BuyContextInterface | undefined>(undefin
 export const BuyProvider = ({ children }: { children: ReactNode }) => {
     const [precioCompra, setPrecioCompra] = useState<string>("")
     const [cantidadCompra, setCantidadCompra] = useState<string>("")
-    const [producto, setProducto] = useState<string>("")
+    const [producto, setProducto] = useState<Producto>("helado")
     const { hoy } = useSell()
 
     const [compras, setCompras] = useState<Compra[]>(() => {

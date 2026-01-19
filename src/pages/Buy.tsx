@@ -4,6 +4,7 @@ import { Header } from "../components/Header";
 import { useOnline } from "../hooks/useOnline"
 import { useBuy } from "../hooks/useBuy";
 import { useState } from "react";
+import type { Producto } from "../context/SellContext";
 
 export const Buy = () => {
     const navigate = useNavigate()
@@ -55,7 +56,7 @@ export const Buy = () => {
 
                     <div className="w-full flex bg-[#FFD3BE] h-20 justify-between px-4 items-center rounded-2xl border-2" >
                         <label htmlFor="producto">Producto</label>
-                        <select name="producto" id="producto" className={`border-2 pl-2 rounded-xl h-10 bg-white w-2/3 `} value={producto} onChange={(e) => setProducto(e.target.value)}>
+                        <select name="producto" id="producto" className={`border-2 pl-2 rounded-xl h-10 bg-white w-2/3 `} value={producto} onChange={(e) => setProducto(e.target.value as Producto)}>
                             <option value="helado">Helado</option>
                             <option value="pollo-trozado">Pollo trozado</option>
                             <option value="carne-picada">Carne picada</option>
