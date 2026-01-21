@@ -217,7 +217,7 @@ export const Month = (props: AccionesProps) => {
                 {props.tipo == "venta" &&
                     (ventasAMostrar && ventasAMostrar.length != 0 ?
                         <div className="">
-                            <HeaderTabla />
+                            <HeaderTabla tipo="month" />
 
                             {ventasAMostrar && ventasAMostrar.map((v, i) => (
                                 <div className={`flex justify-between min-h-12`} key={i}>
@@ -307,7 +307,7 @@ export const Month = (props: AccionesProps) => {
                 {props.tipo == "compra" &&
                     (comprasAMostrar && comprasAMostrar.length != 0 ?
                         <div>
-                            <HeaderTabla />
+                            <HeaderTabla tipo="month" />
                             {comprasAMostrar.map((c, i) => (
                                 <div className="flex justify-between min-h-12 " key={i}>
                                     <div className="flex justify-center w-1/5 border-gray-300 border-2 items-center  ">
