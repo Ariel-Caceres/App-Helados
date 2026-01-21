@@ -5,9 +5,11 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { Modal } from './pages/Sell';
 import { Buy } from './pages/Buy';
 import { Record } from './pages/Record';
+import { LoteResume } from './pages/LoteResume';
 
 
 function App() {
+
 
   return (
     <div className="w-full max-h-full justify-center items-center flex flex-col  ">
@@ -18,8 +20,10 @@ function App() {
           <Route path="/sell" element={<Modal />}></Route>
           <Route path="/record" element={<Record />}></Route>
           <Route path="/buy" element={<Buy />}></Route>
+          <Route path="/lote" element={<LoteResume />}> </Route>
         </Routes>
       </Router>
+
     </div>
   )
 }
