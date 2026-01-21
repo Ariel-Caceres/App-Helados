@@ -17,6 +17,7 @@ export const MonthResume = ({ producto, animar }: { producto: string, animar: bo
     const [ventasTotalDinero, setVentasTotalDinero] = useState<number>()
     const [comprasTotalDinero, setComprasTotalDinero] = useState<number>()
     const { ventasDb, error, cargando } = useSalesDb()
+
     const comprasMes = compras.filter(c =>
         c.fecha.split("-")[1] === hoy.split("-")[1].padStart(2, "0")
             && c.status !== "pending-delete"
@@ -108,7 +109,7 @@ export const MonthResume = ({ producto, animar }: { producto: string, animar: bo
                 <div
                     className={`  w-full flex flex-row md:flex-row justify-evenly gap-4 p-2 px-2 transition-all duration-300 ease-in-out filter${animar ? "scale-110 -translate-y-12/12" : "translate-y-0"}`} >
 
-                    <div className="w-full md:w-full text-md  bg-[#616163] justify-evenly  text-white  min-h-32 md:h-40   rounded-2xl flex flex-col    border-2 shadow-md   p-2 ">
+                    <div className="w-full md:w-full text-md  bg-[#616163] justify-evenly  text-white  min-h-32 md:h-40   rounded-2xl flex flex-col    border-2 shadow-md   p-2 " onClick={() => navigate("/lote")}>
                         <div className="">
                             <span className="font-semibold">Compras: </span>
                             <span className="font-bold">${comprasTotalDinero}</span>
@@ -127,6 +128,7 @@ export const MonthResume = ({ producto, animar }: { producto: string, animar: bo
                                 <span className="font-semibold">A recuperar: </span>
                                 <span className="font-bold text-red-300">${resultado}</span>
                             </div>}
+
 
                     </div>
 
