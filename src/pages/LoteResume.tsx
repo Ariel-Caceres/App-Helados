@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom"
 import { useSearchParams } from "react-router-dom";
 import { useSell } from "../hooks/useSell"
 import type { Producto } from "../context/SellContext"
+import type { Venta } from "../types/venta.entity"
 
 
 export const LoteResume = () => {
@@ -28,6 +29,7 @@ export const LoteResume = () => {
     const [mpd, setmpd] = useState(Number(searchParams.get("categoria")) || 1)
     const [gciaTotal, setGciaTotal] = useState<number>()
     const [gciaUnidad, setGciaUnidad] = useState<number>()
+    const [ventasAMostrar, setVentasAMostrar] = useState<Venta[]>()
     const [margen, setMargen] = useState<number>()
     const productos: Record<string, () => Producto> = {
         1: () => "helado",
@@ -42,9 +44,15 @@ export const LoteResume = () => {
         }
     }, [comprasDb, mpd])
 
-    const ventasAMostrar = ventasDb?.filter(v => v.producto == productos[mpd]() &&
-        Number(v.fecha.split("-")[2]) >= Number(ultimaCompra?.fecha.split("-")[2]))
-        .sort((a, b) => Number(a.fecha.split("-")[2]) - Number(b.fecha.split("-")[2]))
+    useEffect(() => {
+        if (ventasDb && ultimaCompra) {
+            const ventasAMostrar = ventasDb.filter(v => v.producto == productos[mpd]() &&
+                Number(v.fecha.split("-")[2]) >= Number(ultimaCompra.fecha.split("-")[2]))
+                .sort((a, b) => Number(a.fecha.split("-")[2]) - Number(b.fecha.split("-")[2]))
+            setVentasAMostrar(ventasAMostrar)
+        }
+    }, [ventasDb, mpd, ultimaCompra])
+
 
     const calcularTotal = () => {
         if (ventasAMostrar && !cargando) {
@@ -95,7 +103,7 @@ export const LoteResume = () => {
             categoria: String(mpd)
         })
         calcularTotal()
-    }, [cargando, mpd])
+    }, [cargando, mpd, ventasAMostrar, ultimaCompra])
 
 
 
