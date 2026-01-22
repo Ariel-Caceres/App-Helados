@@ -102,7 +102,7 @@ export const LoteResume = () => {
     return (
         <div className="w-full  max-w-3xl mx-auto  flex mt-[5vh]  flex-col gap-5 px-2 overflow-hidden ">
             <Header />
-            <div className="flex flex-col md:flex-row justify-evenly gap-4 mt-2 px-2 max-h-[30vh] overflow-auto ">
+            <div className="flex  flex-col md:flex-row justify-center gap-4 mt-2 px-2 max-h-[30vh] overflow-auto ">
                 <div className="flex flex-col w-full min-w-xl " >
 
                     <HeaderTabla tipo="lote" />
@@ -140,24 +140,24 @@ export const LoteResume = () => {
                     )}
 
                 </div>
-                <div className={`flex w-full justify-center text-2xl p-4 text-center items-center`}>
-                </div>
+
 
             </div>
+
             <div className="w-full gap-2 justify-evenly items-center justify-self-center flex mt-2 flex-col mb-2">
 
-                <div className={`w-full flex  justify-center `}>
-                    <div className=" w-1/6 border-2 border-gray-600 justify-start flex border-r-0 text-start">
+                <div className={`sm:w-[80%] w-full flex  justify-center  `}>
+                    <div className=" w-1/4 border-2 border-gray-600 justify-start flex border-r-0 text-start">
                         <span>Compra =</span>
                     </div>
-                    <div className="w-1/5 border-2 border-gray-600 justify-center flex border-r-0 text-start ">
+                    <div className="w-1/4 border-2 border-gray-600 justify-center flex border-r-0 text-start ">
                         <span>{ultimaCompra?.cantidad} {ultimaCompra?.producto == "helado" ? "uds" : "kgs"}</span>
                     </div>
-                    <div className="w-1/5 border-2 border-gray-600 justify-center flex">
+                    <div className="w-1/4 border-2 border-gray-600 justify-center flex">
                         <span>${ultimaCompra?.precio}</span>
                     </div>
 
-                    <div className="w-1/3 border-2 border-gray-600 justify-center flex border-l-0 text-start">
+                    <div className="w-1/4 border-2 border-gray-600 justify-center flex border-l-0 text-start">
 
                         <span className="pr-1">1 {ultimaCompra?.producto == "helado" ? "ud" : "kg"} x  </span>
                         <span> ${compraUnidad}</span>
@@ -166,18 +166,18 @@ export const LoteResume = () => {
                 </div>
 
                 {productos[mpd]() == "helado" &&
-                    <div className={`w-full flex  justify-center`}>
-                        <div className="w-1/6 border-2 border-gray-600 justify-start flex border-r-0 text-start">
+                    <div className={`sm:w-[80%] w-full flex  justify-center`}>
+                        <div className="w-1/4 border-2 border-gray-600 justify-start flex border-r-0 text-start">
                             <span>Venta =</span>
                         </div>
-                        <div className="w-1/5 border-2 border-gray-600 justify-center flex border-r-0 text-start ">
+                        <div className="w-1/4 border-2 border-gray-600 justify-center flex border-r-0 text-start ">
                             <span>{totalHeladoCantidad} uds</span>
                         </div>
-                        <div className="w-1/5 border-2 border-gray-600 justify-center flex">
+                        <div className="w-1/4 border-2 border-gray-600 justify-center flex">
                             <span>${totalHeladoPrecio}</span>
                         </div>
 
-                        <div className="w-1/3 border-2 border-gray-600 justify-center flex border-l-0 text-start">
+                        <div className="w-1/4 border-2 border-gray-600 justify-center flex border-l-0 text-start">
 
                             <span className="pr-1">1 {ultimaCompra?.producto == "helado" ? "ud" : "kg"} x  </span>
                             <span> ${precios["helado"]}</span>
@@ -185,17 +185,17 @@ export const LoteResume = () => {
                     </div>
                 }
                 {productos[mpd]() == "carne-picada" &&
-                    <div className={`w-full flex  justify-center`}>
-                        <div className="w-1/6 border-2 border-gray-600 justify-start flex border-r-0">
+                    <div className={`sm:w-[80%] w-full flex  justify-center`}>
+                        <div className="w-1/4 border-2 border-gray-600 justify-start flex border-r-0">
                             <span>Venta =</span>
                         </div>
-                        <div className="w-1/5 border-2 border-gray-600 justify-center flex border-r-0">
+                        <div className="w-1/4 border-2 border-gray-600 justify-center flex border-r-0">
                             <span>{CPTotalCantidad} kgs</span>
                         </div>
-                        <div className="w-1/5 border-2 border-gray-600 justify-center flex">
+                        <div className="w-1/4 border-2 border-gray-600 justify-center flex">
                             <span>${CPTotalPrecio}</span>
                         </div>
-                        <div className="w-1/3 border-2 border-gray-600 justify-center flex border-l-0 text-start">
+                        <div className="w-1/4 border-2 border-gray-600 justify-center flex border-l-0 text-start">
 
                             <span className="pr-1">1 {ultimaCompra?.producto == "helado" ? "ud" : "kg"} x  </span>
                             <span> ${precios["carne-picada"]}</span>
@@ -203,37 +203,37 @@ export const LoteResume = () => {
                     </div>
                 }
                 {productos[mpd]() == "pollo-trozado" &&
-                    <div className={`w-full flex  justify-center`}>
-                        <div className="w-1/6 border-2 border-gray-600 justify-start flex border-r-0 ">
+                    <div className={`sm:w-[80%] w-full flex  justify-center`}>
+                        <div className="w-1/4 border-2 border-gray-600 justify-start flex border-r-0 ">
                             <span>Venta =</span>
                         </div>
-                        <div className="w-1/5 border-2 border-gray-600 justify-center flex border-r-0">
+                        <div className="w-1/4 border-2 border-gray-600 justify-center flex border-r-0">
                             <span>{PTTotalCantidad} kgs</span>
                         </div>
-                        <div className="w-1/5 border-2 border-gray-600 justify-center flex">
+                        <div className="w-1/4 border-2 border-gray-600 justify-center flex">
                             <span>${PTTotalPrecio}</span>
                         </div>
-                        <div className="w-1/3 border-2 border-gray-600 justify-center flex border-l-0 text-start">
+                        <div className="w-1/4 border-2 border-gray-600 justify-center flex border-l-0 text-start">
                             <span className="pr-1">1 {ultimaCompra?.producto == "helado" ? "ud" : "kg"} x  </span>
                             <span> ${precios["pollo-trozado"]}</span>
                         </div>
                     </div>
                 }
 
-                <div className={`w-full flex  justify-center`}>
-                    <div className="w-1/6 border-2 border-r-0 border-gray-600 justify-start flex">
+                <div className={`sm:w-[80%] w-full flex  justify-center`}>
+                    <div className="w-1/4 border-2 border-r-0 border-gray-600 justify-start flex">
                         <span>Ganancia =</span>
                     </div>
-                    <div className=" w-1/5 border-2 border-gray-600 justify-center flex border-r-0 ">
+                    <div className=" w-1/4 border-2 border-gray-600 justify-center flex border-r-0 ">
                         <span>Total= </span>
                         <span>${gciaTotal}</span>
                     </div>
-                    <div className="w-1/5 border-2 border-gray-600 justify-center flex">
+                    <div className="w-1/4 border-2 border-gray-600 justify-center flex">
                         <span>Ud=</span>
                         <span>${gciaUnidad}</span>
                     </div>
 
-                    <div className="w-1/3 border-2 border-gray-600 justify-center flex border-l-0">
+                    <div className="w-1/4 border-2 border-gray-600 justify-center flex border-l-0">
 
                         <span className="pr-1">Margen  </span>
                         {margen &&
@@ -244,7 +244,6 @@ export const LoteResume = () => {
                 </div>
 
             </div>
-
 
             <div className={`flex w-full justify-center text-2xl p-4 text-center items-center`}>
                 <div className="w-80 sm:w-2/3 flex justify-center items-center">
