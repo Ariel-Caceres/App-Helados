@@ -166,7 +166,7 @@ export const LoteResume = () => {
 
                     <div className="w-1/4 border-2 border-gray-600 justify-center flex border-l-0 text-start">
 
-                        <span>1 {ultimaCompra?.producto == "helado" ? "ud" : "kg"} x ${compraUnidad}</span>
+                        <span>1 x ${compraUnidad}</span>
                     </div>
 
                 </div>
@@ -185,7 +185,7 @@ export const LoteResume = () => {
 
                         <div className="w-1/4 border-2 border-gray-600 justify-center flex border-l-0 text-start">
 
-                            <span >1 {ultimaCompra?.producto == "helado" ? "ud" : "kg"} x ${precios["helado"]} </span>
+                            <span >1 x ${precios["helado"]} </span>
                         </div>
                     </div>
                 }
@@ -202,7 +202,7 @@ export const LoteResume = () => {
                         </div>
                         <div className="w-1/4 border-2 border-gray-600 justify-center flex border-l-0 text-start">
 
-                            <span >1 {ultimaCompra?.producto == "helado" ? "ud" : "kg"} x {precios["carne-picada"]}</span>
+                            <span >1  x ${precios["carne-picada"]}</span>
                         </div>
                     </div>
                 }
@@ -218,7 +218,7 @@ export const LoteResume = () => {
                             <span>${PTTotalPrecio}</span>
                         </div>
                         <div className="w-1/4 border-2 border-gray-600 justify-center flex border-l-0 text-start">
-                            <span >1 {ultimaCompra?.producto == "helado" ? "ud" : "kg"} x ${precios["pollo-trozado"]} </span>
+                            <span >1  x ${precios["pollo-trozado"]} </span>
                         </div>
                     </div>
                 }
