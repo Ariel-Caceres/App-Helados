@@ -8,6 +8,7 @@ import { Button } from "../components/Button"
 import { useNavigate } from "react-router-dom"
 import { useSearchParams } from "react-router-dom";
 import { useSell } from "../hooks/useSell"
+import type { Producto } from "../context/SellContext"
 
 
 export const LoteResume = () => {
@@ -28,7 +29,7 @@ export const LoteResume = () => {
     const [gciaTotal, setGciaTotal] = useState<number>()
     const [gciaUnidad, setGciaUnidad] = useState<number>()
     const [margen, setMargen] = useState<number>()
-    const productos: Record<string, () => string> = {
+    const productos: Record<string, () => Producto> = {
         1: () => "helado",
         2: () => "carne-picada",
         3: () => "pollo-trozado"
