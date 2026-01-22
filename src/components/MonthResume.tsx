@@ -1,10 +1,10 @@
-import { useNavigate } from "react-router-dom"
 import { useSell } from "../hooks/useSell"
 import { useBuy } from "../hooks/useBuy"
 import { useOnline } from "../hooks/useOnline"
 import { useEffect, useState } from "react"
 import { useSalesDb } from "../hooks/useSalesDb"
 import { usePurchases } from "../hooks/usePurchasesDb"
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 export const MonthResume = ({ producto, animar }: { producto: string, animar: boolean }) => {
     const navigate = useNavigate()
@@ -69,6 +69,15 @@ export const MonthResume = ({ producto, animar }: { producto: string, animar: bo
     }, [comprasTotalDinero, ventasTotalDinero])
 
 
+    const [searchParams] = useSearchParams();
+
+    const irAlLote = () => {
+        navigate({
+            pathname: "/lote",
+            search: `?${searchParams.toString()}`
+        });
+    };
+
 
     if (!online) return null
     if (error) return <p>{error}</p>
@@ -109,7 +118,8 @@ export const MonthResume = ({ producto, animar }: { producto: string, animar: bo
                 <div
                     className={`  w-full flex flex-row md:flex-row justify-evenly gap-4 p-2 px-2 transition-all duration-300 ease-in-out filter${animar ? "scale-110 -translate-y-12/12" : "translate-y-0"}`} >
 
-                    <div className="w-full md:w-full text-md  bg-[#616163] justify-evenly  text-white  min-h-32 md:h-40   rounded-2xl flex flex-col    border-2 shadow-md   p-2 " onClick={() => navigate("/lote")}>
+                    <div className="w-full md:w-full text-md  bg-[#616163] justify-evenly  text-white  min-h-32 md:h-40   rounded-2xl flex flex-col    border-2 shadow-md   p-2 "
+                        onClick={() => irAlLote()}>
                         <div className="">
                             <span className="font-semibold">Compras: </span>
                             <span className="font-bold">${comprasTotalDinero}</span>

@@ -6,10 +6,11 @@ import { usePurchases } from "../hooks/usePurchasesDb"
 import { HeaderTabla } from "../components/HeaderTabla"
 import { Button } from "../components/Button"
 import { useNavigate } from "react-router-dom"
+import { useSearchParams } from "react-router-dom";
 
 
 export const LoteResume = () => {
-
+    const [searchParams, setSearchParams] = useSearchParams()
     const { ventasDb, cargando } = useSalesDb()
     const { comprasDb } = usePurchases()
     const [ultimaCompra, setUltimaCompra] = useState<Compra>()
@@ -20,7 +21,7 @@ export const LoteResume = () => {
     const [PTTotalPrecio, setPTTotalPrecio] = useState<number>()
     const [CPTotalCantidad, setCPTotalCantidad] = useState<number>()
     const [CPTotalPrecio, setCPTotalPrecio] = useState<number>()
-    const [mpd, setmpd] = useState(1)
+    const [mpd, setmpd] = useState(Number(searchParams.get("categoria")) || 1)
     const productos: Record<string, () => string> = {
         1: () => "helado",
         2: () => "carne-picada",
@@ -70,7 +71,11 @@ export const LoteResume = () => {
         }
     }
 
+
     useEffect(() => {
+        setSearchParams({
+            categoria: String(mpd)
+        })
         calcularTotal()
     }, [cargando, mpd])
 

@@ -4,13 +4,16 @@ import { Button } from "../components/Button"
 import { useEffect, useRef, useState } from "react"
 import { MonthResume } from "../components/MonthResume"
 import { DailyResume } from "../components/DailyResume"
+import { useSearchParams } from "react-router-dom";
 
 export const Home = () => {
     const navigate = useNavigate()
+    const [searchParams, setSearchParams] = useSearchParams();
 
-    const [mpd, setmpd] = useState(1)
+    const [mpd, setmpd] = useState(Number(searchParams.get("categoria")) || 1)
 
     const [animar, setAnimar] = useState<boolean>(false)
+
     const productos: Record<string, () => string> = {
         1: () => "helado",
         2: () => "carne-picada",
@@ -25,6 +28,9 @@ export const Home = () => {
 
 
     useEffect(() => {
+        setSearchParams({
+            categoria: String(mpd)
+        })
         if (firstRender.current) {
             firstRender.current = false
             return
@@ -36,6 +42,8 @@ export const Home = () => {
         }, 500)
 
         return () => clearTimeout(timeout)
+
+
     }, [mpd])
 
 
