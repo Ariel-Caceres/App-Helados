@@ -79,7 +79,6 @@ export const LoteResume = () => {
         calcularTotal()
     }, [cargando, mpd])
 
-    console.log(ventasAMostrar?.reduce((acc, v) => v.cantidad + acc, 0));
 
     return (
         <div className="w-full  max-w-3xl mx-auto  flex mt-[5vh]  flex-col gap-5 px-2 overflow-hidden ">

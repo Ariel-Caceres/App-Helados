@@ -27,7 +27,7 @@ export const HeaderTabla = ({ tipo }: { tipo: string }) => {
                 </div>
                 :
                 <div className="w-1/4 border-2 ">
-                    <span className="pl-2 text-xl font-bold">Tipo</span>
+                    <span className="pl-2 text-xl font-bold">Transacción</span>
                 </div>
             }
         </div>
