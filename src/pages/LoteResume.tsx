@@ -112,7 +112,7 @@ export const LoteResume = () => {
                                 <span>{v?.cantidad}</span>
                             </div>
                             <div className="flex justify-center w-1/4 border-gray-300 border-2 items-center ">
-                                <span>${v?.precio}</span>
+                                <span>${v?.precioTotal}</span>
                             </div>
                             <div className="flex justify-center w-1/4 border-gray-300 border-2 items-center ">
                                 <span>Venta</span>
