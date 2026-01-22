@@ -7,11 +7,13 @@ import { HeaderTabla } from "../components/HeaderTabla"
 import { Button } from "../components/Button"
 import { useNavigate } from "react-router-dom"
 import { useSearchParams } from "react-router-dom";
+import { useSell } from "../hooks/useSell"
 
 
 export const LoteResume = () => {
     const [searchParams, setSearchParams] = useSearchParams()
     const { ventasDb, cargando } = useSalesDb()
+    const { precios } = useSell()
     const { comprasDb } = usePurchases()
     const [ultimaCompra, setUltimaCompra] = useState<Compra>()
     const navigate = useNavigate()
@@ -21,13 +23,16 @@ export const LoteResume = () => {
     const [PTTotalPrecio, setPTTotalPrecio] = useState<number>()
     const [CPTotalCantidad, setCPTotalCantidad] = useState<number>()
     const [CPTotalPrecio, setCPTotalPrecio] = useState<number>()
+    const [compraUnidad, setCompraUnidad] = useState<number>()
     const [mpd, setmpd] = useState(Number(searchParams.get("categoria")) || 1)
+    const [gciaTotal, setGciaTotal] = useState<number>()
+    const [gciaUnidad, setGciaUnidad] = useState<number>()
+    const [margen, setMargen] = useState<number>()
     const productos: Record<string, () => string> = {
         1: () => "helado",
         2: () => "carne-picada",
         3: () => "pollo-trozado"
     }
-
     useMemo(() => {
         if (comprasDb) {
             const ultimaCompra: Compra = comprasDb.filter(c => c.producto == productos[mpd]())
@@ -71,6 +76,18 @@ export const LoteResume = () => {
         }
     }
 
+    useMemo(() => {
+        if (ultimaCompra) {
+            const compraUnidad = ultimaCompra.precio / ultimaCompra.cantidad
+            setCompraUnidad(compraUnidad)
+            const gciaTotal = ultimaCompra.cantidad * precios[productos[mpd]()]
+            setGciaTotal(gciaTotal)
+            const gciaUnidad = precios[productos[mpd]()] - compraUnidad
+            setGciaUnidad(gciaUnidad)
+            const margen = (gciaUnidad / precios[productos[mpd]()]) * 100
+            setMargen(margen)
+        }
+    }, [ultimaCompra, mpd])
 
     useEffect(() => {
         setSearchParams({
@@ -78,6 +95,7 @@ export const LoteResume = () => {
         })
         calcularTotal()
     }, [cargando, mpd])
+
 
 
     return (
@@ -125,12 +143,10 @@ export const LoteResume = () => {
                 </div>
 
             </div>
-            <div className="w-full gap-2 justify-center items-center justify-self-center flex mt-2 flex-col mb-2">
-                <div className="w-3/5 flex items-center justify-center text-xl border-2 ">
-                    <span>Total</span>
-                </div>
-                <div className={`w-full flex  justify-center`}>
-                    <div className="w-1/5 border-2 border-gray-600 justify-start flex border-r-0 text-start">
+            <div className="w-full gap-2 justify-evenly items-center justify-self-center flex mt-2 flex-col mb-2">
+
+                <div className={`w-full flex  justify-center `}>
+                    <div className=" w-1/6 border-2 border-gray-600 justify-start flex border-r-0 text-start">
                         <span>Compra =</span>
                     </div>
                     <div className="w-1/5 border-2 border-gray-600 justify-center flex border-r-0 text-start ">
@@ -139,10 +155,18 @@ export const LoteResume = () => {
                     <div className="w-1/5 border-2 border-gray-600 justify-center flex">
                         <span>${ultimaCompra?.precio}</span>
                     </div>
+
+                    <div className="w-1/3 border-2 border-gray-600 justify-center flex border-l-0 text-start">
+
+                        <span className="pr-1">1 {ultimaCompra?.producto == "helado" ? "ud" : "kg"} x  </span>
+                        <span> ${compraUnidad}</span>
+                    </div>
+
                 </div>
+
                 {productos[mpd]() == "helado" &&
                     <div className={`w-full flex  justify-center`}>
-                        <div className="w-1/5 border-2 border-gray-600 justify-start flex border-r-0 text-start">
+                        <div className="w-1/6 border-2 border-gray-600 justify-start flex border-r-0 text-start">
                             <span>Venta =</span>
                         </div>
                         <div className="w-1/5 border-2 border-gray-600 justify-center flex border-r-0 text-start ">
@@ -151,11 +175,17 @@ export const LoteResume = () => {
                         <div className="w-1/5 border-2 border-gray-600 justify-center flex">
                             <span>${totalHeladoPrecio}</span>
                         </div>
+
+                        <div className="w-1/3 border-2 border-gray-600 justify-center flex border-l-0 text-start">
+
+                            <span className="pr-1">1 {ultimaCompra?.producto == "helado" ? "ud" : "kg"} x  </span>
+                            <span> ${precios["helado"]}</span>
+                        </div>
                     </div>
                 }
                 {productos[mpd]() == "carne-picada" &&
                     <div className={`w-full flex  justify-center`}>
-                        <div className="w-1/5 border-2 border-gray-600 justify-start flex border-r-0">
+                        <div className="w-1/6 border-2 border-gray-600 justify-start flex border-r-0">
                             <span>Venta =</span>
                         </div>
                         <div className="w-1/5 border-2 border-gray-600 justify-center flex border-r-0">
@@ -164,11 +194,16 @@ export const LoteResume = () => {
                         <div className="w-1/5 border-2 border-gray-600 justify-center flex">
                             <span>${CPTotalPrecio}</span>
                         </div>
+                        <div className="w-1/3 border-2 border-gray-600 justify-center flex border-l-0 text-start">
+
+                            <span className="pr-1">1 {ultimaCompra?.producto == "helado" ? "ud" : "kg"} x  </span>
+                            <span> ${precios["carne-picada"]}</span>
+                        </div>
                     </div>
                 }
                 {productos[mpd]() == "pollo-trozado" &&
                     <div className={`w-full flex  justify-center`}>
-                        <div className="w-1/5 border-2 border-gray-600 justify-start flex border-r-0 ">
+                        <div className="w-1/6 border-2 border-gray-600 justify-start flex border-r-0 ">
                             <span>Venta =</span>
                         </div>
                         <div className="w-1/5 border-2 border-gray-600 justify-center flex border-r-0">
@@ -177,9 +212,37 @@ export const LoteResume = () => {
                         <div className="w-1/5 border-2 border-gray-600 justify-center flex">
                             <span>${PTTotalPrecio}</span>
                         </div>
+                        <div className="w-1/3 border-2 border-gray-600 justify-center flex border-l-0 text-start">
+                            <span className="pr-1">1 {ultimaCompra?.producto == "helado" ? "ud" : "kg"} x  </span>
+                            <span> ${precios["pollo-trozado"]}</span>
+                        </div>
                     </div>
                 }
+
+                <div className={`w-full flex  justify-center`}>
+                    <div className="w-1/6 border-2 border-r-0 border-gray-600 justify-start flex">
+                        <span>Ganancia =</span>
+                    </div>
+                    <div className=" w-1/5 border-2 border-gray-600 justify-center flex border-r-0 ">
+                        <span>Total= </span>
+                        <span>${gciaTotal}</span>
+                    </div>
+                    <div className="w-1/5 border-2 border-gray-600 justify-center flex">
+                        <span>Ud=</span>
+                        <span>${gciaUnidad}</span>
+                    </div>
+
+                    <div className="w-1/3 border-2 border-gray-600 justify-center flex border-l-0">
+
+                        <span className="pr-1">Margen  </span>
+                        <span>{Math.round(margen)}%</span>
+                    </div>
+
+                </div>
+
             </div>
+
+
             <div className={`flex w-full justify-center text-2xl p-4 text-center items-center`}>
                 <div className="w-80 sm:w-2/3 flex justify-center items-center">
                     <div className=" border-2 rounded-2xl " onClick={() => setmpd(mpd > 1 ? mpd - 1 : 3)}>
@@ -200,6 +263,6 @@ export const LoteResume = () => {
                 <Button texto="Volver" tipo="button" onClick={() => navigate("/")} />
             </div>
 
-        </div>
+        </div >
     )
 }
