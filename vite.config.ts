@@ -16,6 +16,7 @@ export default defineConfig({
       manifest: {
         name: 'Ho`ysã',
         short_name: 'Ho`ysã',
+
         description: 'Mi aplicación React para manejo de negocio de venta de productos fríos',
         start_url: '/',
         display: 'standalone',
@@ -23,12 +24,12 @@ export default defineConfig({
         theme_color: '#ffffff',
         icons: [
           {
-            src: '/pwa-192x192.png',
+            src: '/pwa-192x192-v2.png',
             sizes: '192x192',
             type: 'image/png'
           },
           {
-            src: '/pwa-512x512.png',
+            src: '/pwa-512x512-v2.png',
             sizes: '512x512',
             type: 'image/png'
           }
