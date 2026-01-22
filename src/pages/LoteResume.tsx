@@ -236,7 +236,9 @@ export const LoteResume = () => {
                     <div className="w-1/3 border-2 border-gray-600 justify-center flex border-l-0">
 
                         <span className="pr-1">Margen  </span>
-                        <span>{Math.round(margen)}%</span>
+                        {margen &&
+                            <span>{Math.round(margen)}%</span>
+                        }
                     </div>
 
                 </div>
