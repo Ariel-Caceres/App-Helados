@@ -22,6 +22,7 @@ export const MonthResume = ({ producto, animar }: { producto: string, animar: bo
         c.fecha.split("-")[1] === hoy.split("-")[1].padStart(2, "0")
             && c.status !== "pending-delete"
             && c.producto ? c.producto == producto : true).sort((a, b) => Number(a.fecha.split("-")[2]) - Number(b.fecha.split("-")[2]))
+
     const ventasMes = ventas.filter(v =>
         v.fecha.split("-")[1] === hoy.split("-")[1].padStart(2, "0")
             && v.status !== "pending-delete"
@@ -47,7 +48,7 @@ export const MonthResume = ({ producto, animar }: { producto: string, animar: bo
             if (ventasDb && ultimaCompra) {
                 const venasProducto = ventasDb.filter(p => p.producto ? p.producto == producto : producto == "helado" ? true : false)
                 const ventasDesdeReposicion = venasProducto.filter(v => {
-                    return (Number(v.fecha.split("-")[2])) > Number(ultimaCompra.fecha.split("-")[2])
+                    return (Number(v.fecha.split("-")[2])) >= Number(ultimaCompra.fecha.split("-")[2])
                 })
                 const ventasTotalDinero = ventasDesdeReposicion.reduce((acc, v) => acc + v.precioTotal, 0)
                 setVentasTotalDinero(ventasTotalDinero)
@@ -59,14 +60,17 @@ export const MonthResume = ({ producto, animar }: { producto: string, animar: bo
                 setComprasTotalDinero(comprasTotalDinero)
             }
         }
-    }, [online, comprasDb, ventasDb, producto, comprasMes, ventasMes])
+    }, [online, comprasDb, ventasDb, producto, comprasMes, ventasMes, ultimaCompra])
 
     useEffect(() => {
-        if (!ventasTotalDinero || !comprasTotalDinero) return
-        const calculo = comprasTotalDinero - ventasTotalDinero
+        if (ventasTotalDinero === undefined || comprasTotalDinero === undefined) return
 
+        const calculo = comprasTotalDinero - ventasTotalDinero
         setResultado(calculo)
     }, [comprasTotalDinero, ventasTotalDinero])
+
+
+    console.log(comprasTotalDinero && ventasTotalDinero ? comprasTotalDinero - ventasTotalDinero : "no");
 
 
     const [searchParams] = useSearchParams();
