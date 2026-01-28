@@ -10,9 +10,10 @@ import { useSearchParams } from "react-router-dom";
 import { useSell } from "../hooks/useSell"
 import type { Producto } from "../context/SellContext"
 import type { Venta } from "../types/venta.entity"
-
+import { useOnline } from "../hooks/useOnline"
 
 export const LoteResume = () => {
+    const online = useOnline()
     const [searchParams, setSearchParams] = useSearchParams()
     const { ventasDb, cargando } = useSalesDb()
     const { precios } = useSell()
@@ -106,7 +107,7 @@ export const LoteResume = () => {
     }, [cargando, mpd, ventasAMostrar, ultimaCompra])
 
 
-
+    if (!online) navigate("/")
     return (
         <div className="w-full  max-w-3xl mx-auto  flex mt-[5vh]  flex-col gap-5 px-2 overflow-hidden ">
             <Header />
