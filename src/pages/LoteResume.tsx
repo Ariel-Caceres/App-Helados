@@ -107,7 +107,7 @@ export const LoteResume = () => {
     }, [cargando, mpd, ventasAMostrar, ultimaCompra])
 
 
-    if (!online) {
+    if (!online || cargando) {
         navigate("/")
     }
     return (
