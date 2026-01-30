@@ -70,7 +70,6 @@ export const MonthResume = ({ producto, animar }: { producto: string, animar: bo
     }, [comprasTotalDinero, ventasTotalDinero])
 
 
-    console.log(comprasTotalDinero && ventasTotalDinero ? comprasTotalDinero - ventasTotalDinero : "no");
 
 
     const [searchParams] = useSearchParams();
