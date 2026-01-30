@@ -5,6 +5,7 @@ import { HeaderTabla } from "../components/HeaderTabla"
 import type { Compra } from "../types/compra.entity";
 import { useBuy } from "../hooks/useBuy";
 import { useEffect, useState } from "react";
+import { Cargando } from "./cargando";
 
 
 type AccionesProps =
@@ -210,7 +211,7 @@ export const Month = (props: AccionesProps) => {
 
 
 
-    if (cargando) return <div className="flex justify-center items-center border-2 text-xl mt-2 mb-5 p-2 ">Cargando...<span className=" animate-spin">🕐</span></div>
+    if (cargando) return <Cargando />
     return (
         <>
             <div className="mb-5 relative">

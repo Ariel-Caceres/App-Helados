@@ -10,6 +10,7 @@ import { useSearchParams } from "react-router-dom";
 import { useSell } from "../hooks/useSell"
 import type { Producto } from "../context/SellContext"
 import type { Venta } from "../types/venta.entity"
+import { Cargando } from "../components/cargando"
 import { useOnline } from "../hooks/useOnline"
 
 export const LoteResume = () => {
@@ -107,9 +108,8 @@ export const LoteResume = () => {
     }, [cargando, mpd, ventasAMostrar, ultimaCompra])
 
 
-    if (!online || cargando) {
-        navigate("/")
-    }
+
+
     return (
         <div className="w-full  max-w-3xl mx-auto  flex mt-[5vh]  flex-col gap-5 px-2 overflow-hidden ">
             <Header />
@@ -117,139 +117,149 @@ export const LoteResume = () => {
                 <div className="flex flex-col w-full min-w-xl " >
 
                     <HeaderTabla tipo="lote" />
-                    <div className={`flex justify-between min-h-12`} >
-                        <div className="flex justify-center w-1/4 border-gray-300 border-2 items-center  ">
-                            <span>{ultimaCompra?.fecha}</span>
-                        </div>
+                    {cargando ?
+                        <Cargando /> :
+                        <>
 
-                        <div className="flex justify-center w-1/4 border-gray-300 border-2 items-center ">
-                            <span>{ultimaCompra?.cantidad}</span>
-                        </div>
-                        <div className="flex justify-center w-1/4 border-gray-300 border-2 items-center ">
-                            <span>${ultimaCompra?.precio}</span>
-                        </div>
-                        <div className="flex justify-center w-1/4 border-gray-300 border-2 items-center ">
-                            <span>Compra</span>
-                        </div>
-                    </div>
-                    {ventasAMostrar?.map((v, i) =>
-                        <div className={`flex justify-between min-h-12`} key={i} >
-                            <div className="flex justify-center w-1/4 border-gray-300 border-2 items-center  ">
-                                <span>{v?.fecha}</span>
-                            </div>
+                            <div className={`flex justify-between min-h-12`} >
+                                <div className="flex justify-center w-1/4 border-gray-300 border-2 items-center  ">
+                                    <span>{ultimaCompra?.fecha}</span>
+                                </div>
 
-                            <div className="flex justify-center w-1/4 border-gray-300 border-2 items-center ">
-                                <span>{v?.cantidad}</span>
+                                <div className="flex justify-center w-1/4 border-gray-300 border-2 items-center ">
+                                    <span>{ultimaCompra?.cantidad}</span>
+                                </div>
+                                <div className="flex justify-center w-1/4 border-gray-300 border-2 items-center ">
+                                    <span>${ultimaCompra?.precio}</span>
+                                </div>
+                                <div className="flex justify-center w-1/4 border-gray-300 border-2 items-center ">
+                                    <span>Compra</span>
+                                </div>
                             </div>
-                            <div className="flex justify-center w-1/4 border-gray-300 border-2 items-center ">
-                                <span>${v?.precioTotal}</span>
-                            </div>
-                            <div className="flex justify-center w-1/4 border-gray-300 border-2 items-center ">
-                                <span>Venta</span>
-                            </div>
-                        </div>
-                    )}
+                            {ventasAMostrar?.map((v, i) =>
+                                <div className={`flex justify-between min-h-12`} key={i} >
+                                    <div className="flex justify-center w-1/4 border-gray-300 border-2 items-center  ">
+                                        <span>{v?.fecha}</span>
+                                    </div>
+
+                                    <div className="flex justify-center w-1/4 border-gray-300 border-2 items-center ">
+                                        <span>{v?.cantidad}</span>
+                                    </div>
+                                    <div className="flex justify-center w-1/4 border-gray-300 border-2 items-center ">
+                                        <span>${v?.precioTotal}</span>
+                                    </div>
+                                    <div className="flex justify-center w-1/4 border-gray-300 border-2 items-center ">
+                                        <span>Venta</span>
+                                    </div>
+                                </div>
+                            )}
+                        </>
+                    }
 
                 </div>
 
 
             </div>
-            <div className="w-full gap-2 justify-evenly items-center justify-self-center flex mt-2 flex-col mb-2">
+            {cargando ?
+                <Cargando />
+                :
+                <div className="w-full gap-2 justify-evenly items-center justify-self-center flex mt-2 flex-col mb-2">
 
-                <div className={`w-full flex  justify-center `}>
-                    <div className=" w-1/4 border-2 border-gray-600 justify-start flex border-r-0 text-start">
-                        <span>Compra =</span>
-                    </div>
-                    <div className="w-1/4 border-2 border-gray-600 justify-center flex border-r-0 text-start ">
-                        <span>{ultimaCompra?.cantidad} {ultimaCompra?.producto == "helado" ? "uds" : "kgs"}</span>
-                    </div>
-                    <div className="w-1/4 border-2 border-gray-600 justify-center flex">
-                        <span>${ultimaCompra?.precio}</span>
-                    </div>
-
-                    <div className="w-1/4 border-2 border-gray-600 justify-center flex border-l-0 text-start">
-
-                        <span>1 x ${compraUnidad}</span>
-                    </div>
-
-                </div>
-
-                {productos[mpd]() == "helado" &&
-                    <div className={`w-full flex  justify-center`}>
-                        <div className="w-1/4 border-2 border-gray-600 justify-start flex border-r-0 text-start">
-                            <span>Venta =</span>
+                    <div className={`w-full flex  justify-center `}>
+                        <div className=" w-1/4 border-2 border-gray-600 justify-start flex border-r-0 text-start">
+                            <span>Compra =</span>
                         </div>
                         <div className="w-1/4 border-2 border-gray-600 justify-center flex border-r-0 text-start ">
-                            <span>{totalHeladoCantidad} uds</span>
+                            <span>{ultimaCompra?.cantidad} {ultimaCompra?.producto == "helado" ? "uds" : "kgs"}</span>
                         </div>
                         <div className="w-1/4 border-2 border-gray-600 justify-center flex">
-                            <span>${totalHeladoPrecio}</span>
+                            <span>${ultimaCompra?.precio}</span>
                         </div>
 
                         <div className="w-1/4 border-2 border-gray-600 justify-center flex border-l-0 text-start">
 
-                            <span >1 x ${precios["helado"]} </span>
+                            <span>1 x ${compraUnidad}</span>
                         </div>
+
                     </div>
-                }
-                {productos[mpd]() == "carne-picada" &&
+
+                    {productos[mpd]() == "helado" &&
+                        <div className={`w-full flex  justify-center`}>
+                            <div className="w-1/4 border-2 border-gray-600 justify-start flex border-r-0 text-start">
+                                <span>Venta =</span>
+                            </div>
+                            <div className="w-1/4 border-2 border-gray-600 justify-center flex border-r-0 text-start ">
+                                <span>{totalHeladoCantidad} uds</span>
+                            </div>
+                            <div className="w-1/4 border-2 border-gray-600 justify-center flex">
+                                <span>${totalHeladoPrecio}</span>
+                            </div>
+
+                            <div className="w-1/4 border-2 border-gray-600 justify-center flex border-l-0 text-start">
+
+                                <span >1 x ${precios["helado"]} </span>
+                            </div>
+                        </div>
+                    }
+                    {productos[mpd]() == "carne-picada" &&
+                        <div className={`w-full flex  justify-center`}>
+                            <div className="w-1/4 border-2 border-gray-600 justify-start flex border-r-0">
+                                <span>Venta =</span>
+                            </div>
+                            <div className="w-1/4 border-2 border-gray-600 justify-center flex border-r-0">
+                                <span>{CPTotalCantidad} kgs</span>
+                            </div>
+                            <div className="w-1/4 border-2 border-gray-600 justify-center flex">
+                                <span>${CPTotalPrecio}</span>
+                            </div>
+                            <div className="w-1/4 border-2 border-gray-600 justify-center flex border-l-0 text-start">
+
+                                <span >1  x ${precios["carne-picada"]}</span>
+                            </div>
+                        </div>
+                    }
+                    {productos[mpd]() == "pollo-trozado" &&
+                        <div className={`w-full flex  justify-center`}>
+                            <div className="w-1/4 border-2 border-gray-600 justify-start flex border-r-0 ">
+                                <span>Venta =</span>
+                            </div>
+                            <div className="w-1/4 border-2 border-gray-600 justify-center flex border-r-0">
+                                <span>{PTTotalCantidad} kgs</span>
+                            </div>
+                            <div className="w-1/4 border-2 border-gray-600 justify-center flex">
+                                <span>${PTTotalPrecio}</span>
+                            </div>
+                            <div className="w-1/4 border-2 border-gray-600 justify-center flex border-l-0 text-start">
+                                <span >1  x ${precios["pollo-trozado"]} </span>
+                            </div>
+                        </div>
+                    }
+
                     <div className={`w-full flex  justify-center`}>
-                        <div className="w-1/4 border-2 border-gray-600 justify-start flex border-r-0">
-                            <span>Venta =</span>
+                        <div className="w-1/4 border-2 border-r-0 border-gray-600 justify-start flex">
+                            <span>Ganancia =</span>
                         </div>
-                        <div className="w-1/4 border-2 border-gray-600 justify-center flex border-r-0">
-                            <span>{CPTotalCantidad} kgs</span>
-                        </div>
-                        <div className="w-1/4 border-2 border-gray-600 justify-center flex">
-                            <span>${CPTotalPrecio}</span>
-                        </div>
-                        <div className="w-1/4 border-2 border-gray-600 justify-center flex border-l-0 text-start">
-
-                            <span >1  x ${precios["carne-picada"]}</span>
-                        </div>
-                    </div>
-                }
-                {productos[mpd]() == "pollo-trozado" &&
-                    <div className={`w-full flex  justify-center`}>
-                        <div className="w-1/4 border-2 border-gray-600 justify-start flex border-r-0 ">
-                            <span>Venta =</span>
-                        </div>
-                        <div className="w-1/4 border-2 border-gray-600 justify-center flex border-r-0">
-                            <span>{PTTotalCantidad} kgs</span>
+                        <div className=" w-1/4 border-2 border-gray-600 justify-center flex border-r-0 ">
+                            <span>Tot= </span>
+                            <span>${gciaTotal}</span>
                         </div>
                         <div className="w-1/4 border-2 border-gray-600 justify-center flex">
-                            <span>${PTTotalPrecio}</span>
+                            <span>Ud=</span>
+                            <span>${gciaUnidad}</span>
                         </div>
-                        <div className="w-1/4 border-2 border-gray-600 justify-center flex border-l-0 text-start">
-                            <span >1  x ${precios["pollo-trozado"]} </span>
+
+                        <div className="w-1/4 border-2 border-gray-600 justify-center flex border-l-0">
+
+                            <span className="pr-1">Mrg  </span>
+                            {margen &&
+                                <span>{Math.round(margen)}%</span>
+                            }
                         </div>
-                    </div>
-                }
 
-                <div className={`w-full flex  justify-center`}>
-                    <div className="w-1/4 border-2 border-r-0 border-gray-600 justify-start flex">
-                        <span>Ganancia =</span>
-                    </div>
-                    <div className=" w-1/4 border-2 border-gray-600 justify-center flex border-r-0 ">
-                        <span>Tot= </span>
-                        <span>${gciaTotal}</span>
-                    </div>
-                    <div className="w-1/4 border-2 border-gray-600 justify-center flex">
-                        <span>Ud=</span>
-                        <span>${gciaUnidad}</span>
-                    </div>
-
-                    <div className="w-1/4 border-2 border-gray-600 justify-center flex border-l-0">
-
-                        <span className="pr-1">Mrg  </span>
-                        {margen &&
-                            <span>{Math.round(margen)}%</span>
-                        }
                     </div>
 
                 </div>
-
-            </div>
+            }
 
 
             <div className={`flex w-full justify-center text-2xl p-4 text-center items-center`}>
