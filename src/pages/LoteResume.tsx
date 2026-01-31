@@ -10,7 +10,7 @@ import { useSearchParams } from "react-router-dom";
 import { useSell } from "../hooks/useSell"
 import type { Producto } from "../context/SellContext"
 import type { Venta } from "../types/venta.entity"
-import { Cargando } from "../components/cargando"
+import { Cargando } from "../components/Cargando"
 import { useOnline } from "../hooks/useOnline"
 
 export const LoteResume = () => {
