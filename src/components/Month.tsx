@@ -5,7 +5,7 @@ import { HeaderTabla } from "../components/HeaderTabla"
 import type { Compra } from "../types/compra.entity";
 import { useBuy } from "../hooks/useBuy";
 import { useEffect, useState } from "react";
-import { Cargando } from "./cargando";
+import { Cargando } from "./Cargando";
 
 
 type AccionesProps =
