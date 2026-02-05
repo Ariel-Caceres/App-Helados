@@ -15,8 +15,9 @@ export const DailyResume = ({ producto, animar }: { producto: string, animar: bo
     const ventasHoy = useMemo(() => {
         const fuente = online && !cargando ? ventasDb : ventas
         if (fuente) {
-            return fuente.filter(v => { return v.fecha.split("-")[2] == hoy.split("-")[2] })
+            return fuente.filter(v => { return v.fecha.split("-")[2] == hoy.split("-")[2] && v.fecha.split("-")[1] == hoy.split("-")[1] })
         }
+
     }, [hoy, online, ventas, ventasDb])
 
     const calcularTotal = (parametro: string) => {
