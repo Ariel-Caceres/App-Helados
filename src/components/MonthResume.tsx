@@ -58,7 +58,6 @@ export const MonthResume = ({ producto, animar }: { producto: string, animar: bo
                 if (comprasDb != null) {
                     const comprasProducto = comprasDb.filter(p => p.producto == producto)
                         .sort((a, b) => Number(b.fecha.split("-")[2]) - Number(a.fecha.split("-")[2]))[0]
-                    console.log(comprasProducto)
 
                     if (comprasProducto !== undefined) {
                         const comprasTotalDinero = comprasProducto.precio
@@ -91,8 +90,9 @@ export const MonthResume = ({ producto, animar }: { producto: string, animar: bo
 
     if (!online) return null
     if (error) return <p>{error}</p>
-
+    if (comprasDb != undefined) return
     return (
+
         <div className="w-full border bg-[#DAF5FF] rounded-2xl flex text-xl md:text-2xl flex-col justify-between relative overflow-hidden">
 
             <div className=" border top-0 left-0 gap-x-10 gap-y-1 right-0 flex sm:gap-y-3 w-full  items-center justify-between z-10   bg-amber-200 rounded-2xl px-6 py-3 ">
@@ -111,6 +111,7 @@ export const MonthResume = ({ producto, animar }: { producto: string, animar: bo
                     </button>
                 </div>
             </div>
+
             {cargando ?
                 <div className="flex w-full justify-center p-3 items-center">
                     <span>
@@ -133,10 +134,13 @@ export const MonthResume = ({ producto, animar }: { producto: string, animar: bo
                         <div className="">
                             <span className="font-semibold">Compras: </span>
                             <span className="font-bold">${comprasTotalDinero}</span>
+
                         </div>
                         <div>
                             <span className="font-semibold">Ventas: </span>
+
                             <span className="font-bold">${ventasTotalDinero}</span>
+
                         </div>
                         {comprasTotalDinero && ventasTotalDinero && comprasTotalDinero < ventasTotalDinero ?
                             <div className={`${resultado == undefined ? "hidden" : ""}`}>
@@ -154,8 +158,9 @@ export const MonthResume = ({ producto, animar }: { producto: string, animar: bo
 
 
                 </div>
-
             }
+
         </div >
     )
+
 }
