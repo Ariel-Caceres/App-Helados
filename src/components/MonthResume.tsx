@@ -52,7 +52,7 @@ export const MonthResume = ({ producto, animar }: { producto: string, animar: bo
                     const ventasDesdeReposicion = venasProducto.filter(v => {
                         const [anioV, mesV, diaV] = v.fecha.split("-").map(Number)
                         const [anioU, mesU, diaU] = ultimaCompra.fecha.split("-").map(Number)
-
+                        console.log(anioV, anioU)
                         return (
                             mesV === mesU &&
                             diaV >= diaU
