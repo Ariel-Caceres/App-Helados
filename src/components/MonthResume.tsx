@@ -50,9 +50,19 @@ export const MonthResume = ({ producto, animar }: { producto: string, animar: bo
                 if (ventasDb && ultimaCompra) {
                     const venasProducto = ventasDb.filter(p => p.producto ? p.producto == producto : producto == "helado" ? true : false)
                     const ventasDesdeReposicion = venasProducto.filter(v => {
-                        return (Number(v.fecha.split("-")[2])) >= Number(ultimaCompra.fecha.split("-")[2])
+                        const [anioV, mesV, diaV] = v.fecha.split("-").map(Number)
+                        const [anioU, mesU, diaU] = ultimaCompra.fecha.split("-").map(Number)
+
+                        return (
+                            mesV === mesU &&
+                            diaV >= diaU
+                        )
                     })
+
+                    console.log(ventasDesdeReposicion)
+
                     const ventasTotalDinero = ventasDesdeReposicion.reduce((acc, v) => acc + v.precioTotal, 0)
+
                     setVentasTotalDinero(ventasTotalDinero)
                 }
                 if (comprasDb != null) {
@@ -68,6 +78,7 @@ export const MonthResume = ({ producto, animar }: { producto: string, animar: bo
             }
         }
     }, [online, comprasDb, ventasDb, producto, comprasMes, ventasMes, ultimaCompra])
+
     useEffect(() => {
         if (ventasTotalDinero === undefined || comprasTotalDinero === undefined) return
 
@@ -86,11 +97,9 @@ export const MonthResume = ({ producto, animar }: { producto: string, animar: bo
             search: `?${searchParams.toString()}`
         });
     };
-
-
     if (!online) return null
     if (error) return <p>{error}</p>
-    if (comprasDb != undefined) return
+    // if (comprasDb != undefined && !cargando) 
     return (
 
         <div className="w-full border bg-[#DAF5FF] rounded-2xl flex text-xl md:text-2xl flex-col justify-between relative overflow-hidden">
