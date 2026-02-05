@@ -45,23 +45,30 @@ export const MonthResume = ({ producto, animar }: { producto: string, animar: bo
             setVentasTotalDinero(ventasTotalDinero)
             setComprasTotalDinero(comprasTotalDinero)
         } else {
-            if (ventasDb && ultimaCompra) {
-                const venasProducto = ventasDb.filter(p => p.producto ? p.producto == producto : producto == "helado" ? true : false)
-                const ventasDesdeReposicion = venasProducto.filter(v => {
-                    return (Number(v.fecha.split("-")[2])) >= Number(ultimaCompra.fecha.split("-")[2])
-                })
-                const ventasTotalDinero = ventasDesdeReposicion.reduce((acc, v) => acc + v.precioTotal, 0)
-                setVentasTotalDinero(ventasTotalDinero)
-            }
-            if (comprasDb) {
-                const comprasProducto = comprasDb.filter(p => p.producto == producto)
-                    .sort((a, b) => Number(b.fecha.split("-")[2]) - Number(a.fecha.split("-")[2]))[0]
-                const comprasTotalDinero = comprasProducto.precio
-                setComprasTotalDinero(comprasTotalDinero)
+            if (!cargando) {
+
+                if (ventasDb && ultimaCompra) {
+                    const venasProducto = ventasDb.filter(p => p.producto ? p.producto == producto : producto == "helado" ? true : false)
+                    const ventasDesdeReposicion = venasProducto.filter(v => {
+                        return (Number(v.fecha.split("-")[2])) >= Number(ultimaCompra.fecha.split("-")[2])
+                    })
+                    const ventasTotalDinero = ventasDesdeReposicion.reduce((acc, v) => acc + v.precioTotal, 0)
+                    setVentasTotalDinero(ventasTotalDinero)
+                }
+                if (comprasDb != null) {
+                    const comprasProducto = comprasDb.filter(p => p.producto == producto)
+                        .sort((a, b) => Number(b.fecha.split("-")[2]) - Number(a.fecha.split("-")[2]))[0]
+                    console.log(comprasProducto)
+
+                    if (comprasProducto !== undefined) {
+                        const comprasTotalDinero = comprasProducto.precio
+
+                        setComprasTotalDinero(comprasTotalDinero)
+                    }
+                }
             }
         }
     }, [online, comprasDb, ventasDb, producto, comprasMes, ventasMes, ultimaCompra])
-
     useEffect(() => {
         if (ventasTotalDinero === undefined || comprasTotalDinero === undefined) return
 
