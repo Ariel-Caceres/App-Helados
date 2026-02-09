@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useSearchParams } from "react-router-dom"
 import { Header } from "../components/Header"
 import { Edit } from "./Edit"
 import { useSell } from "../hooks/useSell"
@@ -23,8 +23,9 @@ export const Record = () => {
     const vaciarVentaAEditar = () => setVentaAEditar(undefined)
     const vaciarCompraAEditar = () => setCompraAEditar(undefined)
     const { online } = useOnline()
-    const [mostrarVentas, setMostrarVentas] = useState<boolean>(false)
-    const [mostrarCompras, setMostrarCompras] = useState<boolean>(false)
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [mostrarVentas, setMostrarVentas] = useState<boolean>(searchParams.get("view") == "sales" ? true : false)
+    const [mostrarCompras, setMostrarCompras] = useState<boolean>(searchParams.get("view") == "purchases" ? true : false)
     const cerrarTablas = () => { setMostrarCompras(false); setMostrarVentas(false) }
     const [compraAEliminar, setCompraAEliminar] = useState<Compra>()
     const [mesActual, setMesActual] = useState(Number(hoy.split("-")[1]))
@@ -37,6 +38,8 @@ export const Record = () => {
                 v.id !== transaccion.id
             )
             setVentas(ventaLocalDelete)
+            location.reload()
+
             return
         } else {
             const transBorrado = ventas.map(v =>
@@ -48,6 +51,8 @@ export const Record = () => {
                     : v
             )
             setVentas(transBorrado)
+            location.reload()
+
         }
 
     }
@@ -56,6 +61,7 @@ export const Record = () => {
         if (compra.status == "pending-create") {
             const compraLocal = compras.filter(c => c.id != compra.id)
             setCompras(compraLocal)
+            location.reload()
             return
         }
         else {
@@ -65,12 +71,15 @@ export const Record = () => {
                     c
             )
             setCompras(compraBorrada)
+            location.reload()
+
         }
     }
 
     const volver = () => {
         if (mostrarCompras || mostrarVentas) {
             cerrarTablas()
+            navigate("/record")
         } else {
             navigate("/")
         }
@@ -132,10 +141,10 @@ export const Record = () => {
                             {!mostrarCompras && !mostrarVentas &&
                                 <div className="mt-10 mb-10 w-full justify-center flex items-center gap-5 max-h-[30vh] flex-wrap">
                                     <button className="p-5 bg-[#FFBFA0] rounded-2xl border-2 text-xl cursor-pointer font-medium sm:w-2/3 md:w-1/3 w-4/5"
-                                        onClick={() => { setMostrarVentas(false); setMostrarCompras(true) }
+                                        onClick={() => { setMostrarVentas(false); setMostrarCompras(true); setSearchParams({ view: "purchases" }) }
                                         }>Compras</button>
                                     <button className="p-5 bg-[#87F6FF] rounded-2xl border-2 text-xl cursor-pointer font-medium sm:w-2/3 md:w-1/3 w-4/5 "
-                                        onClick={() => { setMostrarVentas(true); setMostrarCompras(false) }
+                                        onClick={() => { setMostrarVentas(true); setMostrarCompras(false); setSearchParams({ view: "sales" }) }
                                         }>Ventas</button>
                                 </div>
                             }
