@@ -45,6 +45,7 @@ export const Edit = ({ ventaAEditar, compraAEditar, onClick }: EditProps) => {
             if (!cantInvalida && !precioInvalido) {
                 setVentas(actualizado)
                 onClick()
+                location.reload()
             }
         }
 
@@ -63,6 +64,7 @@ export const Edit = ({ ventaAEditar, compraAEditar, onClick }: EditProps) => {
             if (!cantInvalidaCompra && !precioInvalidoCompra) {
                 setCompras(actualizado)
                 onClick()
+                location.reload()
             }
         }
 
