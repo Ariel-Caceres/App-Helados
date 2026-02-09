@@ -50,7 +50,6 @@ export const MonthResume = ({ producto, animar }: { producto: string, animar: bo
                 if (ventasDb && ultimaCompra) {
                     const venasProducto = ventasDb.filter(p => p.producto ? p.producto == producto : producto == "helado" ? true : false)
                     const ventasDesdeReposicion = venasProducto.filter(v => { return (Number(v.fecha.split("-")[2])) >= Number(ultimaCompra.fecha.split("-")[2]) })
-                    console.log(ventasDb.filter(v => String(v.fecha.split("-")[1]).padStart(2, "0") == String(ultimaCompra.fecha.split("-")[1]).padStart(2, "0")))
 
 
                     const ventasTotalDinero = ventasDesdeReposicion.reduce((acc, v) => acc + v.precioTotal, 0)
