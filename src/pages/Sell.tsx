@@ -25,7 +25,7 @@ export const Modal = () => {
         const totalFinal = totalManual ?? totalSugerido;
         const precioTotalInvalido = totalFinal <= 0;
 
-
+        location.reload()
         if (precioInvalido || cantInvalida || precioTotalInvalido) {
             if (precioInvalido) {
                 console.log("Agregar precio")
