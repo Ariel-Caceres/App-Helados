@@ -79,7 +79,6 @@ export const MonthResume = ({ producto, animar }: { producto: string, animar: bo
     }, [comprasTotalDinero, ventasTotalDinero])
 
 
-
     const [searchParams] = useSearchParams();
 
     const irAlLote = () => {
@@ -90,78 +89,77 @@ export const MonthResume = ({ producto, animar }: { producto: string, animar: bo
     };
     if (!online) return null
     if (error) return <p>{error}</p>
-    if (comprasDb != undefined && !cargando)
 
-        return (
+    return (
 
-            <div className="w-full border bg-[#DAF5FF] rounded-2xl flex text-xl md:text-2xl flex-col justify-between relative overflow-hidden">
+        <div className="w-full border bg-[#DAF5FF] rounded-2xl flex text-xl md:text-2xl flex-col justify-between relative overflow-hidden">
 
-                <div className=" border top-0 left-0 gap-x-10 gap-y-1 right-0 flex sm:gap-y-3 w-full  items-center justify-between z-10   bg-amber-200 rounded-2xl px-6 py-3 ">
+            <div className=" border top-0 left-0 gap-x-10 gap-y-1 right-0 flex sm:gap-y-3 w-full  items-center justify-between z-10   bg-amber-200 rounded-2xl px-6 py-3 ">
 
-                    <div className="text-xl whitespace-nowrap md:text-3xl font-medium">
-                        {online ? <i className="fa-solid fa-chart-simple"></i> : "📊"}
-                        <span>
-                            Panel  Mensual
-                        </span>
-                    </div>
-
-                    <div className=" justify-end flex items-end ">
-                        <button className="text-sm   text-end whitespace-nowrap sm:text-2xl font-medium self-end justify-self-end border-2 rounded-2xl cursor-pointer p-1" onClick={() => navigate("/record")}>
-                            {online ? <i className="fa-regular fa-calendar-days"></i> : "📆"}
-                            <span className=""> Ver Historial</span>
-                        </button>
-                    </div>
+                <div className="text-xl whitespace-nowrap md:text-3xl font-medium">
+                    {online ? <i className="fa-solid fa-chart-simple"></i> : "📊"}
+                    <span>
+                        Panel  Mensual
+                    </span>
                 </div>
 
-                {cargando ?
-                    <div className="flex w-full justify-center p-3 items-center">
-                        <span>
-                            Cargando
+                <div className=" justify-end flex items-end ">
+                    <button className="text-sm   text-end whitespace-nowrap sm:text-2xl font-medium self-end justify-self-end border-2 rounded-2xl cursor-pointer p-1" onClick={() => navigate("/record")}>
+                        {online ? <i className="fa-regular fa-calendar-days"></i> : "📆"}
+                        <span className=""> Ver Historial</span>
+                    </button>
+                </div>
+            </div>
+
+            {cargando ?
+                <div className="flex w-full justify-center p-3 items-center">
+                    <span>
+                        Cargando
+                    </span>
+                    {!online ?
+                        <span className="animate-bounce">
+                            ☁
                         </span>
-                        {!online ?
-                            <span className="animate-bounce">
-                                ☁
-                            </span>
-                            :
-                            <span><i className="fa-solid fa-cloud-arrow-down animate-bounce"></i></span>
-                        }
-                    </div>
-                    :
-                    <div
-                        className={`  w-full flex flex-row md:flex-row justify-evenly gap-4 p-2 px-2 transition-all duration-300 ease-in-out filter${animar ? "scale-110 -translate-y-12/12" : "translate-y-0"}`} >
+                        :
+                        <span><i className="fa-solid fa-cloud-arrow-down animate-bounce"></i></span>
+                    }
+                </div>
+                :
+                <div
+                    className={`  w-full flex flex-row md:flex-row justify-evenly gap-4 p-2 px-2 transition-all duration-300 ease-in-out filter${animar ? "scale-110 -translate-y-12/12" : "translate-y-0"}`} >
 
-                        <div className="w-full md:w-full text-md  bg-[#616163] justify-evenly  text-white  min-h-32 md:h-40   rounded-2xl flex flex-col    border-2 shadow-md   p-2 "
-                            onClick={() => irAlLote()}>
-                            <div className="">
-                                <span className="font-semibold">Compras: </span>
-                                <span className="font-bold">${comprasTotalDinero}</span>
-
-                            </div>
-                            <div>
-                                <span className="font-semibold">Ventas: </span>
-
-                                <span className="font-bold">${ventasTotalDinero}</span>
-
-                            </div>
-                            {comprasTotalDinero && ventasTotalDinero && comprasTotalDinero < ventasTotalDinero ?
-                                <div className={`${resultado == undefined ? "hidden" : ""}`}>
-                                    <span className="font-semibold">Ganancia: </span>
-                                    <span className="font-bold text-green-300 animate-pulse">${resultado ? resultado * -1 : resultado}</span>
-                                </div>
-                                :
-                                <div >
-                                    <span className="font-semibold">A recuperar: </span>
-                                    <span className="font-bold text-red-300">${resultado}</span>
-                                </div>}
-
+                    <div className="w-full md:w-full text-md  bg-[#616163] justify-evenly  text-white  min-h-32 md:h-40   rounded-2xl flex flex-col    border-2 shadow-md   p-2 "
+                        onClick={() => irAlLote()}>
+                        <div className="">
+                            <span className="font-semibold">Compras: </span>
+                            <span className="font-bold">${comprasTotalDinero}</span>
 
                         </div>
+                        <div>
+                            <span className="font-semibold">Ventas: </span>
+
+                            <span className="font-bold">${ventasTotalDinero}</span>
+
+                        </div>
+                        {comprasTotalDinero && ventasTotalDinero && comprasTotalDinero < ventasTotalDinero ?
+                            <div className={`${resultado == undefined ? "hidden" : ""}`}>
+                                <span className="font-semibold">Ganancia: </span>
+                                <span className="font-bold text-green-300 animate-pulse">${resultado ? resultado * -1 : resultado}</span>
+                            </div>
+                            :
+                            <div >
+                                <span className="font-semibold">A recuperar: </span>
+                                <span className="font-bold text-red-300">${resultado}</span>
+                            </div>}
 
 
                     </div>
-                }
 
-            </div >
-        )
+
+                </div>
+            }
+
+        </div >
+    )
 
 }

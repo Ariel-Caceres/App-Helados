@@ -10,10 +10,11 @@ interface salesDbInterface {
 }
 
 export const SalesDb = createContext<salesDbInterface | undefined>(undefined)
+
 export const SalesDbProvider = ({ children }: { children: ReactNode }) => {
     const { hoy } = useSell()
     const mes = hoy.split("-")[1]
-    console.log(mes)
+
     const { ventasDb, cargando, error } = useGetVentas(mes)
 
     return (
@@ -21,7 +22,6 @@ export const SalesDbProvider = ({ children }: { children: ReactNode }) => {
             ventasDb,
             cargando,
             error
-
         }}>
             {children}
         </SalesDb.Provider>
