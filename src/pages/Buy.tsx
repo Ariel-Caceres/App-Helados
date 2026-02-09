@@ -28,6 +28,7 @@ export const Buy = () => {
         } else {
             registrarCompra()
             navigate("/")
+            location.reload()
         }
     }
 
