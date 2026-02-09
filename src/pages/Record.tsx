@@ -127,11 +127,11 @@ export const Record = () => {
                                             <span>{mesActualConverter[String(mesActual).padStart(2, "0")]()}</span>
                                         </div>
                                         <div className="gap-2 flex shrink-0 ">
-                                            <div className=" flex p-2 border justify-center items-center rounded-2xl" onClick={() => { setMesActual(mesActual < 12 ? Number(mesActual) + 1 : 1) }}>
-                                                <i className="fa-solid fa-angle-up " ></i>
-                                            </div>
                                             <div className="flex p-2 border justify-center items-center rounded-2xl" onClick={() => { setMesActual(mesActual > 1 ? Number(mesActual) - 1 : 12) }}>
                                                 <i className="fa-solid fa-angle-down" ></i>
+                                            </div>
+                                            <div className=" flex p-2 border justify-center items-center rounded-2xl" onClick={() => { setMesActual(mesActual < 12 ? Number(mesActual) + 1 : 1) }}>
+                                                <i className="fa-solid fa-angle-up " ></i>
                                             </div>
                                         </div>
                                     </div>
