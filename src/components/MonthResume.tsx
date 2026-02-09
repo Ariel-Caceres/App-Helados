@@ -89,6 +89,7 @@ export const MonthResume = ({ producto, animar }: { producto: string, animar: bo
     if (!online) return null
     if (error) return <p>{error}</p>
 
+    if (ventasDb == null) return <div>Error al traer los productos de la base de datos, se solucionara pronto</div>
     return (
 
         <div className="w-full border bg-[#DAF5FF] rounded-2xl flex text-xl md:text-2xl flex-col justify-between relative overflow-hidden">
