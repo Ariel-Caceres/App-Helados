@@ -235,20 +235,24 @@ export const Month = (props: AccionesProps) => {
                                     <div className="flex justify-center w-1/5 border-gray-300 border-2 items-center ">
                                         <span>${v.precioTotal}</span>
                                     </div>
+                                    {ventas.find(vl => v.id == vl.id) ?
 
-                                    <div className="flex justify-center w-1/5 border-gray-300 border-2 items-center ">
-                                        <button className="bg-[#87F6FF] w-1/2 h-full border rounded-md" onClick={() => props.setVentaAEditar(v)}>
-                                            <span className="text-2xl">
-                                                {online ? <i className="fa-regular fa-pen-to-square"></i> : "✏"}
-                                            </span>
-                                        </button>
-                                        <button className="bg-[#FFBFA0] w-1/2 h-full border rounded-md" onClick={() => { props.setModalEliminar(); props.setTransaccion(v) }}>
-                                            <span className="text-2xl">
-                                                {online ? <i className="fa-regular fa-trash-can "></i> : "🗑"}
-                                            </span>
-                                        </button>
+                                        <div className="flex justify-center w-1/5 border-gray-300 border-2 items-center ">
+                                            <button className="bg-[#87F6FF] w-1/2 h-full border rounded-md" onClick={() => props.setVentaAEditar(v)}>
+                                                <span className="text-2xl">
+                                                    {online ? <i className="fa-regular fa-pen-to-square"></i> : "✏"}
+                                                </span>
+                                            </button>
+                                            <button className="bg-[#FFBFA0] w-1/2 h-full border rounded-md" onClick={() => { props.setModalEliminar(); props.setTransaccion(v) }}>
+                                                <span className="text-2xl">
+                                                    {online ? <i className="fa-regular fa-trash-can "></i> : "🗑"}
+                                                </span>
+                                            </button>
 
-                                    </div>
+                                        </div>
+                                        :
+                                        <div className="flex justify-center w-1/5 border-gray-300 border-2 items-center"></div>
+                                    }
                                 </div>))
                             }
                             <div className="w-full gap-2 justify-center items-center justify-self-center flex mt-2 flex-col mb-2">
@@ -323,19 +327,25 @@ export const Month = (props: AccionesProps) => {
                                     <div className="flex justify-center w-1/5 border-gray-300 border-2 items-center ">
                                         <span>${c.precio}</span>
                                     </div>
-                                    <div className="flex justify-center w-1/5 border-gray-300 border-2 items-center ">
-                                        <button className="bg-[#87F6FF] w-1/2 h-full border rounded-md" onClick={() => props.setCompraAEditar(c)}>
-                                            <span className="text-2xl">
-                                                {online ? <i className="fa-regular fa-pen-to-square"></i> : "✏"}
-                                            </span>
-                                        </button>
-                                        <button className="bg-[#FFBFA0] w-1/2 h-full border rounded-md" onClick={() => { props.setModalEliminarCompra(); props.setCompraAEliminar(c) }}>
-                                            <span className="text-2xl">
-                                                {online ? <i className="fa-regular fa-trash-can "></i> : "🗑"}
-                                            </span>
-                                        </button>
+                                    {compras.find(cl => c.id == cl.id) ?
+                                        <div className="flex justify-center w-1/5 border-gray-300 border-2 items-center ">
+                                            <button className="bg-[#87F6FF] w-1/2 h-full border rounded-md" onClick={() => props.setCompraAEditar(c)}>
+                                                <span className="text-2xl">
+                                                    {online ? <i className="fa-regular fa-pen-to-square"></i> : "✏"}
+                                                </span>
+                                            </button>
+                                            <button className="bg-[#FFBFA0] w-1/2 h-full border rounded-md" onClick={() => { props.setModalEliminarCompra(); props.setCompraAEliminar(c) }}>
+                                                <span className="text-2xl">
+                                                    {online ? <i className="fa-regular fa-trash-can "></i> : "🗑"}
+                                                </span>
+                                            </button>
 
-                                    </div>
+                                        </div>
+                                        :
+                                        <div className="flex justify-center w-1/5 border-gray-300 border-2 items-center">
+
+                                        </div>
+                                    }
                                 </div>))}
 
                             <div className="w-full gap-2 justify-center items-center justify-self-center flex mt-2 flex-col mb-2">
