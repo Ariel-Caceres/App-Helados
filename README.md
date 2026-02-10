@@ -100,19 +100,11 @@ Este proyecto fue creado con el objetivo de:
 
 ---
 
-## 📷 Screenshots
+<!-- ## 📷 Screenshots
 
 _(podés agregar capturas de la app acá)_
 
----
-
-## ✨ Autor
-
-Desarrollado por **[Tu nombre]**  
-💻 Frontend Developer  
-📍 React · TypeScript · Node.js
-
----
+--- -->
 
 ## 📝 Notas
 
