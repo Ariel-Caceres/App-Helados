@@ -137,7 +137,6 @@ export const MonthResume = ({ producto, animar }: { producto: string, animar: bo
                         </div>
                         <div>
                             <span className="font-semibold">Ventas: </span>
-
                             <span className="font-bold">${ventasTotalDinero}</span>
 
                         </div>
