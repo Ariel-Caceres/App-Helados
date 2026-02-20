@@ -108,7 +108,7 @@ export const Month = (props: AccionesProps) => {
         }
     }
 
-    const noralizadorProductos: Record<Producto, () => string> = {
+    const noralizadorProductos: Record<string, () => string> = {
         "pollo-trozado": () => "Pollo Trozado",
         "carne-picada": () => "Carne Picada",
         "helado": () => "Helado",
@@ -116,6 +116,7 @@ export const Month = (props: AccionesProps) => {
         "papa": () => "Papa",
         "zanahoria": () => "Zanahoria",
         "pollo-entero": () => "Pollo Entero"
+
     }
 
 
@@ -232,7 +233,9 @@ export const Month = (props: AccionesProps) => {
                                         <span>{v.fecha}</span>
                                     </div>
                                     <div className="flex justify-center w-1/5 border-gray-300 border-2 items-center ">
+
                                         <span>{v.producto ? noralizadorProductos[v.producto]() : "Helado"}</span>
+
                                     </div>
                                     <div className="flex justify-center w-1/5 border-gray-300 border-2 items-center ">
                                         <span>{v.cantidad} {v.producto ? v.producto == "helado" ? "ud" : "kg" : "ud"}</span>
