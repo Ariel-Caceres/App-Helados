@@ -82,19 +82,19 @@ export const LoteResume = () => {
             )
             const CPTotalCantidad = ventasCP.reduce((acc, v) => v.status != "pending-delete" ? acc + v.cantidad : acc, 0)
             const CPTotalPrecio = ventasCP.reduce((acc, v) => v.status != "pending-delete" ? v.precioTotal ? acc + v.precioTotal : acc + v.precio : acc, 0)
-            setCPTotalCantidad(CPTotalCantidad)
-            setCPTotalPrecio(CPTotalPrecio)
+            setCPTotalCantidad(Math.round(CPTotalCantidad))
+            setCPTotalPrecio(Math.round(CPTotalPrecio))
         }
     }
 
     useMemo(() => {
         if (ultimaCompra) {
             const compraUnidad = ultimaCompra.precio / ultimaCompra.cantidad
-            setCompraUnidad(compraUnidad)
+            setCompraUnidad(Math.round(compraUnidad))
             const gciaTotal = ultimaCompra.cantidad * precios[productos[mpd]()]
             setGciaTotal(gciaTotal)
             const gciaUnidad = precios[productos[mpd]()] - compraUnidad
-            setGciaUnidad(gciaUnidad)
+            setGciaUnidad(Math.round(gciaUnidad))
             const margen = (gciaUnidad / precios[productos[mpd]()]) * 100
             setMargen(margen)
         }
