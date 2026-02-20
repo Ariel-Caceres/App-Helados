@@ -25,7 +25,6 @@ export const Modal = () => {
         const totalFinal = totalManual ?? totalSugerido;
         const precioTotalInvalido = totalFinal <= 0;
 
-        location.reload()
         if (precioInvalido || cantInvalida || precioTotalInvalido) {
             if (precioInvalido) {
                 console.log("Agregar precio")
@@ -44,6 +43,8 @@ export const Modal = () => {
         } else {
             registrarVenta()
             navigate("/")
+            location.reload()
+
         }
     }
 
@@ -92,6 +93,10 @@ export const Modal = () => {
                             <option value="helado">Helado</option>
                             <option value="pollo-trozado">Pollo trozado</option>
                             <option value="carne-picada">Carne picada</option>
+                            <option value="pollo-entero">Pollo entero</option>
+                            <option value="papa">Papa</option>
+                            <option value="zanahoria">Zanahoria</option>
+                            <option value="cebolla">Cebolla</option>
                         </select>
                     </div>
 
