@@ -6,6 +6,7 @@ import type { Compra } from "../types/compra.entity";
 import { useBuy } from "../hooks/useBuy";
 import { useEffect, useState } from "react";
 import { Cargando } from "./Cargando";
+import type { Producto } from "../context/SellContext";
 
 
 type AccionesProps =
@@ -107,10 +108,14 @@ export const Month = (props: AccionesProps) => {
         }
     }
 
-    const noralizadorProductos: Record<string, () => string> = {
+    const noralizadorProductos: Record<Producto, () => string> = {
         "pollo-trozado": () => "Pollo Trozado",
         "carne-picada": () => "Carne Picada",
         "helado": () => "Helado",
+        "cebolla": () => "Cebolla",
+        "papa": () => "Papa",
+        "zanahoria": () => "Zanahoria",
+        "pollo-entero": () => "Pollo Entero"
     }
 
 
