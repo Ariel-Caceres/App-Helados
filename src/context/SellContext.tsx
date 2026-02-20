@@ -3,7 +3,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { createContext, useEffect, useState, type ReactNode, } from "react";
 import type { UUID } from '../types/uuid';
 import type { Venta } from '../types/venta.entity';
-export type Producto = "helado" | "pollo-trozado" | "carne-picada"
+
+export type Producto = "helado" | "pollo-trozado" | "carne-picada" | "pollo-entero" | "papa" | "zanahoria" | "cebolla"
 
 export type Precios = Record<Producto, number>;
 
@@ -34,7 +35,10 @@ export const SellProvider = ({ children }: { children: ReactNode }) => {
                 helado: 300,
                 "pollo-trozado": 2700,
                 "carne-picada": 2000,
-                "hielo": 500
+                "pollo-entero": 2800,
+                "zanahoria": 1000,
+                "papa": 900,
+                "cebolla": 800
             };
         }
         return JSON.parse(guardado);
