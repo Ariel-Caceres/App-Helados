@@ -55,6 +55,8 @@ export const MonthResume = ({ producto, animar }: { producto: string, animar: bo
                     const ventasTotalDinero = ventasDesdeReposicion.reduce((acc, v) => acc + v.precioTotal, 0)
 
                     setVentasTotalDinero(ventasTotalDinero)
+                } else {
+                    setVentasTotalDinero(0)
                 }
                 if (comprasDb != null) {
                     const comprasProducto = comprasDb.filter(p => p.producto == producto)
@@ -65,16 +67,25 @@ export const MonthResume = ({ producto, animar }: { producto: string, animar: bo
 
                         setComprasTotalDinero(comprasTotalDinero)
                     }
+                    else {
+                        setComprasTotalDinero(0)
+                    }
+                } else {
+                    setComprasTotalDinero(0)
                 }
             }
         }
     }, [online, comprasDb, ventasDb, producto, comprasMes, ventasMes, ultimaCompra, cargando])
 
     useEffect(() => {
-        if (ventasTotalDinero === undefined || comprasTotalDinero === undefined) return
+        if (ventasTotalDinero === undefined || comprasTotalDinero === undefined) {
+            setResultado(0)
+        } else {
 
-        const calculo = comprasTotalDinero - ventasTotalDinero
-        setResultado(calculo)
+
+            const calculo = comprasTotalDinero - ventasTotalDinero
+            setResultado(calculo)
+        }
     }, [comprasTotalDinero, ventasTotalDinero])
 
 
