@@ -33,9 +33,9 @@ export const SellProvider = ({ children }: { children: ReactNode }) => {
         if (!guardado) {
             return {
                 helado: 300,
-                "pollo-trozado": 2700,
-                "carne-picada": 2000,
-                "pollo-entero": 2800,
+                "pollo-trozado": 3400,
+                "carne-picada": 3000,
+                "pollo-entero": 3800,
                 "zanahoria": 1000,
                 "papa": 900,
                 "cebolla": 800
