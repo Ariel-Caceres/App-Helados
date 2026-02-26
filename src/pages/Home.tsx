@@ -17,9 +17,23 @@ export const Home = () => {
     const productos: Record<string, () => string> = {
         1: () => "helado",
         2: () => "carne-picada",
-        3: () => "pollo-trozado"
+        3: () => "pollo-trozado",
+        4: () => "pollo-entero",
+        5: () => "papa",
+        6: () => "zanahoria",
+        7: () => "cebolla",
     }
 
+
+    // const productos: Record<Producto, string> = {
+    //     "helado": "Helado",
+    //     "carne-picada": "Carne picada",
+    //     "pollo-trozado": "Pollo trozado",
+    //     "pollo-entero": "Pollo entero",
+    //     "papa": "Papa",
+    //     "zanahoria": "Zanahoria",
+    //     "cebolla": "Cebolla",
+    // }
 
     const firstRender = useRef(true)
 
@@ -59,13 +73,13 @@ export const Home = () => {
 
             <div className={`flex w-full justify-center text-2xl p-4 text-center items-center`}>
                 <div className="w-80 sm:w-2/3 flex justify-center items-center">
-                    <div className=" border-2 rounded-2xl " onClick={() => setmpd(mpd > 1 ? mpd - 1 : 3)}>
+                    <div className=" border-2 rounded-2xl " onClick={() => setmpd(mpd > 1 ? mpd - 1 : 7)}>
                         <span ><i className="fa-solid fa-angle-left p-2"></i></span>
                     </div>
-                    <div className={`w-2/3 font-bold ${animar ? "animate-bounce" : ""}`}>
-                        <span>{productos[mpd]() == "helado" ? "Helado" : productos[mpd]() == "pollo-trozado" ? "Pollo Trozado" : productos[mpd]() == "carne-picada" ? "Carne Picada" : ""}</span>
+                    <div className={`w-2/3 font-bold ${animar ? "animate-bounce" : ""} `}>
+                        <span>{productos[mpd]().toUpperCase()}</span>
                     </div>
-                    <div className="border-2 rounded-2xl" onClick={() => setmpd(mpd < 3 ? mpd + 1 : 1)}>
+                    <div className="border-2 rounded-2xl" onClick={() => setmpd(mpd < 7 ? mpd + 1 : 1)}>
                         <span ><i className="fa-solid fa-angle-right p-2"></i></span>
                     </div>
                 </div>
