@@ -47,7 +47,6 @@ export const Month = (props: AccionesProps) => {
     const [totalCantidad, setTotalCantidad] = useState<number>()
 
     const [productoAFiltrar, setProductoAFiltrar] = useState<productoAFiltrar>("todos")
-    console.log(productoAFiltrar);
 
     const calcularTotal = () => {
         if (ventasAMostrar && !cargando) {
