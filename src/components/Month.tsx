@@ -43,8 +43,11 @@ export const Month = (props: AccionesProps) => {
     const [PTTotalPrecio, setPTTotalPrecio] = useState<number>()
     const [CPTotalCantidad, setCPTotalCantidad] = useState<number>()
     const [CPTotalPrecio, setCPTotalPrecio] = useState<number>()
+    const [totalPrecio, setTotalPrecio] = useState<number>()
+    const [totalCantidad, setTotalCantidad] = useState<number>()
 
     const [productoAFiltrar, setProductoAFiltrar] = useState<productoAFiltrar>("todos")
+    console.log(productoAFiltrar);
 
     const calcularTotal = () => {
         if (ventasAMostrar && !cargando) {
@@ -75,6 +78,20 @@ export const Month = (props: AccionesProps) => {
             setCPTotalCantidad(CPTotalCantidad)
             setCPTotalPrecio(CPTotalPrecio)
         }
+
+
+
+        if (ventasAMostrar && !cargando) {
+            const ventasZ = ventasAMostrar.filter(v =>
+                v.producto == productoAFiltrar
+            )
+            const zTotalCnatidad = ventasZ.reduce((acc, v) => v.status != "pending-delete" ? acc + v.cantidad : acc, 0)
+            const zTotalPrecio = ventasZ.reduce((acc, v) => v.status != "pending-delete" ? v.precioTotal ? acc + v.precioTotal : acc + v.precio : acc, 0)
+            console.log(zTotalPrecio);
+
+            setTotalPrecio(zTotalPrecio)
+            setTotalCantidad(zTotalCnatidad)
+        }
     }
     const calcularTotalCompras = () => {
         if (comprasAMostrar && !cargando) {
@@ -104,6 +121,17 @@ export const Month = (props: AccionesProps) => {
             const CPTotalPrecio = ventasCP.reduce((acc, v) => v.status != "pending-delete" ? acc + v.precio : acc, 0)
             setCPTotalCantidad(CPTotalCantidad)
             setCPTotalPrecio(CPTotalPrecio)
+        }
+
+
+        if (comprasAMostrar && !cargando) {
+            const ventasC = comprasAMostrar.filter(v =>
+                v.producto == productoAFiltrar
+            )
+            const totalCantidadC = ventasC.reduce((acc, v) => v.status != "pending-delete" ? acc + v.cantidad : acc, 0)
+            const totalPrecioC = ventasC.reduce((acc, v) => v.status != "pending-delete" ? acc + v.precio : acc, 0)
+            setTotalCantidad(totalCantidadC)
+            setTotalPrecio(totalPrecioC)
         }
     }
 
@@ -305,6 +333,21 @@ export const Month = (props: AccionesProps) => {
                                         </div>
                                     </div>
                                 }
+
+
+                                {productoAFiltrar != "todos" &&
+                                    <div className={`w-full flex  justify-center`}>
+                                        <div className="w-1/5 border-2 border-gray-600 justify-start flex border-r-0 ">
+                                            <span>{productoAFiltrar}</span>
+                                        </div>
+                                        <div className="w-1/5 border-2 border-gray-600 justify-center flex border-r-0">
+                                            <span>{totalCantidad} kgs</span>
+                                        </div>
+                                        <div className="w-1/5 border-2 border-gray-600 justify-center flex">
+                                            <span>${totalPrecio}</span>
+                                        </div>
+                                    </div>
+                                }
                             </div>
                         </div>
                         :
@@ -399,7 +442,23 @@ export const Month = (props: AccionesProps) => {
                                         </div>
                                     </div>
                                 }
+
+                                {productoAFiltrar != "todos" &&
+
+                                    <div className={`w-full flex  justify-center`}>
+                                        <div className="w-1/5 border-2 border-gray-600 justify-start flex border-r-0 ">
+                                            <span>{productoAFiltrar}</span>
+                                        </div>
+                                        <div className="w-1/5 border-2 border-gray-600 justify-center flex border-r-0">
+                                            <span>{totalCantidad} kgs</span>
+                                        </div>
+                                        <div className="w-1/5 border-2 border-gray-600 justify-center flex">
+                                            <span>${totalPrecio}</span>
+                                        </div>
+                                    </div>
+                                }
                             </div>
+
                         </div> :
                         <div className="w-full flex justify-center border-2 mt-2 p-2">
                             <span className="text-xl">
@@ -418,6 +477,10 @@ export const Month = (props: AccionesProps) => {
                         <option value="helado" className="p-2">Helados</option>
                         <option value="carne-picada" className="p-2">Carne Picada</option>
                         <option value="pollo-trozado" className="p-9 flex">Pollo Trozado</option>
+                        <option value="pollo-entero" className="p-9 flex">Pollo Entero</option>
+                        <option value="zanahoria" className="p-9 flex">Zanahoria</option>
+                        <option value="cebolla" className="p-9 flex">Cebolla</option>
+                        <option value="papa" className="p-9 flex">Papa</option>
                     </select>
                 </div>
             </div>
